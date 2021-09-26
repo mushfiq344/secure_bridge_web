@@ -1,0 +1,235 @@
+/* align elements in right in navbar*/
+.navbar-nav {
+    margin-left: auto;
+}
+/* gradient border of navbar*/
+.navbar-bottom-bar {
+    margin-top: 55px;
+    height: 2px;
+    z-index: 200;
+    background-image: linear-gradient(
+        to right,
+        rgba(88, 101, 238, 1),
+        rgba(41, 157, 234, 1),
+        rgba(4, 201, 230, 1)
+    );
+}
+
+/* main container */
+.bg-light {
+    background-color: #615aef12 !important;
+}
+
+.banner-section {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.banner-image {
+    background: #000;
+    background-image: linear-gradient(
+        to right,
+        rgb(23 27 70),
+        rgb(41 157 234),
+        rgb(0 72 82)
+    );
+
+    height: 100%;
+    width: 100%;
+}
+
+/* .root-div-background-image{
+  
+} */
+
+.main-container {
+    margin-top: 80px;
+    margin-bottom: 100px;
+}
+/* text */
+.uncorwd-text-color {
+    /* color:#615aef; */
+    color: #4a00e0;
+}
+.uncorwd-title-text-color {
+    color: #7d39e9;
+}
+
+.uncrowd-grey-text {
+    color: grey;
+}
+
+/* cards for choosing type of account */
+.account-type-member-card {
+    border: none;
+    background-color: #5865ee;
+}
+
+.account-type-startup-card {
+    border: none;
+    border: 3px solid #874efe;
+}
+.account-type-investor-card {
+    border: none;
+    border: 3px solid #874efe;
+}
+.account-type-mentor-card {
+    border: none;
+    border: 3px solid #874efe;
+}
+
+/* buttons */
+
+.uncrowd-btn {
+    /*width: 100px;*/
+    text-align: center;
+    margin-right: 10px;
+    padding: 0.5em 2em;
+}
+
+.add-startup {
+    /*width: 100px;*/
+    text-align: center;
+    padding: 0.5em 2em;
+}
+.uncrowd-btn-active,
+.uncrowd-btn-active:hover,
+.navbar-expand-sm .navbar-nav .uncrowd-btn-active {
+    color: #fff;
+    /* background-image: linear-gradient(to right, rgba(88,101,238,1),rgba(41,157,234,1), rgba(4,201,230,1)); */
+    background-color: #4a00e0;
+    padding: 0.5em 2em;
+    text-decoration: none;
+    border: none;
+}
+
+.navbar-expand-sm .navbar-nav .uncrowd-btn-active:hover {
+    color: #fff;
+    background-image: linear-gradient(
+        to left,
+        rgba(88, 101, 238, 1),
+        rgba(41, 157, 234, 1),
+        rgba(4, 201, 230, 1)
+    );
+    padding: 0.5em 2em;
+    text-decoration: none;
+}
+
+.select-account-type:hover {
+    text-decoration: none;
+}
+
+.uncorwd-anchor,
+.uncorwd-anchor:hover {
+    text-decoration: none;
+}
+
+.dashboard-card-bottom {
+    border-bottom: 1px solid #11efff;
+}
+
+.slider-button {
+    color: #fff;
+    width: 100%;
+    border: none;
+    height: 50px;
+    padding: 10px 30px;
+    background-color: #615aef;
+    text-decoration: none;
+}
+
+/* button */
+.frontend-button {
+    color: #fff;
+    width: 150px;
+    border: none;
+    height: 40px;
+    background-color: #615aef;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.frontend-button:hover {
+    color: #fff;
+    width: 150px;
+    border: none;
+    height: 40px;
+    background-color: #615aef;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+/* icons */
+.fa-google {
+    background: conic-gradient(
+            from -45deg,
+            #ea4335 110deg,
+            #4285f4 90deg 180deg,
+            #34a853 180deg 270deg,
+            #fbbc05 270deg
+        )
+        73% 55%/150% 150% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+/* theme standard */
+h1 {
+    font-size: 3em;
+    margin-bottom: 1em;
+}
+h2 {
+    color: #5666ed;
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+h3 {
+    font-size: 1.5em;
+    margin-bottom: 0;
+}
+
+h6 {
+    display: block;
+}
+
+.long-description-text {
+    border: 1px solid #11efff;
+    padding: 2rem 4rem;
+    margin: 1em 4em;
+    background: #fff2;
+}
+.subtitle {
+    font-size: 0.8em;
+    color: #999;
+    margin-bottom: 0.2em;
+}
+.industry {
+    font-size: 0.5em;
+    color: #615aef;
+    margin-bottom: 0;
+}
+.investors {
+    font-size: 0.5em;
+    color: #615aef;
+    margin-bottom: 0;
+}
+.form-container {
+    padding: 0.5em 1.5em;
+}
+
+.small-font {
+    font-size: 12px;
+    color: #999;
+}
+
+.purple-link {
+    color: #615aef !important;
+    text-decoration: underline !important;
+    font-weight: bold;
+}
+
+.dashboard-message {
+    color: #fff;
+    padding: 10px 20px;
+}

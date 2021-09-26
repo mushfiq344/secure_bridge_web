@@ -1,0 +1,285 @@
+.material-field {
+    border: none;
+    border-radius: 0px;
+    border-bottom: 1px solid #615aef;
+    background: transparent;
+
+};
+
+
+.contact-h{font-size:24px;text-transform:uppercase;font-weight:700;margin-bottom:40px;color:#EC407A}
+.contact .form-group{margin-bottom: 40px;}
+.contact .form-control{
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid  #615AEF;
+  box-shadow: none;    
+
+}
+
+.contact .btn-primary{
+  background-color: #EC407A;
+  border-color: #EC407A;
+  border-radius: 0;
+  text-transform: uppercase;
+  font-weight: bold;
+  
+}
+.contact .btn{
+  padding: 12px 15px;
+}
+
+
+
+.group        { 
+  position:relative; 
+  margin-bottom:35px; 
+}
+
+.material-field:focus     { outline:none;  box-shadow: inset 0 -1px 0 #ddd;background-color: transparent;}
+
+
+label          {
+  color:#999; 
+  font-size:18px;
+  font-weight:normal;
+  position:absolute;
+  pointer-events:none;
+  /* left:5px; */
+  top:0;
+  transition:0.4s ease all; 
+  -moz-transition:0.4s ease all; 
+  -webkit-transition:0.4s ease all;
+}
+
+
+.material-field:focus ~ label, input:valid ~ label,.has-value ~ label    {
+  top:-20px;
+  font-size:14px;
+  color: #615AEF;
+  
+}
+
+
+.material-field:focus ~ .form-check-label, input:valid ~ .form-check-label    {
+  top:0px;
+  left:20px;
+  font-size:17px;
+  color: #615AEF;
+  
+}
+
+.bar  { position:relative; display:block; width:100%; }
+.bar:before, .bar:after   {
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:0px; 
+  position:absolute;
+  background: #615AEF; 
+  transition:0.4s ease all; 
+  -moz-transition:0.4s ease all; 
+  -webkit-transition:0.4s ease all;
+}
+.bar:before {
+  left:50%;
+}
+.bar:after {
+  right:50%; 
+}
+
+
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+  width:50%;
+}
+
+.highlight {
+  position:absolute;
+ /* height:60%; */
+  width:100px; 
+  top:25%; 
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+
+/* active state */
+input:focus ~ .highlight {
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+
+.material-checkbox{
+      border: 2px solid #0000ff;
+    width: 18px;
+    height: 18px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin-right: 0px;
+}
+
+.material-checkbox:checked {
+  -webkit-appearance: none;
+    -moz-appearance: none;
+   border: 2px solid #0000ff;
+  background: #615AEF;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to  { width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to  { width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+  from { background:#5264AE; }
+  to  { width:0; background:transparent; }
+}
+
+
+
+.text-group textarea {
+  display: block;
+  background: none;
+  padding: 0.125rem 0.125rem 0.0625rem;  
+  border-width: 0;
+  border-color: transparent;
+  line-height: 1.9;
+  width: 100%;
+  -webkit-transition: all 0.28s ease;
+  transition: all 0.28s ease;
+  box-shadow: none;
+}
+.text-group textarea:focus ~ .input-label,
+.text-group textarea:valid ~ .input-label,
+.text-group textarea.form-file ~ .input-label,
+.text-group textarea.has-value ~ .input-label {
+ font-size:14px;;
+  color: gray;
+  top: -1rem;
+  left: 0;
+}
+.text-group textarea:focus ~ .input-label {
+  color:  #615AEF;
+}
+.text-group textarea:focus ~ .bar::before {
+  width: 100%;
+  left: 0;
+}
+.text-group {
+  position: relative;
+  margin-top: 2.25rem;
+  margin-bottom: 4.25rem;
+}
+
+
+
+
+/* button */
+.form-submit-button{
+    color: #fff;
+    width: 150px;
+    border: none;
+    height: 50px;
+    background-color: #615AEF;
+     text-decoration: none;
+     text-transform: uppercase;
+}
+.form-submit-button-reset{
+    color: #fff;
+    width: 250px;
+    border: none;
+    height: 40px;
+    background-color: #615AEF;
+     text-decoration: none;
+}
+.form-submit-button:hover{
+    color: #fff;
+   
+    border: none;
+    height: 50px;
+    background-color: #615AEF;
+     text-decoration: none;
+}
+.form-submit-button-reset:hover{
+    color: #fff;
+    width: 150px;
+    border: none;
+    height: 50px;
+    background-color: #615AEF;
+     text-decoration: none;
+     text-transform: uppercase;
+}
+
+.material-file-input{
+  opacity: 0;
+}
+
+/* logo  */
+#img-logo-preview,#owner-photo-preview,#img-logo-company-preview{
+  max-height: 150px;
+  max-width: 200px;
+  overflow: hidden;
+  text-indent: -10000px;
+  border: none;
+}
+
+
+
+
+#img-cover-preview{
+  max-height: 150px;
+  max-width: 200px;
+  overflow: hidden;
+  text-indent: -10000px;
+  border: none;
+}
+
+
+
+.form-image-upload-button,.form-image-upload-button:focus{
+  color: #fff;
+  border-radius: 0%;
+  width: 150px;
+  height: 60px;
+  /* background-image: linear-gradient(to right, rgba(88,101,238,1),rgba(41,157,234,1), rgba(4,201,230,1)); */
+  background-color: #615AEF;
+  text-transform: uppercase;
+}
+
+.edit-leader{
+  width:100%;height:140px;border:4px #615aef solid ; display:block;
+    margin:auto;
+}
+
+.add-leader{
+  width:100%;height:140px;border:4px #615aef solid; display:block;
+    margin:auto;
+}
+
+.sidebar-link,.sidebar-link:hover,.sidebar-link:active,.sidebar-link:link{
+  text-decoration: none;
+   color: inherit; 
+ 
+}
+
+/* On screens that are 992px or less, set the background color to blue */
+@media screen and (max-width: 1000px) {
+.form-submit-button{
+    color: #fff;
+    width: 80px;
+    border: none;
+  
+}
+
+}
+
+@media screen and (max-width: 575px) {
+ .edit-leader,.add-leader{
+   height: 280px;
+ }
+}

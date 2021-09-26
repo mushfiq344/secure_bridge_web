@@ -1,0 +1,38 @@
+.login-page{
+    background-image: url('https://i.pinimg.com/originals/63/ec/47/63ec4727d8415905823ef41079a8695d.jpg');
+}
+
+
+/* backgrounds */
+.uncorwd-background{
+
+
+     /* background-color:#615aef; */
+     background-color: #4A00E0;
+}
+
+/* .white-background{
+    background-color: #fff;
+} */
+
+.grey-background{
+    /* background-color: #F5F5F5; */
+    background-color: #eee;
+}
+
+.dashboard-color-background{
+    background-color:#11EFFF;
+}
+.ash-background{
+    background-color: #E8E8E8;
+}
+
+.tile-container{
+    background-color: #eee;
+}
+
+.gradient-background{
+   background-image: linear-gradient(to right, rgba(88,101,238,1),, rgba(4,201,230,1));
+    /* background: rgba(41,157,234,1); */
+    background: #4A00E0;
+}

@@ -1,0 +1,243 @@
+.root-div{
+    position: relative;
+}
+.root-div-background-image{
+    z-index: -1000;opacity:0.8;width: 100%;
+}
+
+.main-banner-img {
+    /* width: 600px; */
+    width: 50vw;
+    bottom: 00px;
+    right: 50px;
+    position: absolute;
+}
+
+.join-us-btn{
+    color: #fff;
+    width: 150px;
+    border: none;
+    height: 50px;
+    background-color: #7d39e9;
+    text-decoration: none;
+    /* border: 2px solid #11EFFF; */
+   /* margin-left: 2em; */
+}
+
+.root-div-logo-section{
+    padding-left: 18rem;
+}
+.text-under-logo{
+    padding-left: 18rem;padding-top:1.5rem;
+}
+.root-div-short-description{
+   padding-left: 13rem;
+   
+}
+
+.long-description-div{
+    padding: 0rem 10rem;
+}
+
+.search-div{
+    padding: 5rem 0rem;
+}
+
+.long-description-text{
+    border:2px solid #11EFFF;padding: 2rem 4rem;
+}
+
+/* glider slider start */
+.slider-element{
+     display: flex;align-items: center;justify-content: center;
+}
+
+.slider-tab{
+    margin: auto;  display: flex;align-items: center;justify-content: center;
+}
+
+.slider-tab-element{
+margin: 0;
+padding: 0;
+border: none;
+}
+
+.slider-element-action{
+   display: flex;align-items: center;flex-direction:column;justify-content: center;padding-right:4rem
+}
+
+.slider-tab-button-selected{
+    color: #fff;
+    width: 150px;
+    border: none;
+    height: 60px;
+    background-color: #615AEF;
+     text-decoration: none;
+}
+.slider-tab-button-unselected{
+    color: #fff;
+    width: 150px;
+    border: none;
+    height: 60px;
+    background-color: #11EFFF;
+     text-decoration: none;
+}
+/* glider slider end */
+
+.icon-div{
+    border-radius:50%;text-align: center;height:100px;width:100px;position:relative;
+}
+
+.icon-hand{
+     position:absolute;height:60px;width:60px;left: 30px;top: 20px;padding: 1px 1px;
+}
+.icon-chatting{
+     position:absolute;height:60px;width:60px;left: 22px;top: 20px;padding: 5px 5px;
+}
+
+.icon-path{
+      position:absolute;height:70px;width:70px;left: 14px;top: 15px;padding: 5px 5px;
+}
+
+
+
+
+
+
+
+    .blog-date {
+        position: absolute;
+        width: 100%;
+        bottom: 2px;
+        left: 0px;
+        display: block;
+        margin-top: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background-color: rgba(93, 93, 93, 0.44);
+        color: #f0f0f0;
+        font-size: 15px;
+        line-height: 20px;
+        text-align: center;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+
+    }
+
+        .blog-wrapper {
+        border-top: 1px solid #f0f0f0;
+        border-bottom: 1px solid #f0f0f0;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .blog-title{
+        font-size: 15px;line-height: 20px;
+        letter-spacing: 1px;
+    }
+    .blog-body{
+         font-size: 24px;font-weight: 700;
+    }
+.blog-link,.blog-link:hover{
+    color: #fff;
+    text-decoration: none;
+}
+    .blog-container {
+        position: absolute;
+        left: 0px;
+        bottom: 30px;
+        width: 100%;
+        display: block;
+
+        background-color: rgba(93, 93, 93, 0.44);
+        color: #f0f0f0;
+
+
+
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+
+
+
+@media only screen and (max-width: 1200px) {
+ .root-div-logo-section{
+    padding-left: 15rem;
+     padding-top:0rem;
+}
+    .text-under-logo{
+    padding-left: 16rem;
+}
+}
+@media only screen and (max-width: 1000px) {
+ .root-div-logo-section{
+    padding-left: 5rem;
+    padding-top:0rem;
+}
+.text-under-logo{
+    padding-left:5rem;
+}
+
+.root-div-short-description{
+   padding-left: 5rem;
+}
+
+.long-description-div{
+    padding: 0rem 5rem;
+}
+.long-description-text{
+    padding: 1rem 2rem;
+}
+
+
+.root-div-background-image{
+    height:600px;
+    
+}
+}
+@media only screen and (max-width: 770px) {
+ .root-div-logo-section{
+    padding-left: 6rem;
+    padding-top:0rem;
+}
+.text-under-logo{
+    padding-left:2rem;
+}
+.long-description-div{
+    padding-left: 5rem;
+    
+}
+.long-description-text{
+    padding: .5rem .5rem;
+}
+
+
+.root-div-background-image{
+    height: 650px;
+    
+}
+
+}
+
+@media only screen and (max-width: 700px) {
+.main-banner-img {
+    width: 100vw;
+    /* top: 5px; */
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    position: absolute;
+    height: auto;
+}
+
+.banner-content{
+    text-align: center;
+}
+
+}
+
