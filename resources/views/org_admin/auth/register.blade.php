@@ -81,7 +81,7 @@
                 </div>
                 <div class="form-group m-t-10 mb-0 row">
                     <div class="col-12 m-t-20">
-                        <p class="mb-0">By registering you agree to the Xplex - Dashboard <a href="#"
+                        <p class="mb-0">By registering you agree to the Secure Bridges - Dashboard <a href="#"
                                 class="text-primary">Terms of Use</a></p>
                     </div>
                 </div>

@@ -20,7 +20,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => ['auth', 'is_user'], "namespace" => "User"], function () {
+
+    Route::get('/home', 'OpportunityController@index')->name('home');
+    Route::post('fetch-opportunities', 'OpportunityController@fetchOpportunities')->name('fetch.opportunities');
+
+    Route::resource('/opportunities', 'OpportunityController');
+    Route::get('/user/opportunities', 'OpportunityController@userOpportunities');
+
+});
 
 Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
 
@@ -31,6 +39,8 @@ Route::prefix('/org-admin')->name('org-admin.')->group(function () {
         Route::view('/home', 'org_admin.home')->name('home');
 
         Route::resource('/opportunities', 'OpportunityController');
+        Route::get('/personal-profile', 'ProfileController@personalProfile');
+        Route::resource('/profiles', 'ProfileController');
     });
 
     Route::get('/login', 'Auth\LoginController@showOrgAdminLoginForm')->name('login');

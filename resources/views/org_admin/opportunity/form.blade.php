@@ -41,16 +41,40 @@
                     </div>
                 </div>
 
-
                 <div class="form-group row">
-                    <label for="example-search-input" class="col-sm-2 col-form-label">Reward</label>
+                    <label for="example-search-input" class="col-sm-2 col-form-label">Duration (Days)</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" rows="5" name="reward"
-                            id="reward">{{ !empty($opportunity->reward) ? $opportunity->reward:'' }}</textarea>
+                        <input type="number" class="form-control" name="duration"
+                            value="{{ !empty($opportunity->duration) ? $opportunity->duration:'' }}" required>
 
 
                     </div>
                 </div>
+
+                <div class="form-group row">
+                    <label for="example-search-input" class="col-sm-2 col-form-label">Reward ($)</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" name="reward"
+                            value="{{ !empty($opportunity->reward) ? $opportunity->reward:'' }}" required>
+
+
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="example-search-input" class="col-sm-2 col-form-label">Icon Image</label>
+                    <div class="col-sm-10">
+                        <div id="icon_image" class="input-images mt-5"></div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-search-input" class="col-sm-2 col-form-label">Cover Image</label>
+                    <div class="col-sm-10">
+                        <div id="cover_image" class="input-images mt-5"></div>
+                    </div>
+                </div>
+
+
 
                 <!-- <div class="form-group row">
           <label for="example-search-input" class="col-sm-2 col-form-label">Terms</label>

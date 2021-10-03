@@ -40,6 +40,11 @@
                         <i class="mdi mdi-settings m-r-5"></i><span>Social Links</span>
                     </a>
                 </li> -->
+                <li>
+                    <a href="/org-admin/personal-profile" class="waves-effect">
+                        <i class="mdi mdi-face-profile m-r-5"></i><span>Profile</span>
+                    </a>
+                </li>
 
                 <li>
                     <a href="/org-admin/opportunities" class="waves-effect">

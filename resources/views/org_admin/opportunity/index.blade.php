@@ -1,6 +1,6 @@
 @extends('org_admin.layouts.org-admin-layout')
 
-@include('org_admin.partials.table.header')
+@include('org_admin.partials.table.head')
 
 @section('content')
 <div class="page-title-box">

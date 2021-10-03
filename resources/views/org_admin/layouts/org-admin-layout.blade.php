@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="{{ asset('images/static_images/favicon.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    @yield('header')
+    @yield('head')
     <link rel="stylesheet" href="{{asset('admin/plugins/chartist/css/chartist.min.css')}}">
 
 
@@ -41,12 +41,12 @@
                 <a href="{{asset('/')}}" class="logo">
                     <span>
                         <!-- change here -->
-                        <img src="{{asset('admin/images/uncrowd_logo2.png')}}" alt="" height="50">
+                        <img src="{{asset('admin/images/admin-panel-logo.jpeg')}}" alt="" height="50">
                     </span>
                     <i>
                         <!-- change here -->
-                        <img src="{{asset('admin/images/uncrowd_logo_sm.png')}}" alt="logo" width="70" height="55"
-                            style="padding: 3px">
+                        <img src="{{asset('admin/images/admin-panel-logo-small.jpeg')}}" alt="logo" width="70"
+                            height="55" style="padding: 3px">
                     </i>
                 </a>
             </div>
