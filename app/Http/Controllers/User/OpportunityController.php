@@ -59,6 +59,18 @@ class OpportunityController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  string  $slug
+     * @return \Illuminate\Http\Response
+     */
+    public function showBySlug($slug)
+    {
+        $opportunity = Opportunity::where('slug', $slug)->first();
+        return $opportunity->users;
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

@@ -19,7 +19,7 @@
 <div class="column is-6">
     <div class="card blog-grid-item">
         <div class="card-image">
-            <a href="/opportunities/{{$opportunity->slug}}">
+            <a href="/opportunity/{{$opportunity->slug}}">
                 @if(!empty($opportunity->cover_image))
                 <img class="item-featured-image" src="{{url($uploadPath.$opportunity->cover_image)}}"
                     data-demo-src="assets/img/demo/posts/post-1.jpg" alt="">
@@ -42,18 +42,18 @@
                     @endif
                 </div>
                 <div class="title-meta">
-                    <h2 class="post-title"> <a href="/opportunities/{{$opportunity->slug}}">{{$opportunity->title}}</a>
+                    <h2 class="post-title"> <a href="/opportunity/{{$opportunity->slug}}">{{$opportunity->title}}</a>
                     </h2>
                     <h4 class="post-subtitle">
                         <span>by <a class="author-name"
-                                href="/opportunities/{{$opportunity->slug}}">{{\App\Models\User::getUserName($opportunity->created_by)}}</a></span>
+                                href="/opportunity/{$opportunity->slug}}">{{\App\Models\User::getUserName($opportunity->created_by)}}</a></span>
                         <i class="fa fa-circle"></i>
-                        <span>Posted in <a href="/opportunities/{{$opportunity->slug}}"></a></span>
+                        <span>Posted in <a href="/opportunity/{{$opportunity->slug}}"></a></span>
                     </h4>
                 </div>
             </div>
             <p>{{\App\SecureBridges\Helpers\CustomHelper::limit_text($opportunity->description,15)}}</p>
-            <a href="/opportunities/{{$opportunity->slug}}" class="read-more-link">
+            <a href="/opportunity/{{$opportunity->slug}}" class="read-more-link">
                 Read More <span>&#10230;</span>
             </a>
         </div>

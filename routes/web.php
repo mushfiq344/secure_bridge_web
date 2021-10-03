@@ -24,7 +24,7 @@ Route::group(['middleware' => ['auth', 'is_user'], "namespace" => "User"], funct
 
     Route::get('/home', 'OpportunityController@index')->name('home');
     Route::post('fetch-opportunities', 'OpportunityController@fetchOpportunities')->name('fetch.opportunities');
-
+    Route::get('/opportunity/{slug}', 'OpportunityController@showBySlug')->name('opportunity.slug');
     Route::resource('/opportunities', 'OpportunityController');
     Route::get('/user/opportunities', 'OpportunityController@userOpportunities');
 
@@ -39,6 +39,7 @@ Route::prefix('/org-admin')->name('org-admin.')->group(function () {
         Route::view('/home', 'org_admin.home')->name('home');
 
         Route::resource('/opportunities', 'OpportunityController');
+
         Route::get('/personal-profile', 'ProfileController@personalProfile');
         Route::resource('/profiles', 'ProfileController');
     });
