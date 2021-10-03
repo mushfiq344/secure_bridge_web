@@ -46,7 +46,7 @@
                     </h2>
                     <h4 class="post-subtitle">
                         <span>by <a class="author-name"
-                                href="/opportunity/{$opportunity->slug}}">{{\App\Models\User::getUserName($opportunity->created_by)}}</a></span>
+                                href="/opportunity/{{$opportunity->slug}}">{{\App\Models\User::getUserName($opportunity->created_by)}}</a></span>
                         <i class="fa fa-circle"></i>
                         <span>Posted in <a href="/opportunity/{{$opportunity->slug}}"></a></span>
                     </h4>
