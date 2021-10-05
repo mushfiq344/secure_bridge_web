@@ -27,6 +27,18 @@
 
 }
 
+.enrolled,
+.added-in-wishlist {
+    color: red;
+    cursor: pointer;
+}
+
+.un-enrolled,
+.not-added-in-wishlist {
+    color: white;
+    cursor: pointer;
+}
+
 
 .pagination .page-item.active .page-link {
     border: 2px solid #581e71;
@@ -246,6 +258,114 @@ function fetch_data(page = 1, search_field = '') {
         }
     });
 }
+
+
+
+
+$(document).on('click', ".enrolled, .un-enrolled", function(event) {
+
+
+    let task = $(this).attr("task");
+    let opportunity_id = $(this).attr("opportunity-id");
+    var icon = $(this);
+
+    if (task == "enroll") {
+        $.ajax({
+            url: "{{route('user-opportunities.store')}}",
+            method: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                opportunity_id: opportunity_id
+            },
+            success: function(data, textStatus, xhr) {
+
+                if (xhr.status == 201) {
+
+                    $(icon).removeClass("un-enrolled");
+                    $(icon).addClass("enrolled");
+                    $(icon).attr("task", "un-enroll");
+                }
+
+            }
+        });
+    } else {
+        $.ajax({
+            url: "/user-opportunities/" + opportunity_id,
+            method: "DELETE",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                opportunity_id: opportunity_id
+            },
+            success: function(data, textStatus, xhr) {
+                console.log(data);
+                console.log(xhr.status);
+
+                if (xhr.status == 204) {
+
+                    $(icon).removeClass("enrolled");
+                    $(icon).addClass("un-enrolled");
+                    $(icon).attr("task", "enroll");
+                }
+
+            }
+        });
+    }
+
+
+});
+
+$(document).on('click', ".added-in-wishlist, .not-added-in-wishlist", function(event) {
+
+
+    let task = $(this).attr("task");
+    let opportunity_id = $(this).attr("opportunity-id");
+    var icon = $(this);
+
+
+    if (task == "add") {
+        $.ajax({
+            url: "{{route('wish-list.store')}}",
+            method: "POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                opportunity_id: opportunity_id
+            },
+            success: function(data, textStatus, xhr) {
+
+                if (xhr.status == 201) {
+
+                    $(icon).removeClass("not-added-in-wishlist");
+                    $(icon).addClass("added-in-wishlist");
+                    $(icon).attr("task", "remove");
+                }
+
+            }
+        });
+    } else {
+        $.ajax({
+            url: "wish-list/" + opportunity_id,
+            method: "DELETE",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                opportunity_id: opportunity_id
+            },
+            success: function(data, textStatus, xhr) {
+                console.log(data);
+                console.log(xhr.status);
+
+                if (xhr.status == 204) {
+
+                    $(icon).removeClass("added-in-wishlist");
+                    $(icon).addClass("not-added-in-wishlist");
+                    $(icon).attr("task", "add");
+                }
+
+            }
+        });
+    }
+
+
+});
 </script>
 <script>
 

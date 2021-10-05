@@ -5,7 +5,6 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Opportunity;
 use App\Models\User;
-use DB;
 use Illuminate\Http\Request;
 
 class OpportunityController extends Controller
@@ -52,19 +51,7 @@ class OpportunityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $opportunity = Opportunity::find($id);
-        return $opportunity->users;
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  string  $slug
-     * @return \Illuminate\Http\Response
-     */
-    public function showBySlug($slug)
+    public function show($slug)
     {
         $opportunity = Opportunity::where('slug', $slug)->first();
         return $opportunity->users;
@@ -113,26 +100,10 @@ class OpportunityController extends Controller
         $searchField = $request->search_field;
         $opportunityDate = $request->opportunity_date;
 
-        $query = DB::table('opportunities')
-            ->where('is_active', 1)->Where('title', 'like', '%' . $searchField . '%');
-
-        $query = $query->whereBetween('duration', array($durationLow - 1, $durationHigh + 1));
-
-        $query = $query->whereBetween('reward', array($rewardLow - 1, $rewardHigh + 1));
-
-        if ($opportunityDate != null) {
-            $query = $query->where('opportunity_date', $opportunityDate);
-        };
-
-        $opportunities = $query->paginate(1);
+        $opportunities = Opportunity::searchByParams($durationLow, $durationHigh, $rewardLow, $rewardHigh, $searchField, $opportunityDate);
 
         $uploadPath = Opportunity::$_uploadPath;
         return view('user.opportunity.opportunity-card', compact('opportunities', 'uploadPath'))->render();
     }
 
-    public function userOpportunities()
-    {
-        $user = User::find(auth()->user()->id);
-        return $user->opportunities;
-    }
 }
