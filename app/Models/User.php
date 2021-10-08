@@ -46,22 +46,19 @@ class User extends Authenticatable
     public static function getTypes()
     {
         return [
-            'generic' => '0',
-            'startup' => '1',
-            'mentor' => '2',
-            'investor' => '3',
-            'admin' => '4',
+            'User' => '0',
+            'Organizational Admin' => '1',
+            'Admin' => '2',
         ];
     }
 
     public static function getTypeNames()
     {
         return [
-            '0' => 'generic',
-            '1' => 'startup',
-            '2' => 'mentor',
-            '3' => 'investor',
-            '4' => 'admin',
+            '0' => 'User',
+            '1' => 'Organizational Admin',
+            '2' => 'Admin',
+
         ];
     }
 

@@ -1,3 +1,8 @@
+<?php
+use App\Models\User;
+
+$userTypes = User::getTypes();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,12 +31,17 @@
     <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-messaging.js"></script>
     <link rel="manifest" href="{{asset('manifest.json')}}">
 
+    <!-- sidebar css -->
+    <link id="theme-sheet" rel="stylesheet" href="{{asset('frontend/css/sidebar.css')}}">
+
     @yield('head')
     <style>
     .capital-text {
         text-transform: uppercase;
     }
     </style>
+
+
 
 </head>
 
@@ -70,6 +80,19 @@
 
     <!-- Back To Top Button -->
     <div id="backtotop"><a href="#"></a></div>
+
+    <script>
+    function openNav() {
+
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
+    </script>
 
 
 

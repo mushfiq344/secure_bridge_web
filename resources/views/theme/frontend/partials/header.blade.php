@@ -14,15 +14,12 @@ $links = [];
 ?>
 
 
-<nav class="navbar navbar-wrapper navbar-default navbar-fade is-transparent">
+<nav class="navbar navbar-wrapper navbar-default navbar-fade is-transparent" style="background-color: #56206c;">
     <div class="container">
         <!-- Brand -->
         <div class="navbar-brand">
-            <a class="navbar-item" href="{{url('')}}">
-                <img class="switcher-logo" src="{{asset('frontend/theme/assets/img/logos/logo/logo-top.jpeg')}}" alt="">
-            </a>
 
-            <!-- Sidebar Trigger -->
+            @include('theme.frontend.partials.sidebar')
             <!--<a id="navigation-trigger" class="navbar-item hamburger-btn" href="javascript:void(0);">
                         <span class="menu-toggle">
                             <span class="icon-box-toggle">
@@ -36,7 +33,7 @@ $links = [];
                     </a>-->
 
             <!-- Responsive toggle -->
-            <div class="custom-burger" data-target="">
+            <!-- <div class="custom-burger" data-target="">
                 <a id="" class="responsive-btn" href="javascript:void(0);">
                     <span class="menu-toggle">
                         <span class="icon-box-toggle">
@@ -48,7 +45,7 @@ $links = [];
                         </span>
                     </span>
                 </a>
-            </div>
+            </div> -->
             <!-- /Responsive toggle -->
         </div>
 
@@ -94,7 +91,7 @@ $links = [];
                         <i class="fa fa-home"></i>
                     </a> -->
                 </div>
-                @if(Auth::user()->type!=$userTypes['generic'])
+                @if(Auth::user()->type!=$userTypes['User'])
                 <div class="navbar-item">
 
                     <!-- <a class="navbar-item is-slide" href="/{{$userType}}/dashboard/chatting">
@@ -114,15 +111,8 @@ $links = [];
                 @else
                 <!-- Signup button -->
                 <div class="navbar-item">
-                    <a id="#signup-btn" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"
-                        class="button button-cta btn-outlined is-bold btn-align primary-btn rounded raised">
-                        Sign Out
-                    </a>
+                    <i class="fa fa-user-circle" style="font-size:30px;color:#fff;"></i>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
                 </div>
                 @endguest
             </div>
