@@ -14,3 +14,4 @@
     <a class="navbar-item" href="#"><i class="fa fa-home" aria-hidden="true"></i> Community</a>
 </div>
 <!-- Sidebar Trigger -->
+<!-- test comment -->
