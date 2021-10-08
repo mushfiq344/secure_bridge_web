@@ -162,7 +162,7 @@
 @endsection
 
 @section('scripts')
-@include('user.opportunity.opportunities-ui-range-slider')
+@include('opportunity.opportunities-ui-range-slider')
 <!--initial load-->
 <script>
 // load all initially

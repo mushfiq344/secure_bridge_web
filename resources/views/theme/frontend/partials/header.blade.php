@@ -111,11 +111,34 @@ $links = [];
                 @else
                 <!-- Signup button -->
                 <div class="navbar-item">
-                    <i class="fa fa-user-circle" style="font-size:30px;color:#fff;"></i>
 
+                    <div class="button btn-align has-icon-right primary-btn btn-outlined is-drop"> <i
+                            class="fa fa-user-circle" style="font-size:30px;color:#fff;"></i> <i
+                            class="sl sl-icon-arrow-down is-icon-xs"></i>
+                        <div class="dropContain">
+                            <div class="dropOut">
+                                <ul>
+
+                                    <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"><i
+                                                class="fa fa-sign-out" aria-hidden="true"></i> Log Out</a>
+                                    </li>
+
+
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                            </div>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                @endguest
+
+
             </div>
+            @endguest
         </div>
+    </div>
     </div>
 </nav>

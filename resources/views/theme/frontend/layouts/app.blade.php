@@ -26,13 +26,20 @@ $userTypes = User::getTypes();
     <link rel="stylesheet" href="{{asset('frontend/theme/assets/css/app.css')}}">
     <link id="theme-sheet" rel="stylesheet" href="{{asset('frontend/theme/assets/css/purple.css')}}">
 
-    <!-- fcm -->
-    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-messaging.js"></script>
-    <link rel="manifest" href="{{asset('manifest.json')}}">
+
 
     <!-- sidebar css -->
     <link id="theme-sheet" rel="stylesheet" href="{{asset('frontend/css/sidebar.css')}}">
+    <!--  -->
+    <style>
+    .white-text {
+        color: #fff !important;
+    }
+
+    .bg-581e71 {
+        background-color: #581e71;
+    }
+    </style>
 
     @yield('head')
     <style>

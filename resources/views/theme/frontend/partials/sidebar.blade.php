@@ -7,11 +7,20 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <a class="navbar-item" href="#"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
     <a class="navbar-item" href="#"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
-    <a class="navbar-item" href="#"><i class="fa fa-home" aria-hidden="true"></i> Opportunities</a>
+    <a class="navbar-item" href="/org-admin/opportunities"><i class="fa fa-home" aria-hidden="true"></i>
+        Opportunities</a>
     <a class="navbar-item" href="#"><i class="fa fa-home" aria-hidden="true"></i> Users</a>
     <a class="navbar-item" href="#"><i class="fa fa-home" aria-hidden="true"></i> Reward</a>
     <a class="navbar-item" href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
     <a class="navbar-item" href="#"><i class="fa fa-home" aria-hidden="true"></i> Community</a>
+    <a class="navbar-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+        {{ __('Logout') }}
+    </a>
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+    </form>
 </div>
 <!-- Sidebar Trigger -->
 <!-- test comment -->

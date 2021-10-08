@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Opportunity;
@@ -20,7 +20,7 @@ class OpportunityController extends Controller
         $maxReward = Opportunity::max('reward');
         $minReward = Opportunity::min('reward');
 
-        return view('opportunity.opportunity-list-for-users', compact('maxDuration', 'minDuration', 'maxReward', 'minReward'));
+        return view('user.opportunity.opportunity-list-for-users', compact('maxDuration', 'minDuration', 'maxReward', 'minReward'));
     }
 
     /**
@@ -88,6 +88,21 @@ class OpportunityController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function fetchOpportunities(Request $request)
+    {
+        $durationLow = $request->duration_low;
+        $durationHigh = $request->duration_high;
+        $rewardLow = $request->reward_low;
+        $rewardHigh = $request->reward_high;
+        $searchField = $request->search_field;
+        $opportunityDate = $request->opportunity_date;
+
+        $opportunities = Opportunity::searchByParams($durationLow, $durationHigh, $rewardLow, $rewardHigh, $searchField, $opportunityDate);
+
+        $uploadPath = Opportunity::$_uploadPath;
+        return view('opportunity.opportunity-card', compact('opportunities', 'uploadPath'))->render();
     }
 
 }

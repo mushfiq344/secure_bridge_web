@@ -16,8 +16,13 @@ class OpportunityController extends Controller
      */
     public function index()
     {
-        $oppotunities = Opportunity::all();
-        return view('org_admin.opportunity.index', compact('oppotunities'));
+        $maxDuration = Opportunity::max('duration');
+        $minDuration = Opportunity::min('duration');
+        $maxReward = Opportunity::max('reward');
+        $minReward = Opportunity::min('reward');
+
+        return view('org_admin.opportunity.index', compact('maxDuration', 'minDuration', 'maxReward', 'minReward'));
+
     }
 
     /**
