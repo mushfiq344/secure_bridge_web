@@ -1,4 +1,4 @@
-@extends('theme.frontend.layouts.app')
+@extends('user.layouts.user-layout')
 
 
 @section('head')
@@ -54,7 +54,7 @@
 @endsection
 
 @section('main-banner')
-@include("theme.frontend.partials.search-bar")
+@include("opportunity.search-bar")
 @endsection
 
 @section('content')
@@ -271,7 +271,7 @@ $(document).on('click', ".enrolled, .un-enrolled", function(event) {
 
     if (task == "enroll") {
         $.ajax({
-            url: "{{route('user-opportunities.store')}}",
+            url: "{{route('user.choice-list.store')}}",
             method: "POST",
             data: {
                 "_token": "{{ csrf_token() }}",
@@ -290,7 +290,7 @@ $(document).on('click', ".enrolled, .un-enrolled", function(event) {
         });
     } else {
         $.ajax({
-            url: "/user-opportunities/" + opportunity_id,
+            url: "/user/choice-list/" + opportunity_id,
             method: "DELETE",
             data: {
                 "_token": "{{ csrf_token() }}",
@@ -324,7 +324,7 @@ $(document).on('click', ".added-in-wishlist, .not-added-in-wishlist", function(e
 
     if (task == "add") {
         $.ajax({
-            url: "{{route('wish-list.store')}}",
+            url: "{{route('user.wish-list.store')}}",
             method: "POST",
             data: {
                 "_token": "{{ csrf_token() }}",
@@ -343,7 +343,7 @@ $(document).on('click', ".added-in-wishlist, .not-added-in-wishlist", function(e
         });
     } else {
         $.ajax({
-            url: "wish-list/" + opportunity_id,
+            url: "/user/wish-list/" + opportunity_id,
             method: "DELETE",
             data: {
                 "_token": "{{ csrf_token() }}",

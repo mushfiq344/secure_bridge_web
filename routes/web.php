@@ -22,12 +22,15 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth', 'is_user'], "namespace" => "User"], function () {
 
-    Route::resource('/opportunities', 'OpportunityController');
-    Route::apiResource('/user-opportunities', 'OpportunityUserController');
-    Route::apiResource('/wish-list', 'WishListController');
+    Route::prefix('/user')->name('user.')->group(function () {
+        Route::apiResource('/choice-list', 'OpportunityUserController');
+        Route::apiResource('/wish-list', 'WishListController');
+        Route::resource('/opportunities', 'OpportunityController');
+        Route::resource('/profiles', 'ProfileController');
 
-    Route::get('/home', 'OpportunityController@index')->name('home');
-    Route::post('fetch-opportunities', 'OpportunityController@fetchOpportunities')->name('fetch.opportunities');
+        Route::get('/home', 'OpportunityController@index')->name('home');
+        Route::get('/personal-profile', 'ProfileController@personalProfile');
+    });
 
 });
 
@@ -43,6 +46,7 @@ Route::prefix('/org-admin')->name('org-admin.')->group(function () {
 
         Route::get('/personal-profile', 'ProfileController@personalProfile');
         Route::resource('/profiles', 'ProfileController');
+
     });
 
     Route::get('/login', 'Auth\LoginController@showOrgAdminLoginForm')->name('login');
@@ -50,4 +54,7 @@ Route::prefix('/org-admin')->name('org-admin.')->group(function () {
     Route::get('/register', 'Auth\RegisterController@showOrgAdminRegisterForm')->name('register');
     Route::post('/register', 'Auth\RegisterController@CreateOrgAdmin');
 
+});
+Route::group(['middleware' => ['auth']], function () {
+    Route::post('fetch-opportunities', 'OpportunityController@fetchOpportunities')->name('fetch.opportunities');
 });

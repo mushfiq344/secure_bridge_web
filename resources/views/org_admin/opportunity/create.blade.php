@@ -5,15 +5,22 @@
 @endsection
 
 @section('content')
-<div class="page-title-box">
-    @include('org_admin.partials.form.create-breadcrumbs', ['featureName'=> 'opportunity'])
 
-    <form action="/org-admin/opportunities" method="post" enctype="multipart/form-data">
-        @csrf
-        @include('org_admin.opportunity.form', ['submitButtonText' => 'Save'])
-    </form>
+<div class="section blog-section">
+    <div class="container">
 
+
+        @include('org_admin.partials.form.create-breadcrumbs', ['featureName'=> 'opportunity'])
+
+        <form action="/org-admin/opportunities" method="post" enctype="multipart/form-data">
+            @csrf
+            @include('org_admin.opportunity.form', ['submitButtonText' => 'Save'])
+        </form>
+
+    </div>
 </div>
+
+
 @endsection
 
 @section('scripts')

@@ -19,7 +19,7 @@ $links = [];
         <!-- Brand -->
         <div class="navbar-brand">
 
-            @include('theme.frontend.partials.sidebar')
+            @include('org_admin.partials.sidebar')
             <!--<a id="navigation-trigger" class="navbar-item hamburger-btn" href="javascript:void(0);">
                         <span class="menu-toggle">
                             <span class="icon-box-toggle">

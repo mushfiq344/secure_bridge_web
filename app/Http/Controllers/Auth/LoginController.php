@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/user/home';
 
     /**
      * Create a new controller instance.
@@ -53,7 +53,7 @@ class LoginController extends Controller
             } else if (auth()->user()->user_type == 1) {
                 return redirect()->route('org-admin.home');
             } else {
-                return redirect()->route('home');
+                return redirect()->route('user.home');
             }
         } else {
             return redirect()->route('login')

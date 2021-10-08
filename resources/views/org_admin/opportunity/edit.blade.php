@@ -1,18 +1,20 @@
-@extends('org_admin.layouts.org-admin-layout')
+@extends('theme.frontend.layouts.app')
 @section('head')
 <link href="{{asset('frontend/drag-drop-image-uploader/dist/image-uploader.min.css')}}" rel="stylesheet">
 
 @endsection
 @section('content')
-<div class="page-title-box">
-    @include('org_admin.partials.form.edit-breadcrumbs', ['featureName' => 'opportunity'])
-    <form action="{{route('org-admin.opportunities.update',['opportunity'=>$opportunity->id])}}" method="POST"
-        enctype="multipart/form-data">
-        @csrf
+<div class="section blog-section">
+    <div class="container">
+        @include('org_admin.partials.form.edit-breadcrumbs', ['featureName' => 'opportunity'])
+        <form action="{{route('org-admin.opportunities.update',['opportunity'=>$opportunity->id])}}" method="POST"
+            enctype="multipart/form-data">
+            @csrf
 
-        @method('PUT')
-        @include('org_admin.opportunity.form', ['submitButtonText' => 'Update'])
-    </form>
+            @method('PUT')
+            @include('org_admin.opportunity.form', ['submitButtonText' => 'Update'])
+        </form>
+    </div>
 </div>
 @endsection
 @section('scripts')

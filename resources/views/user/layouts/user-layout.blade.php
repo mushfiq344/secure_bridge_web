@@ -59,7 +59,7 @@ $userTypes = User::getTypes();
 
         <!-- navbar -->
 
-        @include('org_admin.partials.header')
+        @include('user.partials.header')
         <!-- main banner -->
 
         @yield('main-banner')
@@ -82,7 +82,7 @@ $userTypes = User::getTypes();
 
 
     <!-- Side footer -->
-    @include('org_admin.partials.footer')
+    @include('user.partials.footer')
     <!-- /Side footer -->
 
     <!-- Back To Top Button -->
