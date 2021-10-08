@@ -81,7 +81,7 @@ class OpportunityController extends Controller
      */
     public function edit($id)
     {
-        $opportunity = Opportunity::find($id)->first();
+        $opportunity = Opportunity::find($id);
         $uploadPath = Opportunity::$_uploadPath;
         return view('org_admin.opportunity.edit', compact('opportunity', 'uploadPath'));
     }

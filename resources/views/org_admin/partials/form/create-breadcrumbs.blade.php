@@ -1,14 +1,15 @@
-<div class="row align-items-center">
-  <!-- Breadcrumbs-->
-  <div class="col-sm-6">
-    <h4 class="page-title">Create {{ ucfirst($featureName) }}</h4>
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="/admin/dashboard">Dashboard</a></li>
-      <li class="breadcrumb-item">
-        <a href="/admin/dashboard/{{ \Str::plural($featureName) }}">{{ ucfirst(\Str::plural($featureName)) }}</a>
-      </li>
-      <li class="breadcrumb-item active">Create {{ ucfirst($featureName) }}</li>
-    </ol>
-  </div>
-  <!--menu-->
+<div class="columns is-vcentered">
+    <div class="column is-8 is-offset-2">
+        <div class="inline-list has-text-centered">
+            <div>Create {{ ucfirst($featureName) }}</div>
+            <i class="inline-bullet fa fa-circle"></i>
+            <div><a href="/org-admin/home">Home</a></div>
+            <i class="inline-bullet fa fa-circle"></i>
+            <div><a href="/org-admin/{{ \Str::plural($featureName) }}">{{ ucfirst(\Str::plural($featureName)) }}</a>
+            </div>
+            <i class="inline-bullet fa fa-circle"></i>
+            <div>Create {{ ucfirst($featureName) }}</div>
+
+        </div>
+    </div>
 </div>

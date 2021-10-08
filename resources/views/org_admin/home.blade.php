@@ -1,4 +1,4 @@
-@extends('theme.frontend.layouts.app')
+@extends('org_admin.layouts.org-admin-layout')
 @section('main-banner')
 
 @endsection

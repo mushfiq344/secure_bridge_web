@@ -20,7 +20,7 @@ class OpportunityController extends Controller
         $maxReward = Opportunity::max('reward');
         $minReward = Opportunity::min('reward');
 
-        return view('opportunity.opportunity-list-for-users', compact('maxDuration', 'minDuration', 'maxReward', 'minReward'));
+        return view('user.opportunity.opportunity-list-for-users', compact('maxDuration', 'minDuration', 'maxReward', 'minReward'));
     }
 
     /**

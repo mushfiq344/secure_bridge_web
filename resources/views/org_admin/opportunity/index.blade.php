@@ -1,4 +1,4 @@
-@extends('theme.frontend.layouts.app')
+@extends('org_admin.layouts.org-admin-layout')
 
 
 @section('head')
@@ -54,7 +54,8 @@
 @endsection
 
 @section('main-banner')
-@include("theme.frontend.partials.search-bar")
+
+@include("org_admin.partials.search-bar")
 @endsection
 
 @section('content')
@@ -62,6 +63,7 @@
 <!-- Blog post list section -->
 <div class="section blog-section">
     <div class="container">
+
         <div class="columns">
 
 
@@ -162,7 +164,7 @@
 @endsection
 
 @section('scripts')
-@include('opportunity.opportunities-ui-range-slider')
+@include('org_admin.opportunity.opportunities-ui-range-slider')
 <!--initial load-->
 <script>
 // load all initially

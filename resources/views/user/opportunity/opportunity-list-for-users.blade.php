@@ -1,4 +1,4 @@
-@extends('theme.frontend.layouts.app')
+@extends('user.layouts.user-layout')
 
 
 @section('head')
@@ -54,7 +54,7 @@
 @endsection
 
 @section('main-banner')
-@include("theme.frontend.partials.search-bar")
+@include("opportunity.search-bar")
 @endsection
 
 @section('content')
@@ -162,7 +162,7 @@
 @endsection
 
 @section('scripts')
-@include('opportunity.opportunities-ui-range-slider')
+@include('user.opportunity.opportunities-ui-range-slider')
 <!--initial load-->
 <script>
 // load all initially

@@ -71,7 +71,7 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        $profile = Profile::find($id)->first();
+        $profile = Profile::find($id);
         $uploadPath = User::$_uploadPath;
         return view('org_admin.profile.edit', compact('profile', 'uploadPath'));
     }
