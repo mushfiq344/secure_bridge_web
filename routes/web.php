@@ -22,11 +22,15 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth', 'is_user'], "namespace" => "User"], function () {
 
-    Route::resource('/opportunities', 'OpportunityController');
-    Route::apiResource('/user-opportunities', 'OpportunityUserController');
-    Route::apiResource('/wish-list', 'WishListController');
+    Route::prefix('/user')->name('user.')->group(function () {
+        Route::apiResource('/choice-list', 'OpportunityUserController');
+        Route::apiResource('/wish-list', 'WishListController');
+        Route::resource('/opportunities', 'OpportunityController');
+        Route::resource('/profiles', 'ProfileController');
 
-    Route::get('/home', 'OpportunityController@index')->name('home');
+        Route::get('/home', 'OpportunityController@index')->name('home');
+        Route::get('/personal-profile', 'ProfileController@personalProfile');
+    });
 
 });
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\OrgADmin;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Profile;
@@ -27,7 +27,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        return view('org_admin.profile.create');
+        return view('user.profile.create');
     }
 
     /**
@@ -49,7 +49,7 @@ class ProfileController extends Controller
 
         $profile->save();
 
-        return redirect(route('org-admin.home'))->with('success', 'saved');
+        return redirect(route('user.home'))->with('success', 'saved');
     }
 
     /**
@@ -75,7 +75,7 @@ class ProfileController extends Controller
         $uploadPath = User::$_uploadPath;
         // update only personal profile
         if ($profile->user_id == auth()->user()->id) {
-            return view('org_admin.profile.edit', compact('profile', 'uploadPath'));
+            return view('user.profile.edit', compact('profile', 'uploadPath'));
         }
 
     }
@@ -110,7 +110,7 @@ class ProfileController extends Controller
 
         $profile->save();
 
-        return redirect(route('org-admin.home'))->with('success', 'updated');
+        return redirect(route('user.home'))->with('success', 'updated');
     }
 
     /**
@@ -129,9 +129,9 @@ class ProfileController extends Controller
         $user = User::find(auth()->user()->id);
         $profile = $user->profile;
         if ($profile) {
-            return redirect(route('org-admin.profiles.edit', ['profile' => $profile->id]));
+            return redirect(route('user.profiles.edit', ['profile' => $profile->id]));
         } else {
-            return redirect(route('org-admin.profiles.create'));
+            return redirect(route('user.profiles.create'));
 
         }
     }

@@ -19,7 +19,7 @@ class IsAdmin
         if (auth()->user()->user_type == 2) {
             return $next($request);
         } elseif (auth()->user()->user_type == 0) {
-            return redirect('home')->with('error', "You don't have admin access.");
+            return redirect('user/home')->with('error', "You don't have admin access.");
         } elseif (auth()->user()->user_type == 1) {
             return redirect('org-admin/home')->with('error', "You don't have admin access.");
         }
