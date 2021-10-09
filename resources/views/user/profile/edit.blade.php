@@ -4,15 +4,17 @@
 
 @endsection
 @section('content')
-<div class="page-title-box">
-    @include('user.partials.form.edit-breadcrumbs', ['featureName' => 'profile'])
-    <form action="{{route('user.profiles.update',['profile'=>$profile->id])}}" method="POST"
-        enctype="multipart/form-data">
-        @csrf
+<div class="section blog-section">
+    <div class="container">
+        @include('user.partials.form.edit-breadcrumbs', ['featureName' => 'profile'])
+        <form action="{{route('user.profiles.update',['profile'=>$profile->id])}}" method="POST"
+            enctype="multipart/form-data">
+            @csrf
 
-        @method('PUT')
-        @include('user.profile.form', ['submitButtonText' => 'Update'])
-    </form>
+            @method('PUT')
+            @include('user.profile.form', ['submitButtonText' => 'Update'])
+        </form>
+    </div>
 </div>
 @endsection
 @section('scripts')

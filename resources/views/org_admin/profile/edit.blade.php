@@ -4,15 +4,17 @@
 
 @endsection
 @section('content')
-<div class="page-title-box">
-    @include('org_admin.partials.form.edit-breadcrumbs', ['featureName' => 'profile'])
-    <form action="{{route('org-admin.profiles.update',['profile'=>$profile->id])}}" method="POST"
-        enctype="multipart/form-data">
-        @csrf
+<div class="section blog-section">
+    <div class="container">
+        @include('org_admin.partials.form.edit-breadcrumbs', ['featureName' => 'profile'])
+        <form action="{{route('org-admin.profiles.update',['profile'=>$profile->id])}}" method="POST"
+            enctype="multipart/form-data">
+            @csrf
 
-        @method('PUT')
-        @include('org_admin.profile.form', ['submitButtonText' => 'Update'])
-    </form>
+            @method('PUT')
+            @include('org_admin.profile.form', ['submitButtonText' => 'Update'])
+        </form>
+    </div>
 </div>
 @endsection
 @section('scripts')

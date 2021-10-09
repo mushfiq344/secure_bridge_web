@@ -1,3 +1,11 @@
+<?php
+$userTypes = \App\Models\User::getTypes();
+?>
+
+
+
+
+
 <div class="column is-12">
 
     <div class="blog-sidebar">
@@ -19,6 +27,7 @@
 <div class="column is-6">
     <div class="card blog-grid-item">
         <div class="card-image" style="position:relative;">
+            @if(auth()->user()->user_type==$userTypes["User"])
             <div style="position:absolute; right:1.5rem; top:1.5rem;">
                 @if(\App\Models\OpportunityUser::hasUserEnrolledOpportunity($opportunity->id))
                 <i class="fa fa-heart mr-2 enrolled" opportunity-id="{{$opportunity->id}}" task="un-enroll"></i>
@@ -35,6 +44,12 @@
                 @endif
 
             </div>
+            @else
+            <div style="position:absolute; right:1.5rem; top:1.5rem;">
+                <a href="{{route('org-admin.opportunities.edit',['opportunity'=>$opportunity->id])}}"><i
+                        class="fa fa-edit white-icon"></i></a>
+            </div>
+            @endif
             <a href="/opportunities/{{$opportunity->slug}}">
                 @if(!empty($opportunity->cover_image))
                 <img class="item-featured-image" src="{{url($uploadPath.$opportunity->cover_image)}}"
@@ -46,6 +61,7 @@
             </a>
 
         </div>
+
         <div class="card-content">
             <div class="featured-post-title">
                 <div class="title-avatar">
