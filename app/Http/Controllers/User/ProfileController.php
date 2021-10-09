@@ -17,7 +17,15 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+        $user = User::findOrFail(auth()->user()->id);
+        $profile = $user->profile;
+        if ($profile) {
+            return redirect(route('user.profiles.edit', ['profile' => $profile->id]));
+        } else {
+            return redirect(route('user.profiles.create'));
+
+        }
+
     }
 
     /**
@@ -38,7 +46,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        $photoName = CustomHelper::saveImage($request->file('photo')[0], User::$_uploadPath, 600, 600);
+        $photoName = CustomHelper::saveImage($request->file('photo')[0], Profile::$_uploadPath, 600, 600);
 
         $profile = new Profile;
         $profile->user_id = auth()->user()->id;
@@ -71,8 +79,8 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        $profile = Profile::find($id);
-        $uploadPath = User::$_uploadPath;
+        $profile = Profile::findOrFail($id);
+        $uploadPath = Profile::$_uploadPath;
         // update only personal profile
         if ($profile->user_id == auth()->user()->id) {
             return view('user.profile.edit', compact('profile', 'uploadPath'));
@@ -124,15 +132,4 @@ class ProfileController extends Controller
         //
     }
 
-    public function personalProfile()
-    {
-        $user = User::find(auth()->user()->id);
-        $profile = $user->profile;
-        if ($profile) {
-            return redirect(route('user.profiles.edit', ['profile' => $profile->id]));
-        } else {
-            return redirect(route('user.profiles.create'));
-
-        }
-    }
 }

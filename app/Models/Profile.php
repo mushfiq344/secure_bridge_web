@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
+    public static $_uploadPath = 'uploads/images/profiles/';
     use HasFactory;
 }

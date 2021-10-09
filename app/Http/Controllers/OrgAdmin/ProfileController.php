@@ -17,7 +17,14 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+        $user = User::find(auth()->user()->id);
+        $profile = $user->profile;
+        if ($profile) {
+            return redirect(route('org-admin.profiles.edit', ['profile' => $profile->id]));
+        } else {
+            return redirect(route('org-admin.profiles.create'));
+
+        }
     }
 
     /**
@@ -38,7 +45,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        $photoName = CustomHelper::saveImage($request->file('photo')[0], User::$_uploadPath, 600, 600);
+        $photoName = CustomHelper::saveImage($request->file('photo')[0], Profile::$_uploadPath, 600, 600);
 
         $profile = new Profile;
         $profile->user_id = auth()->user()->id;
@@ -72,7 +79,7 @@ class ProfileController extends Controller
     public function edit($id)
     {
         $profile = Profile::find($id);
-        $uploadPath = User::$_uploadPath;
+        $uploadPath = Profile::$_uploadPath;
         // update only personal profile
         if ($profile->user_id == auth()->user()->id) {
             return view('org_admin.profile.edit', compact('profile', 'uploadPath'));
@@ -122,17 +129,5 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function personalProfile()
-    {
-        $user = User::find(auth()->user()->id);
-        $profile = $user->profile;
-        if ($profile) {
-            return redirect(route('org-admin.profiles.edit', ['profile' => $profile->id]));
-        } else {
-            return redirect(route('org-admin.profiles.create'));
-
-        }
     }
 }

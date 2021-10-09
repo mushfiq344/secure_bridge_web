@@ -5,14 +5,16 @@
 @endsection
 
 @section('content')
-<div class="page-title-box">
-    @include('user.partials.form.create-breadcrumbs', ['featureName'=> 'profile'])
+<div class="section blog-section">
+    <div class="container">
+        @include('user.partials.form.create-breadcrumbs', ['featureName'=> 'profile'])
 
-    <form action="/user/profiles" method="post" enctype="multipart/form-data">
-        @csrf
-        @include('user.profile.form', ['submitButtonText' => 'Save'])
-    </form>
+        <form action="/user/profiles" method="post" enctype="multipart/form-data">
+            @csrf
+            @include('user.profile.form', ['submitButtonText' => 'Save'])
+        </form>
 
+    </div>
 </div>
 @endsection
 

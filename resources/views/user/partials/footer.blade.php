@@ -46,7 +46,7 @@ if (!empty(Auth::user())) {
                 <div class="footer-nav-right">
                     @guest
                     @else
-                    <a class="footer-nav-link capital-text" href="/home">Home</a>
+                    <a class="footer-nav-link capital-text" href="/user/home">Home</a>
                     @endguest
 
                     @foreach($blogs as $blog)

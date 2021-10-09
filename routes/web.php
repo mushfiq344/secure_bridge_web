@@ -27,9 +27,8 @@ Route::group(['middleware' => ['auth', 'is_user'], "namespace" => "User"], funct
         Route::apiResource('/wish-list', 'WishListController');
         Route::resource('/opportunities', 'OpportunityController');
         Route::resource('/profiles', 'ProfileController');
-
         Route::get('/home', 'OpportunityController@index')->name('home');
-        Route::get('/personal-profile', 'ProfileController@personalProfile');
+
     });
 
 });
@@ -41,10 +40,7 @@ Route::prefix('/org-admin')->name('org-admin.')->group(function () {
     Route::group(['middleware' => ['auth', 'is_org_admin'], "namespace" => "OrgAdmin"], function () {
 
         Route::view('/home', 'org_admin.home')->name('home');
-
         Route::resource('/opportunities', 'OpportunityController');
-
-        Route::get('/personal-profile', 'ProfileController@personalProfile');
         Route::resource('/profiles', 'ProfileController');
 
     });

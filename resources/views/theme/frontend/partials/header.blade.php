@@ -63,12 +63,7 @@ $links = [];
                 @endforeach
 
                 @guest
-                @if (Route::has('login'))
-                <!-- Navbar item -->
-                <a class="navbar-item is-slide capital-text" href="{{ route('login') }}">
-                    Login
-                </a>
-                @endif
+
                 @endguest
             </div>
 
