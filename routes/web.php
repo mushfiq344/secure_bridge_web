@@ -53,4 +53,11 @@ Route::prefix('/org-admin')->name('org-admin.')->group(function () {
 });
 Route::group(['middleware' => ['auth']], function () {
     Route::post('fetch-opportunities', 'OpportunityController@fetchOpportunities')->name('fetch.opportunities');
+
+    Route::get('/chatting/{id?}', "MessagesController@index")->where('id', '[0-9]*');
+    Route::get('/message/{id}', 'MessagesController@getMessage')->name('message');
+    Route::get('/message-list', 'MessagesController@getMessageList')->name('message.list');
+    Route::post('message', 'MessagesController@sendMessage');
+
+    Route::post('message-users', 'MessagesController@loadUsers')->name('load.users');
 });
