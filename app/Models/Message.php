@@ -18,7 +18,7 @@ class Message extends Model
             return $element == auth()->user()->id;
         });
 
-        return array_values($usersList->toArray());
+        return $usersList;
     }
 
     public static function totalUnreadMessagesSentFromUser($id)

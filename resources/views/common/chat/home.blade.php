@@ -175,9 +175,10 @@ input[type=text]:focus {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <script>
-var receiver_id = "{{!empty($selectedId)?$selectedId:''}}";
+var active_tab_sender_id = "{{!empty($selectedId)?$selectedId:''}}";
 var my_id = "{{ Auth::id() }}";
-var new_user_id = "{{!empty($selectedId)?$selectedId:''}}";
+var priority_user_id = "{{!empty($selectedId)?$selectedId:''}}";
+
 // ajax setup form csrf token
 $.ajaxSetup({
     headers: {
@@ -202,13 +203,14 @@ channel.bind('my-event', function(data) {
         // play the alarm
         var alert_sound = document.getElementById("chat-alert-sound");
         alert_sound.play();
-        if (receiver_id == data.from) {
+        if (active_tab_sender_id == data.from) {
+            loadUsers();
             // if receiver is selected, reload the selected user ...
             $('#' + data.from).click();
         } else {
             console.log('here');
-            new_user_id = data.from;
-            loadUsers("");
+
+            loadUsers();
 
             // if receiver is not seleted, add notification for that user
             var pending = parseInt($('#' + data.from).find('.pending').html());
@@ -228,10 +230,10 @@ $(document).on("click", ".user", function() {
     $(this).addClass('active');
     $(this).find('.pending').remove();
 
-    receiver_id = $(this).attr('id');
+    active_tab_sender_id = $(this).attr('id');
     $.ajax({
         type: "get",
-        url: "/message/" + receiver_id, // need to create this route
+        url: "/message/" + active_tab_sender_id, // need to create this route
         data: "",
         cache: false,
         success: function(data) {
@@ -247,10 +249,10 @@ $(document).on('keyup', '#send_message_field', function(e) {
     // alert(message);
 
     // check if enter key is pressed and message is not null also receiver is selected
-    if (e.keyCode == 13 && message != '' && receiver_id != '') {
+    if (e.keyCode == 13 && message != '' && active_tab_sender_id != '') {
         $(this).val(''); // while pressed enter text box will be empty
 
-        var datastr = "receiver_id=" + receiver_id + "&message=" + message;
+        var datastr = "active_tab_sender_id=" + active_tab_sender_id + "&message=" + message;
         $.ajax({
             type: "post",
             url: "{{url('message')}}", // need to create this post route
@@ -279,7 +281,7 @@ function scrollToBottomFunc() {
 
 
 <script>
-function loadUsers(selectedId) {
+function loadUsers() {
 
     $.ajax({
         type: "post",
@@ -294,12 +296,11 @@ function loadUsers(selectedId) {
             $('.user-wrapper').html(data);
 
             $('.user').removeClass("active");
-            $('#' + receiver_id).addClass("active");
+            $('#' + active_tab_sender_id).addClass("active");
+            $('#' + active_tab_sender_id).find('.pending').remove();
         }
     });
 }
-
-loadUsers("{{!empty($selectedId)?$selectedId:''}}");
 </script>
 
 
@@ -307,29 +308,53 @@ loadUsers("{{!empty($selectedId)?$selectedId:''}}");
 
 @if(isset($selectedId))
 <script>
-function initialLoad() {
+function initialLoadingWithPriorityUser() {
 
+    $.ajax({
+        type: "post",
+        url: "{{route('load.users')}}",
+        data: {
+            "_token": "{{ csrf_token() }}",
+            "priority_user_id": priority_user_id
+
+        },
+        cache: false,
+        success: function(data) {
+            $('.user-wrapper').html(data);
+
+            $('.user').removeClass("active");
+            $('#' + priority_user_id).addClass("active");
+            activateTabForPriorityUser();
+        }
+    });
+}
+
+function activateTabForPriorityUser() {
     $('.user').removeClass('active');
-    $('#{{$selectedId}}').addClass('active');
-    $('#{{$selectedId}}').find('.pending').remove();
+    $('#' + priority_user_id).addClass('active');
+    $('#' + priority_user_id).find('.pending').remove();
 
 
-    receiver_id = '{{$selectedId}}';
     $.ajax({
         type: "get",
-        url: "/message/" + receiver_id, // need to create this route
+        url: "/message/" + priority_user_id, // need to create this route
         data: "",
         cache: false,
         success: function(data) {
+            console.log('message from user', data);
             $('#messages').html(data);
             scrollToBottomFunc();
         }
     });
 }
-initialLoad();
+
+initialLoadingWithPriorityUser()
 </script>
 
-
+@else
+<script>
+loadUsers();
+</script>
 
 @endif
 

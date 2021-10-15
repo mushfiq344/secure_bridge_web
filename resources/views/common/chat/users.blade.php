@@ -3,7 +3,7 @@
         <h3 class="text-light text-center">SENDERS</h3>
     </li>
     @foreach($users as $user)
-    <li class="user {{$user->id==$receiverId?'active':''}}" id="{{ $user->id }}">
+    <li class="user " id="{{ $user->id }}">
         {{--will show unread count notification--}}
         @if(\App\Models\Message::unreadMessagesSentFromUserExists($user->id))
         <span class="pending">{{\App\Models\Message::totalUnreadMessagesSentFromUser($user->id)}}</span>

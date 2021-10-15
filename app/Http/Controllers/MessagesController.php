@@ -29,36 +29,23 @@ class MessagesController extends Controller
 
     public function loadUsers(Request $request)
     {
-        $id = $request->receiver_id;
-        if (!empty($id)) {
+        $users = [];
 
-            $checkUser = User::find($id);
+        $fromIds = Message::orWhere('to', auth()->user()->id)->orWhere('from', auth()->user()->id)->distinct()->pluck('from')->toArray();
+        $toIds = Message::orWhere('to', auth()->user()->id)->orWhere('from', auth()->user()->id)->distinct()->pluck('to')->toArray();
+        $usersList = collect(array_merge($fromIds, $toIds))->unique();
+        $usersList = $usersList->reject(function ($element) {
+            return $element == auth()->user()->id;
+        });
 
-            if (empty($checkUser)) {
-                $userTypeNames = \App\Models\User::getTypeNames();
+        if ($usersList->count()) {
+            $priorityUserid = $request->priority_user_id;
 
-                return redirect('/' . $userTypeNames[Auth::user()->type] . '/dashboard')->with('error', 'no such id exists');
-            }
-            $ids = Message::messageIds();
+            if (!empty($priorityUserid)) {
 
-            $users = DB::select("select users.id, users.name, users.email, users.type, count(is_read) as unread
-            from users LEFT  JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
-            where users.id != " . Auth::id() . " and users.id != " . $id . " and users.reg_steps_completed>=2 and users.id in(" . $ids . ")
-            group by users.id, users.name,  users.email,users.type");
-
-            $usersSelect = DB::select("select users.id, users.name, users.email, users.type, count(is_read) as unread
-            from users LEFT  JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
-            where users.id != " . Auth::id() . " and users.id = " . $id . " and users.reg_steps_completed>=2
-            group by users.id, users.name,  users.email,users.type");
-
-            $users = array_merge($usersSelect, $users);
-            return view('common.chat.users', ['users' => $users, 'receiverId' => $request->receiver_id]);
-        } else {
-            $users = [];
-
-            $ids = Message::messageIds();
-
-            if (!empty($ids)) {
+                $usersList = $usersList->reject(function ($element) use ($priorityUserid) {
+                    return $element == $priorityUserid;
+                });
 
                 $users = \DB::table('users')
 
@@ -69,16 +56,50 @@ class MessagesController extends Controller
                         });
 
                     })
+                    ->whereIn('users.id', array_values($usersList->toArray()))
+                    ->select('users.id', 'users.email', \DB::raw("MAX(messages.id) AS last_message"), \DB::raw("MIN(messages.id) AS first_message"))
+                    ->groupBy('users.id', 'users.email')
+                    ->orderBy('last_message', 'desc');
 
-                    ->whereIn('users.id', $ids)
+                $usersWithPriorityUserOnTop = \DB::table('users')
+
+                    ->leftJoin('messages', function ($join) {
+                        $join->on(function ($query) {
+                            $query->orOn('users.id', '=', 'messages.from');
+                            $query->orOn('users.id', '=', 'messages.to');
+                        });
+
+                    })
+                    ->whereIn('users.id', [$priorityUserid])
+                    ->select('users.id', 'users.email', \DB::raw("MAX(messages.id) AS last_message"), \DB::raw("MIN(messages.id) AS first_message"))
+                    ->groupBy('users.id', 'users.email')
+                    ->orderBy('last_message', 'desc')
+                    ->union($users)
+                    ->get();
+
+                return view('common.chat.users', ['users' => $usersWithPriorityUserOnTop]);
+            } else {
+
+                $users = \DB::table('users')
+
+                    ->leftJoin('messages', function ($join) {
+                        $join->on(function ($query) {
+                            $query->orOn('users.id', '=', 'messages.from');
+                            $query->orOn('users.id', '=', 'messages.to');
+                        });
+
+                    })
+                    ->whereIn('users.id', array_values($usersList->toArray()))
                     ->select('users.id', 'users.email', \DB::raw("MAX(messages.id) AS last_message"), \DB::raw("MIN(messages.id) AS first_message"))
                     ->groupBy('users.id', 'users.email')
                     ->orderBy('last_message', 'desc')
                     ->get();
-
+                return view('common.chat.users', ['users' => $users]);
             }
-            return view('common.chat.users', ['users' => $users, 'receiverId' => $request->receiver_id]);
+        } else {
+            return view('common.chat.users', ['users' => $users]);
         }
+
     }
 
     public function getMessageList()
@@ -121,7 +142,7 @@ class MessagesController extends Controller
     public function sendMessage(Request $request)
     {
         $from = Auth::id();
-        $to = $request->receiver_id;
+        $to = $request->active_tab_sender_id;
         $message = $request->message;
 
         $data = new Message();
