@@ -208,7 +208,7 @@ channel.bind('my-event', function(data) {
         } else {
             console.log('here');
             new_user_id = data.from;
-            loadUsers("{{!empty($selectedId)?$selectedId:''}}");
+            loadUsers("");
 
             // if receiver is not seleted, add notification for that user
             var pending = parseInt($('#' + data.from).find('.pending').html());
@@ -287,7 +287,7 @@ function loadUsers(selectedId) {
         data: {
             "_token": "{{ csrf_token() }}",
 
-            receiver_id: new_user_id
+
         },
         cache: false,
         success: function(data) {

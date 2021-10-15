@@ -17,12 +17,19 @@ class Message extends Model
         $usersList = $usersList->reject(function ($element) {
             return $element == auth()->user()->id;
         });
-        return $usersList->implode(',');
+
+        return array_values($usersList->toArray());
     }
 
-    public static function lastMessageCreatedAt($id)
+    public static function totalUnreadMessagesSentFromUser($id)
     {
 
-        return self::where('from', $id)->where('to', auth()->user()->id)->max('id');
+        return self::where('from', $id)->where('to', auth()->user()->id)->where('is_read', 0)->count();
+    }
+
+    public static function unreadMessagesSentFromUserExists($id)
+    {
+
+        return self::where('from', $id)->where('to', auth()->user()->id)->where('is_read', 0)->exists();
     }
 }

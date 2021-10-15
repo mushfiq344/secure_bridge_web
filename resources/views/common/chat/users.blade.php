@@ -5,9 +5,10 @@
     @foreach($users as $user)
     <li class="user {{$user->id==$receiverId?'active':''}}" id="{{ $user->id }}">
         {{--will show unread count notification--}}
-        @if($user->unread)
-        <span class="pending">{{ $user->unread }}</span>
+        @if(\App\Models\Message::unreadMessagesSentFromUserExists($user->id))
+        <span class="pending">{{\App\Models\Message::totalUnreadMessagesSentFromUser($user->id)}}</span>
         @endif
+
 
         <div class="media">
             <div class="media-left">
@@ -15,7 +16,7 @@
             </div>
 
             <div class="media-body">
-                <p class="name">{{ $user->name  }}</p>
+                <p class="name">{{ \App\Models\User::getUserName($user->id) }} {{$user->last_message}}</p>
                 <p class="email">{{ $user->email }}</p>
             </div>
         </div>

@@ -60,13 +60,21 @@ class MessagesController extends Controller
 
             if (!empty($ids)) {
 
-                $derivableTable = "select users.id, users.name, users.email, users.user_type,messages.created_at,messages.is_read
-                from users LEFT  JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = " . auth()->user()->id . "
-                where users.id in(" . $ids . ") order by messages.created_at desc";
+                $users = \DB::table('users')
 
-                // count how many message are unread from the selected user
-                $users = DB::select("select id, name, email,user_type, count(is_read) as unread from (" . $derivableTable . ")AS derivedTable  group by derivedTable.id, derivedTable.name,  derivedTable.email,derivedTable.user_type order by derivedTable.created_at desc
-    ");
+                    ->leftJoin('messages', function ($join) {
+                        $join->on(function ($query) {
+                            $query->orOn('users.id', '=', 'messages.from');
+                            $query->orOn('users.id', '=', 'messages.to');
+                        });
+
+                    })
+
+                    ->whereIn('users.id', $ids)
+                    ->select('users.id', 'users.email', \DB::raw("MAX(messages.id) AS last_message"), \DB::raw("MIN(messages.id) AS first_message"))
+                    ->groupBy('users.id', 'users.email')
+                    ->orderBy('last_message', 'desc')
+                    ->get();
 
             }
             return view('common.chat.users', ['users' => $users, 'receiverId' => $request->receiver_id]);
