@@ -57,7 +57,6 @@ class MessagesController extends Controller
             $users = [];
 
             $ids = Message::messageIds();
-            error_log($ids);
 
             if (!empty($ids)) {
 
