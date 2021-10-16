@@ -83,4 +83,16 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Profile');
     }
 
+    public static function getUserPhoto($userId)
+    {
+
+        $profile = Profile::where('user_id', $userId)->first();
+        if ($profile) {
+            return Profile::$_uploadPath . $profile->photo;
+        } else {
+            return Profile::$_defaultAvatarPath;
+        }
+
+    }
+
 }

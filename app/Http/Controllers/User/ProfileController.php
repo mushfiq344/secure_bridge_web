@@ -102,12 +102,12 @@ class ProfileController extends Controller
 
         if ($request->file('photo')) {
             // delete file
-            $fileName = public_path() . '/' . User::$_uploadPath . $profile->photo;
+            $fileName = public_path() . '/' . Profile::$_uploadPath . $profile->photo;
             if (file_exists($fileName)) {
                 \File::delete($fileName);
             }
 
-            $photoName = CustomHelper::saveImage($request->file('photo')[0], User::$_uploadPath, 600, 600);
+            $photoName = CustomHelper::saveImage($request->file('photo')[0], Profile::$_uploadPath, 600, 600);
             $profile->photo = $photoName;
         }
 
