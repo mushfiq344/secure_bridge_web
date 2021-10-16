@@ -77,7 +77,7 @@ class MessagesController extends Controller
                     ->union($users)
                     ->get();
 
-                return view('common.chat.users', ['users' => $usersWithPriorityUserOnTop]);
+                return view('common.chat.chat-list', ['users' => $usersWithPriorityUserOnTop]);
             } else {
 
                 $users = \DB::table('users')
@@ -94,10 +94,10 @@ class MessagesController extends Controller
                     ->groupBy('users.id', 'users.email')
                     ->orderBy('last_message', 'desc')
                     ->get();
-                return view('common.chat.users', ['users' => $users]);
+                return view('common.chat.chat-list', ['users' => $users]);
             }
         } else {
-            return view('common.chat.users', ['users' => $users]);
+            return view('common.chat.chat-list', ['users' => $users]);
         }
 
     }

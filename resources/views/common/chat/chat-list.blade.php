@@ -16,7 +16,7 @@
             </div>
 
             <div class="media-body">
-                <p class="name">{{ \App\Models\User::getUserName($user->id) }} {{$user->last_message}}</p>
+                <p class="name">{{ \App\Models\User::getUserName($user->id) }}</p>
                 <p class="email">{{ $user->email }}</p>
             </div>
         </div>

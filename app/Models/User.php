@@ -86,7 +86,12 @@ class User extends Authenticatable
     public static function getUserPhoto($userId)
     {
 
-        return "asds";
+        $profile = Profile::where('user_id', $userId)->first();
+        if ($profile) {
+            return Profile::$_uploadPath . $profile->photo;
+        } else {
+            return Profile::$_defaultAvatarPath;
+        }
 
     }
 
