@@ -32,12 +32,12 @@ class RegisterController extends BaseController
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
         $success['token'] = $user->createToken('MyApp')->plainTextToken;
-        $success['user']= array("name"=>$user->name,
-        "email"=>$user->email,
-        "id"=>$user->id);
+        $success['user'] = array("name" => $user->name,
+            "email" => $user->email,
+            "id" => $user->id,
+            "profile_image" => User::getUserPhoto($user->id));
 
-
-        return $this->sendResponse($success, 'User register successfully.',201);
+        return $this->sendResponse($success, 'User register successfully.', 201);
     }
 
     /**
@@ -50,7 +50,7 @@ class RegisterController extends BaseController
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
             $success['token'] = $user->createToken('MyApp')->plainTextToken;
-            $success['user']= array("name"=>$user->name,"email"=>$user->email,"id"=>$user->id);
+            $success['user'] = array("name" => $user->name, "email" => $user->email, "id" => $user->id, "profile_image" => User::getUserPhoto($user->id));
 
             return $this->sendResponse($success, 'User login successfully.');
         } else {
@@ -58,9 +58,10 @@ class RegisterController extends BaseController
         }
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         $request->user()->tokens()->delete();
-        
+
         return $this->sendResponse([], 'Logged Out Successfully.');
     }
 }
