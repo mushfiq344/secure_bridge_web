@@ -18,8 +18,8 @@ Route::post('login', [RegisterController::class, 'login']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::resource('/opportunities', 'Api\OpportunityController');
-    Route::post('fetch-opportunities', 'Api\OpportunityController@fetchOpportunities')->name('fetch.opportunities');
+    Route::resource('/opportunities', 'API\OpportunityController');
+    Route::post('fetch-opportunities', 'API\OpportunityController@fetchOpportunities')->name('fetch.opportunities');
     Route::get('/profile', function (Request $request) {
         return auth()->user();
     });
