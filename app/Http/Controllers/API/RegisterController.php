@@ -32,9 +32,12 @@ class RegisterController extends BaseController
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
         $success['token'] = $user->createToken('MyApp')->plainTextToken;
-        $success['name'] = $user->name;
+        $success['user']= array("name"=>$user->name,
+        "email"=>$user->email,
+        "id"=>$user->id);
 
-        return $this->sendResponse($success, 'User register successfully.');
+
+        return $this->sendResponse($success, 'User register successfully.',201);
     }
 
     /**
@@ -47,11 +50,17 @@ class RegisterController extends BaseController
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
             $success['token'] = $user->createToken('MyApp')->plainTextToken;
-            $success['name'] = $user->name;
+            $success['user']= array("name"=>$user->name,"email"=>$user->email,"id"=>$user->id);
 
             return $this->sendResponse($success, 'User login successfully.');
         } else {
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         }
+    }
+
+    public function logout(Request $request) {
+        $request->user()->tokens()->delete();
+        
+        return $this->sendResponse([], 'Logged Out Successfully.');
     }
 }
