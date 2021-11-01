@@ -16,14 +16,16 @@ class MessagesController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($id = "")
+    public function index(Request $request)
     {
+
+        $mobileView = $request->mobile_view;
         if (!empty($id)) {
 
-            return view('common.chat.home', ['selectedId' => $id]);
+            return view('common.chat.home', ['selectedId' => $id, 'mobileView' => $mobileView]);
         } else {
 
-            return view('common.chat.home');
+            return view('common.chat.home', ['mobileView' => $mobileView]);
         }
     }
 
