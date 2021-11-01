@@ -13,7 +13,7 @@ $blogs = [];
 $links = [];
 ?>
 
-@if(!isset($mobileView))
+@if (!$agent->isMobile())
 <nav class="navbar navbar-wrapper navbar-default navbar-fade is-transparent" style="background-color: #56206c;">
     <div class="container">
         <!-- Brand -->
