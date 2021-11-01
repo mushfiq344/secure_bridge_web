@@ -70,7 +70,7 @@
                             <div class="control has-icons-left">
                                 <input type="text" id="email" type="email"
                                     class="input is-rounded is-primary-focus input-field  @error('email') is-invalid @enderror "
-                                    placeholder="Email address" name="email" value="{{ old('email') }}" required
+                                    placeholder="Email address" name="email" value="{{ $email??old('email') }}" required
                                     autocomplete="email" autofocus>
                                 <div class="icon is-nedium is-left input-field-icon">
                                     <i class="sl sl-icon-envelope-open"></i>
@@ -92,6 +92,18 @@
 
                             </div>
                         </div>
+                        @if($redirectUrl)
+                        <div class="field">
+                            <div class="control has-icons-left">
+                                <input id="password" type="text"
+                                    class="input is-rounded is-primary-focus input-field @error('redirect_url') is-invalid @enderror"
+                                    placeholder="Password" name="redirect_url" value="{{$redirectUrl??''}}" ;
+                                    style="display:none">
+
+
+                            </div>
+                        </div>
+                        @endif
 
                         <div class="field pb-5">
                             <div class="control">
