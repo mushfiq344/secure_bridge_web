@@ -49,6 +49,7 @@ class LoginController extends Controller
 
         if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
             if ($request->redirect_url) {
+                $link = url("{$request->redirect_url}?mobile_view=yes");
                 return redirect($request->redirect_url);
             }
             if (auth()->user()->user_type == 2) {
