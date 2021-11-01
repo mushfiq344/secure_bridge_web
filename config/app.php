@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         TeamTeaTime\Forum\ForumServiceProvider::class,
+        App\Providers\AgentServiceProvider::class,
 
     ],
 
