@@ -70,7 +70,8 @@ class LoginController extends Controller
     {
         $email = $request->email;
         $redirectUrl = $request->redirect_url;
-        return view('auth.login', compact('email', 'redirectUrl'));
+        $mobileView = $request->mobile_view;
+        return view('auth.login', compact('email', 'redirectUrl', 'mobileView'));
     }
 
     public function showOrgAdminLoginForm()
