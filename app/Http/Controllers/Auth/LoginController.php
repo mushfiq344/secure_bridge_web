@@ -48,6 +48,9 @@ class LoginController extends Controller
         ]);
 
         if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
+            if ($request->redirect_url) {
+                return redirect($request->redirect_url);
+            }
             if (auth()->user()->user_type == 2) {
                 return redirect()->route('admin.home');
             } else if (auth()->user()->user_type == 1) {
@@ -60,6 +63,13 @@ class LoginController extends Controller
                 ->with('error', 'Email-Address And Password Are Wrong.');
         }
 
+    }
+
+    public function showLoginForm(Request $request)
+    {
+        $email = $request->email;
+        $redirectUrl = $request->redirect_url;
+        return view('auth.login', compact('email', 'redirectUrl'));
     }
 
     public function showOrgAdminLoginForm()
