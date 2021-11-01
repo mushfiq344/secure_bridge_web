@@ -124,7 +124,7 @@
                         </div>
 
                         <div class="has-text-centered">
-                            @if (Route::has('password.request') && !isset($mobileView))
+                            @if (!$agent->isMobile())
                             <a class="muted-text purple-text fw-500" href="{{ route('password.request') }}">Forgot
                                 Password?</a>
                             @endif
