@@ -33,7 +33,7 @@ class WishListController extends Controller
         $wish->opportunity_id = $request->opportunity_id;
         $wish->status = "active";
         $wish->save();
-        return Response::json([], 201);
+        return Response::json(["message" => 'added to wishlist successfully'], 201);
     }
 
     /**
@@ -68,6 +68,6 @@ class WishListController extends Controller
     public function destroy($id)
     {
         WishList::where('opportunity_id', $id)->where('user_id', auth()->user()->id)->delete();
-        return Response::json(["data" => $id], 204);
+        return Response::json(["message" => 'removed from wish list successfully'], 200);
     }
 }

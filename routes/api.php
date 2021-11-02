@@ -16,10 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [RegisterController::class, 'login']);
 
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/opportunities', 'API\OpportunityController');
     Route::post('fetch-opportunities', 'API\OpportunityController@fetchOpportunities')->name('fetch.opportunities');
+    Route::apiResource('/wish-list', 'User\WishListController');
+    Route::apiResource('/choice-list', 'User\OpportunityUserController');
     Route::get('/profile', function (Request $request) {
         return auth()->user();
     });

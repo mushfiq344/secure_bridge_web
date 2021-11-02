@@ -300,7 +300,7 @@ $(document).on('click', ".enrolled, .un-enrolled", function(event) {
                 console.log(data);
                 console.log(xhr.status);
 
-                if (xhr.status == 204) {
+                if (xhr.status == 200) {
 
                     $(icon).removeClass("enrolled");
                     $(icon).addClass("un-enrolled");
@@ -353,7 +353,7 @@ $(document).on('click', ".added-in-wishlist, .not-added-in-wishlist", function(e
                 console.log(data);
                 console.log(xhr.status);
 
-                if (xhr.status == 204) {
+                if (xhr.status == 200) {
 
                     $(icon).removeClass("added-in-wishlist");
                     $(icon).addClass("not-added-in-wishlist");

@@ -35,7 +35,7 @@ class OpportunityUserController extends Controller
         $opportunityUser->opportunity_id = $request->opportunity_id;
         $opportunityUser->status = "active";
         $opportunityUser->save();
-        return Response::json([], 201);
+        return Response::json(["message" => 'added to enrollment list successfully'], 201);
 
     }
 
@@ -71,6 +71,6 @@ class OpportunityUserController extends Controller
     public function destroy($id)
     {
         OpportunityUser::where('opportunity_id', $id)->where('user_id', auth()->user()->id)->delete();
-        return Response::json(["data" => $id], 204);
+        return Response::json(["message" => 'removed from enrollment list successfully'], 200);
     }
 }
