@@ -1,7 +1,7 @@
 <?php
 
 namespace App\SecureBridges\Helpers;
-
+use Image;
 class CustomHelper
 {
     /**
@@ -42,6 +42,19 @@ class CustomHelper
         }
 
         return $fileName;
+    }
+
+    public static function saveBase64Image($image,$path,$width,$height){
+        $image = str_replace('data:image/png;base64,', '', $image);
+        $image = str_replace(' ', '+', $image);
+        $imageName =  time() . uniqid().'.'.'png';
+        \File::put(public_path($path.$imageName), base64_decode($image));
+       // Also, after resizing, we save it with the same name in the same place.
+        Image::make(public_path($path.$imageName))
+        ->resize($width,$height)
+        ->save(public_path($path.$imageName));
+
+        return $imageName;
     }
 
     public static function generateSlug($name, $tableName)

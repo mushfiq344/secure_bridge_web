@@ -5,7 +5,8 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Controllers\Controller;
 use App\Models\Opportunity;
 use Illuminate\Http\Request;
-
+use App\SecureBridges\Helpers\CustomHelper;
+use Image;
 class OpportunityController extends BaseController
 {
     /**
@@ -46,7 +47,27 @@ class OpportunityController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        $coverImage = $request->cover_image; 
+        $coverImageName=CustomHelper::saveBase64Image($coverImage,Opportunity::$_uploadPath,300,200);
+        $iconImage = $request->icon_image; 
+        $iconImageName=CustomHelper::saveBase64Image($iconImage,Opportunity::$_uploadPath,300,200);
+        $opportunity = new Opportunity;
+        $opportunity->title = $request->title;
+        $opportunity->created_by = auth()->user()->id;
+        $opportunity->subtitle = $request->subtitle;
+        $opportunity->description = $request->description;
+        $opportunity->opportunity_date = $request->opportunity_date;
+        $opportunity->duration = $request->duration;
+        $opportunity->reward = $request->reward;
+        $opportunity->type = $request->type;
+        $opportunity->icon_image = $iconImageName;
+        $opportunity->cover_image = $coverImageName;
+        $opportunity->slug = CustomHelper::generateSlug($request->title, 'opportunities');
+        $opportunity->save();
+        $success=array(
+         "opportunity"=> $opportunity
+        );
+        return $this->sendResponse($success, 'opportunity created successfully.',201);
     }
 
     /**
