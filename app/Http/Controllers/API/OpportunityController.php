@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\API;
+
 use App\Http\Controllers\API\BaseController as BaseController;
-use App\Http\Controllers\Controller;
 use App\Models\Opportunity;
-use Illuminate\Http\Request;
+use App\Models\OpportunityUser;
+use App\Models\WishList;
 use App\SecureBridges\Helpers\CustomHelper;
-use Image;
+use Illuminate\Http\Request;
+
 class OpportunityController extends BaseController
 {
     /**
@@ -20,13 +22,17 @@ class OpportunityController extends BaseController
         $minDuration = Opportunity::min('duration');
         $maxReward = Opportunity::max('reward');
         $minReward = Opportunity::min('reward');
-        $success['max_duration']=$maxDuration;
-        $success['min_duration']=$minDuration;
-        $success['max_reward']=$maxReward;
-        $success['min_reward']=$minReward;
-        return $this->sendResponse($success, 'opportunity data fetch successfully.',200);
+        $success['max_duration'] = $maxDuration;
+        $success['min_duration'] = $minDuration;
+        $success['max_reward'] = $maxReward;
+        $success['min_reward'] = $minReward;
 
-        
+        $success['opportunities'] = Opportunity::all();
+        $success['upload_path'] = Opportunity::$_uploadPath;
+        $success['user_wishes'] = WishList::where('user_id', auth()->user()->id)->pluck('opportunity_id')->toArray();
+        $success['user_enrollments'] = OpportunityUser::where('user_id', auth()->user()->id)->pluck('opportunity_id')->toArray();
+        return $this->sendResponse($success, 'opportunities fetch successfully.', 200);
+
     }
 
     /**
@@ -47,10 +53,10 @@ class OpportunityController extends BaseController
      */
     public function store(Request $request)
     {
-        $coverImage = $request->cover_image; 
-        $coverImageName=CustomHelper::saveBase64Image($coverImage,Opportunity::$_uploadPath,300,200);
-        $iconImage = $request->icon_image; 
-        $iconImageName=CustomHelper::saveBase64Image($iconImage,Opportunity::$_uploadPath,300,200);
+        $coverImage = $request->cover_image;
+        $coverImageName = CustomHelper::saveBase64Image($coverImage, Opportunity::$_uploadPath, 300, 200);
+        $iconImage = $request->icon_image;
+        $iconImageName = CustomHelper::saveBase64Image($iconImage, Opportunity::$_uploadPath, 300, 200);
         $opportunity = new Opportunity;
         $opportunity->title = $request->title;
         $opportunity->created_by = auth()->user()->id;
@@ -64,10 +70,10 @@ class OpportunityController extends BaseController
         $opportunity->cover_image = $coverImageName;
         $opportunity->slug = CustomHelper::generateSlug($request->title, 'opportunities');
         $opportunity->save();
-        $success=array(
-         "opportunity"=> $opportunity
+        $success = array(
+            "opportunity" => $opportunity,
         );
-        return $this->sendResponse($success, 'opportunity created successfully.',201);
+        return $this->sendResponse($success, 'opportunity created successfully.', 201);
     }
 
     /**
@@ -111,7 +117,7 @@ class OpportunityController extends BaseController
                 \File::delete($fileName);
             }
 
-            $coverImageName =CustomHelper::saveBase64Image($request->cover_image,Opportunity::$_uploadPath,1600,900);
+            $coverImageName = CustomHelper::saveBase64Image($request->cover_image, Opportunity::$_uploadPath, 1600, 900);
             $opportunity->cover_image = $coverImageName;
         }
 
@@ -122,11 +128,9 @@ class OpportunityController extends BaseController
                 \File::delete($fileName);
             }
 
-            $iconImageName = CustomHelper::saveBase64Image($request->icon_image,Opportunity::$_uploadPath,600,600);
+            $iconImageName = CustomHelper::saveBase64Image($request->icon_image, Opportunity::$_uploadPath, 600, 600);
             $opportunity->icon_image = $iconImageName;
         }
-
-        
 
         $opportunity->title = $request->title;
         $opportunity->slug = CustomHelper::generateSlug($request->title, 'opportunities');
@@ -138,10 +142,10 @@ class OpportunityController extends BaseController
         $opportunity->type = $request->type;
 
         $opportunity->save();
-        $success=array(
-            "opportunity"=> $opportunity
-           );
-        return $this->sendResponse($success, 'opportunity updated successfully.',200);
+        $success = array(
+            "opportunity" => $opportunity,
+        );
+        return $this->sendResponse($success, 'opportunity updated successfully.', 200);
     }
 
     /**
@@ -161,12 +165,12 @@ class OpportunityController extends BaseController
         if (file_exists($fileName)) {
             \File::delete($fileName);
         }
-        $opportunity=Opportunity::destroy($id);
+        $opportunity = Opportunity::destroy($id);
 
-        $success=array(
-            "opportunity"=> $opportunity
-           );
-        return $this->sendResponse($success, 'opportunity deleted successfully.',200);
+        $success = array(
+            "opportunity" => $opportunity,
+        );
+        return $this->sendResponse($success, 'opportunity deleted successfully.', 200);
     }
 
     public function fetchOpportunities(Request $request)
@@ -180,10 +184,11 @@ class OpportunityController extends BaseController
 
         // $opportunities = Opportunity::searchByParams($durationLow, $durationHigh, $rewardLow, $rewardHigh, $searchField, $opportunityDate);
         // $success['opportunities']=$opportunities;
-        $success['opportunities']=Opportunity::all();
+        $success['opportunities'] = Opportunity::all();
         $success['upload_path'] = Opportunity::$_uploadPath;
-        return $this->sendResponse($success, 'opportunities fetched successfully.',200);
-       
+        $success['user_wishes'] = WishList::where('user_id', auth()->user()->id)->pluck('opportunity_id')->toArray();
+        return $this->sendResponse($success, 'opportunities fetched successfully.', 200);
+
     }
 
 }
