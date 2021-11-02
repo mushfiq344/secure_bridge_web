@@ -102,7 +102,46 @@ class OpportunityController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        //
+        $opportunity = Opportunity::find($request->id);
+
+        if ($request->cover_image) {
+            // delete file
+            $fileName = public_path() . '/' . Opportunity::$_uploadPath . $opportunity->cover_image;
+            if (file_exists($fileName)) {
+                \File::delete($fileName);
+            }
+
+            $coverImageName =CustomHelper::saveBase64Image($request->cover_image,Opportunity::$_uploadPath,1600,900);
+            $opportunity->cover_image = $coverImageName;
+        }
+
+        if ($request->icon_image) {
+            // delete file
+            $fileName = public_path() . '/' . Opportunity::$_uploadPath . $opportunity->icon_image;
+            if (file_exists($fileName)) {
+                \File::delete($fileName);
+            }
+
+            $iconImageName = CustomHelper::saveBase64Image($request->icon_image,Opportunity::$_uploadPath,600,600);
+            $opportunity->icon_image = $iconImageName;
+        }
+
+        
+
+        $opportunity->title = $request->title;
+        $opportunity->slug = CustomHelper::generateSlug($request->title, 'opportunities');
+        $opportunity->subtitle = $request->subtitle;
+        $opportunity->description = $request->description;
+        $opportunity->opportunity_date = $request->opportunity_date;
+        $opportunity->duration = $request->duration;
+        $opportunity->reward = $request->reward;
+        $opportunity->type = $request->type;
+
+        $opportunity->save();
+        $success=array(
+            "opportunity"=> $opportunity
+           );
+        return $this->sendResponse($success, 'opportunity updated successfully.',200);
     }
 
     /**
@@ -113,7 +152,21 @@ class OpportunityController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        $opportunity = Opportunity::find($id);
+        $fileName = public_path() . '/' . Opportunity::$_uploadPath . $opportunity->cover_image;
+        if (file_exists($fileName)) {
+            \File::delete($fileName);
+        }
+        $fileName = public_path() . '/' . Opportunity::$_uploadPath . $opportunity->icon_image;
+        if (file_exists($fileName)) {
+            \File::delete($fileName);
+        }
+        $opportunity=Opportunity::destroy($id);
+
+        $success=array(
+            "opportunity"=> $opportunity
+           );
+        return $this->sendResponse($success, 'opportunity deleted successfully.',200);
     }
 
     public function fetchOpportunities(Request $request)
