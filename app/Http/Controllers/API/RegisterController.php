@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
+use Laravel\Socialite\Facades\Socialite;
 
 class RegisterController extends BaseController
 {
@@ -64,5 +65,34 @@ class RegisterController extends BaseController
         $request->user()->tokens()->delete();
 
         return $this->sendResponse([], 'Logged Out Successfully.');
+    }
+
+
+    public function requestTokenGoogle(Request $request) {
+        // Getting the user from socialite using token from google
+        $token =$request->google_token;
+        $provider='google';
+        $driver= Socialite::driver($provider);
+        $userGoogleInfo= $driver->userFromToken($token);
+         // Getting or creating user from db
+        $user = User::firstOrCreate(
+            ['email' => $userGoogleInfo->getEmail()],
+            [
+                'email_verified_at' => now(),
+                'name' => $userGoogleInfo->name,
+                'password'=>bcrypt('123456')
+            ]
+        );
+
+
+        $success['token'] = $user->createToken('MyApp')->plainTextToken;
+        $success['user'] = array("name" => $user->name, "email" => $user->email, "id" => $user->id, "user_type"=>$user->user_type,"profile_image" => User::getUserPhoto($user->id));
+        return $this->sendResponse($success, 'User login successfully.');
+
+       
+        // // Returning response
+        // $token = $userFromDb->createToken('Laravel Sanctum Client')->plainTextToken;
+        // $response = ['token' => $token, 'message' => 'Google Login/Signup Successful'];
+        // return response($response, 200);
     }
 }
