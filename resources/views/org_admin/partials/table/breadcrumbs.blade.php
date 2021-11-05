@@ -1,22 +1,13 @@
-<div class="row align-items-center">
-    <!-- Breadcrumbs-->
-    <div class="col-sm-6">
-        <h4 class="page-title">{{ ucfirst(\Str::plural($featureName)) }}</h4>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/org-admin/home">Dashboard</a></li>
-            <li class="breadcrumb-item active">{{ ucfirst(\Str::plural($featureName)) }}
-            </li>
-        </ol>
-    </div>
-    <div class="col-sm-6">
-        <div class="float-right d-none d-md-block">
-            <div class="dropdown">
-                <a href="/org-admin/{{ \Str::plural($featureName) }}/create"
-                    class="btn btn-primary  arrow-none waves-effect waves-light" aria-haspopup="true"
-                    aria-expanded="false">
-                    <i class="mdi mdi-plus mr-2"></i> New {{ ucfirst($featureName) }}
-                </a>
+<div class="columns is-vcentered">
+    <div class="column is-8 is-offset-2">
+        <div class="inline-list has-text-centered">
+          
+            <div><a href="/org-admin/home">Home</a></div>
+            <i class="inline-bullet fa fa-circle"></i>
+            <div><a href="/org-admin/{{ \Str::plural($featureName) }}">{{ ucfirst(\Str::plural($featureName)) }}</a>
             </div>
+            
+
         </div>
     </div>
 </div>

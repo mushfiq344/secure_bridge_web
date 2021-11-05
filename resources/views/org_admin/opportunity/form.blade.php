@@ -56,6 +56,16 @@
 
                          </div>
                      </div>
+                    @if($opportunity!=null)
+                     <div class="field mt-20">
+                         <label class="form-label">Enrollment</label>
+                         <div class="control">
+                             {{Form::select('is_active', array('0' => 'Continue', '1' => 'Stop'),  !empty($opportunity->is_active) ? $opportunity->is_active:'',array('class'
+                        => 'input is-medium'))}}
+
+                         </div>
+                     </div>
+                     @endif
                      <div class="field mt-20">
                          <label class="form-label">Icon Image</label>
                          <div class="control">

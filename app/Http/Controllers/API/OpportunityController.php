@@ -184,7 +184,7 @@ class OpportunityController extends BaseController
 
         // $opportunities = Opportunity::searchByParams($durationLow, $durationHigh, $rewardLow, $rewardHigh, $searchField, $opportunityDate);
         // $success['opportunities']=$opportunities;
-        $success['opportunities'] = Opportunity::all();
+        $success['opportunities'] = Opportunity::where('is_active',0)->get();
         $success['upload_path'] = Opportunity::$_uploadPath;
         $success['user_wishes'] = WishList::where('user_id', auth()->user()->id)->pluck('opportunity_id')->toArray();
         return $this->sendResponse($success, 'opportunities fetched successfully.', 200);
