@@ -30,4 +30,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'google' => [
+        'client_id' => '422537799361-ptge0no6qr47qagpqfb1iglo6d29l4tl.apps.googleusercontent.com',
+        'client_secret' => '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',
+        'redirect' => 'https://securebridges.ubitrixbd.com/auth/google/callback',
+    ],
+
 ];
