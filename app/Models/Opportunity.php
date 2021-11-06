@@ -19,8 +19,13 @@ class Opportunity extends Model
 
     public static function searchByParams($durationLow, $durationHigh, $rewardLow, $rewardHigh, $searchField, $opportunityDate)
     {
-        $query = DB::table('opportunities')
-            ->where('is_active', 1)->Where('title', 'like', '%' . $searchField . '%');
+        $userTypes=User::getTypes();
+        $query = DB::table('opportunities')->Where('title', 'like', '%' . $searchField . '%');
+
+        if(auth()->user()->user_type==$userTypes['User']){
+            $query = $query->where('is_active', 0);
+        }
+           
 
         $query = $query->whereBetween('duration', array($durationLow - 1, $durationHigh + 1));
 
@@ -30,10 +35,20 @@ class Opportunity extends Model
             $query = $query->where('opportunity_date', $opportunityDate);
         };
 
+       
+        if(auth()->user()->user_type==$userTypes['Organizational Admin']){
+            $query = $query->where('created_by', auth()->user()->id);
+        }
+
         $opportunities = $query->paginate(1);
 
         return $opportunities;
 
+    }
+
+    public static function getOpportunityTitle($id){
+        $opportunity=self::find($id);
+        return $opportunity->title;
     }
 
 }

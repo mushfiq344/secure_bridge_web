@@ -68,6 +68,12 @@ class User extends Authenticatable
         return $user->name;
     }
 
+    public static function getUserEmail($id)
+    {
+        $user = self::find($id);
+        return $user->email;
+    }
+
     public function opportunities()
     {
         return $this->belongsToMany(Opportunity::class);
