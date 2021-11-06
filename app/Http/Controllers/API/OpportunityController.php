@@ -82,10 +82,15 @@ class OpportunityController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($id)
     {
-        $opportunity = Opportunity::where('slug', $slug)->first();
-        return $opportunity->users;
+        $opportunity = Opportunity::findOrFail($id);
+        $success = array(
+            "opportunity" => $opportunity,
+            "is_user_enrolled"=>OpportunityUser::where('user_id',auth()->user()->id)->where('opportunity_id',$id)->exists(),
+            "user_code"=>OpportunityUser::getUserCode($id)
+        );
+        return $this->sendResponse($success, 'opportunity fetched successfully.', 200);
     }
 
     /**
