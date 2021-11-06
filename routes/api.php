@@ -20,6 +20,8 @@ Route::post('auth/google',[RegisterController::class, 'requestTokenGoogle']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/opportunities', 'API\OpportunityController');
     Route::post('fetch-opportunities', 'API\OpportunityController@fetchOpportunities')->name('fetch.opportunities');
+    Route::post('fetch-opportunity-users', 'API\OpportunityController@fetchOpportunityUsers')->name('fetch.opportunity-users');
+    Route::post('check-enrollment', 'API\OpportunityController@checkEnrollment')->name('check-enrollment');
     Route::apiResource('/wish-list', 'User\WishListController');
     Route::apiResource('/choice-list', 'User\OpportunityUserController');
     Route::get('/profile', function (Request $request) {

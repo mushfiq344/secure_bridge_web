@@ -32,4 +32,12 @@ class OpportunityUser extends Model
 
     }
 
+    public static function hasAnySpecificUserEnrolledOpportunity($opportunityId,$code)
+    {
+        $isEnrolled = self::where('opportunity_id', $opportunityId)->where('code', $code)->exists();
+
+        return $isEnrolled;
+
+    }
+
 }
