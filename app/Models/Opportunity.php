@@ -46,4 +46,9 @@ class Opportunity extends Model
 
     }
 
+    public static function getOpportunityTitle($id){
+        $opportunity=self::find($id);
+        return $opportunity->title;
+    }
+
 }

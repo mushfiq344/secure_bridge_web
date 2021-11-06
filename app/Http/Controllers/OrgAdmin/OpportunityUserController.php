@@ -71,8 +71,15 @@ class OpportunityUserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {   
+        
+       $userOpportunity=OpportunityUser::findOrFail($id);
+     
+       $opportynity=Opportunity::where('created_by',auth()->user()->id)->where('id',$userOpportunity->opportunity_id)->firstOrFail();
+      
+       $userOpportunity->status=$userOpportunity->status=="confirmed"?"unconfirmed":"confirmed";
+       $userOpportunity->save();
+       return redirect(route('org-admin.user-opportunities.index'));
     }
 
     /**
