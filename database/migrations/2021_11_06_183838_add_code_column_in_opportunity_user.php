@@ -14,7 +14,7 @@ class AddCodeColumnInOpportunityUser extends Migration
     public function up()
     {
         Schema::table('opportunity_user', function (Blueprint $table) {
-            $table->integer('code')->unique();
+            $table->integer('code')->default(0);
         });
     }
 
