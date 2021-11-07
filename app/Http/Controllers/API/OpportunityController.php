@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Opportunity;
 use App\Models\OpportunityUser;
+use App\Models\Status;
 use App\Models\WishList;
 use App\SecureBridges\Helpers\CustomHelper;
 use Illuminate\Http\Request;
@@ -85,12 +86,14 @@ class OpportunityController extends BaseController
     public function show($id)
     {
         $opportunity = Opportunity::findOrFail($id);
-        $success = array(
-            "opportunity" => $opportunity,
-            "is_user_enrolled"=>OpportunityUser::where('user_id',auth()->user()->id)->where('opportunity_id',$id)->exists(),
-            "user_code"=>OpportunityUser::getUserCode($id),
-            "opportunity_users"=>$opportunity->users
-        );
+        $userOpportunity=OpportunityUser::where('user_id',auth()->user()->id)->where('opportunity_id',$id)->first();
+        $success["opportunity"] = $opportunity;
+        
+        $success["is_user_enrolled"]=!empty($userOpportunity)?true:false;
+        $success["enrollment_status"]=!empty($userOpportunity)?Status::$userStatusNames[$userOpportunity->status]:null;
+        $success["user_code"]=!empty($userOpportunity)?$userOpportunity->code:null;
+        $success["opportunity_users"]=$opportunity->users;
+         
         return $this->sendResponse($success, 'opportunity fetched successfully.', 200);
     }
 
@@ -205,6 +208,20 @@ class OpportunityController extends BaseController
             "opportunity_users"=>$opportunity->users
         );
         return $this->sendResponse($success, 'opportunity users fetched successfully.', 200);
+        
+
+    }
+
+    public function fetchUserOpportunityRelatedInfo(Request $request)
+    {
+      
+        $userOpportunity=OpportunityUser::where('user_id',$request->user_id)->where('opportunity_id',$request->opportunity_id)->first();
+        $success["is_user_enrolled"]=!empty($userOpportunity)?true:false;
+        $success["enrollment_status"]=!empty($userOpportunity)?Status::$userStatusNames[$userOpportunity->status]:null;
+        $success["user_code"]=!empty($userOpportunity)?$userOpportunity->code:null;
+       
+         
+        return $this->sendResponse($success, 'user opportunity related data fetched successfully.', 200);
         
 
     }

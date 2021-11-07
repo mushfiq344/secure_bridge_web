@@ -16,7 +16,9 @@
                             <th>User Email</th>
                             <th>Opportunity Name</th>
                             <th>Status</th>
+                            <th>Code</th>
                             <th>Action</th>
+                          
                         </tr>
                     </thead>
                     <tbody>
@@ -25,29 +27,66 @@
                             <td>{{\App\Models\User::getUserName($userOpportunity->user_id)}}</td>
                             <td>{{\App\Models\User::getUserEmail($userOpportunity->user_id)}}</td>
                             <td>{{\App\Models\Opportunity::getOpportunityTitle($userOpportunity->opportunity_id)}}</td>
-                            <td>{{$userOpportunity->status}}</td>
+                            <td>{{\App\Models\Status::$userStatusNames[$userOpportunity->status]}}</td>
+                            <td>{{$userOpportunity->code}}</td>
                             <td>
-                                <!-- delete -->
-                                <form action="{{ route('org-admin.user-opportunities.update', $userOpportunity->id)}}"
-                                        method="POST">
-                                        @method('PUT')
-                                        @csrf
-                                        @if($userOpportunity->status=="confirmed")
-                                        <button type="submit" class="btn btn-default float-left"
-                                            style="margin-left: 10px;">
-                                            <i class="fa fa-close"></i>
-                                        </button>
-                                        @else
-                                        <button type="submit" class="btn btn-default float-left"
-                                            style="margin-left: 10px;">
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                        @endif
-                                </form>
 
+                                @if($userOpportunity->status==\App\Models\Status::$userStatusValues['Requested'])
+                                <div class="row">
+                                    <div class="col-6">
+                                        <form action="{{ route('org-admin.user-opportunities.update', $userOpportunity->id)}}" method="POST">
+                                            @method('PUT')
+                                            @csrf
+                                            <input type="text" name="status" value="{{\App\Models\Status::$userStatusValues['Approved']}}" style="display:none;">
+                                            <button type="submit" class="btn btn-default float-left" style="margin-left: 10px;">
+                                                Approve <i class="fa fa-check"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="col-6">
+                                        <form action="{{ route('org-admin.user-opportunities.update', $userOpportunity->id)}}" method="POST">
+                                            @method('PUT')
+                                            @csrf
+                                            <input type="text" name="status" value="{{\App\Models\Status::$userStatusValues['Rejected']}}" style="display:none;">
+                                            <button type="submit" class="btn btn-default float-left" style="margin-left: 10px;">
+                                                Reject <i class="fa fa-close"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- delete -->
+                                @else
+                                <form action="{{ route('org-admin.user-opportunities.update', $userOpportunity->id)}}" method="POST">
+                                    @method('PUT')
+                                    @csrf
+
+
+
+                                    @if($userOpportunity->status==\App\Models\Status::$userStatusValues['Approved'])
+                                    <input type="text" name="status" value="{{\App\Models\Status::$userStatusValues['Participated']}}" style="display:none;">
+                                    <button type="submit" class="btn btn-default float-left" style="margin-left: 10px;">
+                                        <i class="fa fa-check">Participated</i>
+                                    </button>
+
+
+                                    @elseif($userOpportunity->status==\App\Models\Status::$userStatusValues['Participated'])
+                                    <input type="text" name="status" value="{{\App\Models\Status::$userStatusValues['Rewarded']}}" style="display:none;">
+                                    <button type="submit" class="btn btn-default float-left" style="margin-left: 10px;">
+                                        <i class="fa fa-check">Rewarded</i>
+                                    </button>
+
+                                    @elseif($userOpportunity->status==\App\Models\Status::$userStatusValues['Rejected'])
+                                    <input type="text" name="status" value="{{\App\Models\Status::$userStatusValues['Approved']}}" style="display:none;">
+                                    <button type="submit" class="btn btn-default float-left" style="margin-left: 10px;">
+                                        <i class="fa fa-check">Approve</i>
+                                    </button>
+                                    @endif
+                                </form>
+                                @endif
                             </td>
+                            
                         </tr>
-                       @endforeach
+                        @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
@@ -55,7 +94,9 @@
                             <th>User Email</th>
                             <th>Opportunity Name</th>
                             <th>Status</th>
+                            <th>Code</th>
                             <th>Action</th>
+                           
                         </tr>
                     </tfoot>
                 </table>
