@@ -82,10 +82,16 @@ class OpportunityController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($id)
     {
-        $opportunity = Opportunity::where('slug', $slug)->first();
-        return $opportunity->users;
+        $opportunity = Opportunity::findOrFail($id);
+        $success = array(
+            "opportunity" => $opportunity,
+            "is_user_enrolled"=>OpportunityUser::where('user_id',auth()->user()->id)->where('opportunity_id',$id)->exists(),
+            "user_code"=>OpportunityUser::getUserCode($id),
+            "opportunity_users"=>$opportunity->users
+        );
+        return $this->sendResponse($success, 'opportunity fetched successfully.', 200);
     }
 
     /**
@@ -190,5 +196,30 @@ class OpportunityController extends BaseController
         return $this->sendResponse($success, 'opportunities fetched successfully.', 200);
 
     }
+
+    public function fetchOpportunityUsers(Request $request)
+    {
+        $opportunity = Opportunity::findOrFail($request->id);
+        $success = array(
+          
+            "opportunity_users"=>$opportunity->users
+        );
+        return $this->sendResponse($success, 'opportunity users fetched successfully.', 200);
+        
+
+    }
+
+    public function checkEnrollment(Request $request)
+    {
+       
+        $success = array(
+          
+            "user_is_enrolled"=> OpportunityUser::hasAnySpecificUserEnrolledOpportunity($request->opportunity_id,$request->code)
+        );
+        return $this->sendResponse($success, 'opportunity users fetched successfully.', 200);
+        
+
+    }
+    
 
 }

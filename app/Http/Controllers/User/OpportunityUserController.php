@@ -34,6 +34,7 @@ class OpportunityUserController extends Controller
         $opportunityUser->user_id = auth()->user()->id;
         $opportunityUser->opportunity_id = $request->opportunity_id;
         $opportunityUser->status = "unconfirmed";
+        $opportunityUser->code = mt_rand(100000,999999);
         $opportunityUser->save();
         return Response::json(["message" => 'added to enrollment list successfully'], 201);
 

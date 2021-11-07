@@ -56,7 +56,7 @@
 
                          </div>
                      </div>
-                    @if($opportunity!=null)
+                    @if(!empty($opportunity))
                      <div class="field mt-20">
                          <label class="form-label">Enrollment</label>
                          <div class="control">
