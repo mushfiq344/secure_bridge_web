@@ -19,6 +19,8 @@ Route::post('auth/google',[RegisterController::class, 'requestTokenGoogle']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/opportunities', 'API\OpportunityController');
+    Route::post('fetch-user-opportunity-related-info', 'API\OpportunityController@fetchUserOpportunityRelatedInfo')->name('fetch.user-opportunity-related-info');
+    Route::apiResource('/user-opportunities', 'API\OpportunityUserController');  
     Route::post('fetch-opportunities', 'API\OpportunityController@fetchOpportunities')->name('fetch.opportunities');
     Route::post('fetch-opportunity-users', 'API\OpportunityController@fetchOpportunityUsers')->name('fetch.opportunity-users');
     Route::post('check-enrollment', 'API\OpportunityController@checkEnrollment')->name('check-enrollment');

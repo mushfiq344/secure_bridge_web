@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\OrgAdmin;
+namespace App\Http\Controllers\Api;
+use App\Models\OpportunityUser;
 use App\Models\Opportunity;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\OpportunityUser;
-class OpportunityUserController extends Controller
+
+class OpportunityUserController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +15,7 @@ class OpportunityUserController extends Controller
      */
     public function index()
     {
-        $opportunityIds=Opportunity::where('created_by',auth()->user()->id)->pluck('id');
-      
-        $userOpportunities=OpportunityUser::whereIn('opportunity_id', $opportunityIds)->get();
-        return view('org_admin.user_opportunities.index',compact('userOpportunities'));
+        //
     }
 
     /**
@@ -70,15 +68,13 @@ class OpportunityUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {     
-       $userOpportunity=OpportunityUser::findOrFail($id);
-     
-       $opportynity=Opportunity::where('created_by',auth()->user()->id)->where('id',$userOpportunity->opportunity_id)->firstOrFail();
-      
-       $userOpportunity->status=$userOpportunity->status=$request->status;
-       $userOpportunity->save();
-       return redirect(route('org-admin.user-opportunities.index'));
+    public function update(Request $request, $id=-1)
+    {
+        $opportunityUser=OpportunityUser::where('opportunity_id',$request->opportunity_id)
+        ->where('user_id',$request->user_id)->first();
+        $opportunityUser->status=$request->status;
+        $opportunityUser->save();
+        return $this->sendResponse(array(), 'user status updated.', 200);
     }
 
     /**
