@@ -87,9 +87,11 @@ class OpportunityController extends BaseController
     {
         $opportunity = Opportunity::findOrFail($id);
         $userOpportunity=OpportunityUser::where('user_id',auth()->user()->id)->where('opportunity_id',$id)->first();
+        $userWish=WishList::where('user_id',auth()->user()->id)->where('opportunity_id',$id)->first();
         $success["opportunity"] = $opportunity;
         
         $success["is_user_enrolled"]=!empty($userOpportunity)?true:false;
+        $success['in_user_wish_list']=!empty($$userWish)?true:false;
         $success["enrollment_status"]=!empty($userOpportunity)?Status::$userStatusNames[$userOpportunity->status]:null;
         $success["user_code"]=!empty($userOpportunity)?$userOpportunity->code:null;
         $success["opportunity_users"]=$opportunity->users;
