@@ -27,12 +27,17 @@ class WishListController extends Controller
      */
     public function store(Request $request)
     {
-        $wish = new WishList;
+        $userWish = WishList::where('opportunity_id', $request->opportunity_id)
+            ->where('user_id', auth()->user()->id)->first();
+        if (empty($userWish)) {
 
-        $wish->user_id = auth()->user()->id;
-        $wish->opportunity_id = $request->opportunity_id;
-        $wish->status = "active";
-        $wish->save();
+            $wish = new WishList;
+
+            $wish->user_id = auth()->user()->id;
+            $wish->opportunity_id = $request->opportunity_id;
+            $wish->status = "active";
+            $wish->save();
+        }
         return Response::json(["message" => 'added to wishlist successfully'], 201);
     }
 
