@@ -91,7 +91,7 @@ class OpportunityController extends BaseController
         $success["opportunity"] = $opportunity;
         
         $success["is_user_enrolled"]=!empty($userOpportunity)?true:false;
-        $success['in_user_wish_list']=!empty($$userWish)?true:false;
+        $success['in_user_wish_list']=!empty($userWish)?true:false;
         $success["enrollment_status"]=!empty($userOpportunity)?Status::$userStatusNames[$userOpportunity->status]:null;
         $success["user_code"]=!empty($userOpportunity)?$userOpportunity->code:null;
         $success["opportunity_users"]=$opportunity->users;
