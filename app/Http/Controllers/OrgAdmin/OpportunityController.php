@@ -53,6 +53,7 @@ class OpportunityController extends Controller
         $opportunity->opportunity_date = $request->opportunity_date;
         $opportunity->duration = $request->duration;
         $opportunity->reward = $request->reward;
+        $opportunity->location = $request->location;
         $opportunity->type = $request->type;
         $opportunity->icon_image = $iconImageName;
         $opportunity->cover_image = $coverImageName;
@@ -127,6 +128,7 @@ class OpportunityController extends Controller
         $opportunity->opportunity_date = $request->opportunity_date;
         $opportunity->duration = $request->duration;
         $opportunity->reward = $request->reward;
+        $opportunity->location = $request->location;
         $opportunity->type = $request->type;
         $opportunity->is_active=$request->is_active;
 

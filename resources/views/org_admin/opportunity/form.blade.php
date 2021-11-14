@@ -56,6 +56,15 @@
 
                          </div>
                      </div>
+                     <div class="field mt-20">
+                         <label class="form-label">Location</label>
+                         <div class="control">
+
+                             <input type="text" class="input is-medium" name="location"
+                                 value="{{ !empty($opportunity->location) ? $opportunity->location:'' }}" required>
+
+                         </div>
+                     </div>
                     @if(!empty($opportunity))
                      <div class="field mt-20">
                          <label class="form-label">Enrollment</label>
