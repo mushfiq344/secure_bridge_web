@@ -4,6 +4,7 @@ namespace App\Http\Controllers\OrgAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Opportunity;
+use App\Models\User;
 use App\SecureBridges\Helpers\CustomHelper;
 use Illuminate\Http\Request;
 

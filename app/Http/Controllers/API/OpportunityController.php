@@ -95,6 +95,7 @@ class OpportunityController extends BaseController
         $success["enrollment_status"]=!empty($userOpportunity)?Status::$userStatusNames[$userOpportunity->status]:null;
         $success["user_code"]=!empty($userOpportunity)?$userOpportunity->code:null;
         $success["opportunity_users"]=$opportunity->users;
+        $success["opportunity_creator"]=$opportunity->createdBy;
          
         return $this->sendResponse($success, 'opportunity fetched successfully.', 200);
     }

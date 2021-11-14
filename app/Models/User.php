@@ -101,4 +101,9 @@ class User extends Authenticatable
 
     }
 
+    public function createdOpportunities()
+    {
+        return $this->hasMany(Opportunity::class,'created_by','id');
+    }
+
 }
