@@ -28,7 +28,7 @@ class OpportunityController extends BaseController
         $success['max_reward'] = $maxReward;
         $success['min_reward'] = $minReward;
 
-        $success['opportunities'] = Opportunity::all();
+        $success['opportunities'] = Opportunity::with('createdBy')->get();
         $success['upload_path'] = Opportunity::$_uploadPath;
         $success['user_wishes'] = WishList::where('user_id', auth()->user()->id)->pluck('opportunity_id')->toArray();
         $success['user_enrollments'] = OpportunityUser::where('user_id', auth()->user()->id)->pluck('opportunity_id')->toArray();
@@ -95,6 +95,7 @@ class OpportunityController extends BaseController
         $success["enrollment_status"]=!empty($userOpportunity)?Status::$userStatusNames[$userOpportunity->status]:null;
         $success["user_code"]=!empty($userOpportunity)?$userOpportunity->code:null;
         $success["opportunity_users"]=$opportunity->users;
+        $success["opportunity_creator"]=$opportunity->createdBy;
          
         return $this->sendResponse($success, 'opportunity fetched successfully.', 200);
     }

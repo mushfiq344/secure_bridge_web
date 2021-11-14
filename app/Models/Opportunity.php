@@ -6,6 +6,7 @@ use DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Opportunity extends Model
 {
     use HasFactory;
@@ -15,6 +16,12 @@ class Opportunity extends Model
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class,'created_by','id');
     }
 
     public static function searchByParams($durationLow, $durationHigh, $rewardLow, $rewardHigh, $searchField, $opportunityDate)

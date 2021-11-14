@@ -4,6 +4,7 @@ namespace App\Http\Controllers\OrgAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Opportunity;
+use App\Models\User;
 use App\SecureBridges\Helpers\CustomHelper;
 use Illuminate\Http\Request;
 
@@ -53,6 +54,7 @@ class OpportunityController extends Controller
         $opportunity->opportunity_date = $request->opportunity_date;
         $opportunity->duration = $request->duration;
         $opportunity->reward = $request->reward;
+        $opportunity->location = $request->location;
         $opportunity->type = $request->type;
         $opportunity->icon_image = $iconImageName;
         $opportunity->cover_image = $coverImageName;
@@ -127,6 +129,7 @@ class OpportunityController extends Controller
         $opportunity->opportunity_date = $request->opportunity_date;
         $opportunity->duration = $request->duration;
         $opportunity->reward = $request->reward;
+        $opportunity->location = $request->location;
         $opportunity->type = $request->type;
         $opportunity->is_active=$request->is_active;
 
