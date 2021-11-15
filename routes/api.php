@@ -30,6 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('/org-admin/opportunities', 'API\OrgAdmin\OpportunityController');  
 
+    Route::apiResource('/user/opportunities', 'API\User\OpportunityController');  
+
     Route::get('/profile', function (Request $request) {
         return auth()->user();
     });
