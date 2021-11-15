@@ -26,6 +26,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('check-enrollment', 'API\OpportunityController@checkEnrollment')->name('check-enrollment');
     Route::apiResource('/wish-list', 'User\WishListController');
     Route::apiResource('/choice-list', 'User\OpportunityUserController');
+
+
+    Route::apiResource('/org-admin/opportunities', 'API\OrgAdmin\OpportunityController');  
+
+    Route::apiResource('/user/opportunities', 'API\User\OpportunityController');  
+
     Route::get('/profile', function (Request $request) {
         return auth()->user();
     });
