@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [RegisterController::class, 'login']);
 Route::post('auth/google',[RegisterController::class, 'requestTokenGoogle']);
-
+Route::post('password/email', 'API\ForgotPasswordController@forgot');
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/opportunities', 'API\OpportunityController');
     Route::post('fetch-user-opportunity-related-info', 'API\OpportunityController@fetchUserOpportunityRelatedInfo')->name('fetch.user-opportunity-related-info');
@@ -31,6 +31,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/org-admin/opportunities', 'API\OrgAdmin\OpportunityController');  
 
     Route::apiResource('/user/opportunities', 'API\User\OpportunityController');  
+
+   
 
     Route::get('/profile', function (Request $request) {
         return auth()->user();
