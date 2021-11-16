@@ -28,13 +28,19 @@ class OpportunityUserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $opportunityUser = new OpportunityUser;
+    {   
 
-        $opportunityUser->user_id = auth()->user()->id;
-        $opportunityUser->opportunity_id = $request->opportunity_id;
-        $opportunityUser->status = "active";
-        $opportunityUser->save();
+        $opportunityUser=OpportunityUser::where('opportunity_id',$request->opportunity_id)
+        ->where('user_id',auth()->user()->id)->first();
+        if(empty($opportunityUser)){
+            $opportunityUser = new OpportunityUser;
+
+            $opportunityUser->user_id = auth()->user()->id;
+            $opportunityUser->opportunity_id = $request->opportunity_id;
+            $opportunityUser->code = mt_rand(100000,999999);
+            $opportunityUser->save();
+        }
+     
         return Response::json(["message" => 'added to enrollment list successfully'], 201);
 
     }

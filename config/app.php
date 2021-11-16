@@ -178,6 +178,7 @@ return [
         TeamTeaTime\Forum\ForumServiceProvider::class,
         App\Providers\AgentServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
 
     ],
 
@@ -235,6 +236,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
 
     ],
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddStatusToOpportunityUserTable extends Migration
+class AddLocationColumnInOpportunitites extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddStatusToOpportunityUserTable extends Migration
      */
     public function up()
     {
-        Schema::table('opportunity_user', function (Blueprint $table) {
-            $table->string('status');
+        Schema::table('opportunities', function (Blueprint $table) {
+            $table->string('location')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AddStatusToOpportunityUserTable extends Migration
      */
     public function down()
     {
-        Schema::table('opportunity_user', function (Blueprint $table) {
-            $table->dropColumn('status');
+        Schema::table('opportunities', function (Blueprint $table) {
+            $table->dropColumn('location');
         });
     }
 }

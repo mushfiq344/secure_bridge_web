@@ -4,6 +4,7 @@ namespace App\Http\Controllers\OrgAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Opportunity;
+use App\Models\User;
 use App\SecureBridges\Helpers\CustomHelper;
 use Illuminate\Http\Request;
 
@@ -53,6 +54,7 @@ class OpportunityController extends Controller
         $opportunity->opportunity_date = $request->opportunity_date;
         $opportunity->duration = $request->duration;
         $opportunity->reward = $request->reward;
+        $opportunity->location = $request->location;
         $opportunity->type = $request->type;
         $opportunity->icon_image = $iconImageName;
         $opportunity->cover_image = $coverImageName;
@@ -81,7 +83,7 @@ class OpportunityController extends Controller
      */
     public function edit($id)
     {
-        $opportunity = Opportunity::find($id);
+        $opportunity = Opportunity::where('id',$id)->where('created_by',auth()->user()->id)->firstOrFail();
         $uploadPath = Opportunity::$_uploadPath;
         return view('org_admin.opportunity.edit', compact('opportunity', 'uploadPath'));
     }
@@ -127,7 +129,9 @@ class OpportunityController extends Controller
         $opportunity->opportunity_date = $request->opportunity_date;
         $opportunity->duration = $request->duration;
         $opportunity->reward = $request->reward;
+        $opportunity->location = $request->location;
         $opportunity->type = $request->type;
+        $opportunity->is_active=$request->is_active;
 
         $opportunity->save();
         return redirect(route('org-admin.opportunities.index'))->with('success', 'updated');

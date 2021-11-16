@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\User;
-
+namespace App\Http\Controllers\API\User;
+use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Controllers\Controller;
+use App\Models\Opportunity;
 use App\Models\WishList;
+use App\Models\OpportunityUser;
 use Illuminate\Http\Request;
-use Response;
 
-class WishListController extends Controller
+class OpportunityController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,12 @@ class WishListController extends Controller
      */
     public function index()
     {
-        //
+        $enrolledOpportunityIds= OpportunityUser::where('user_id', auth()->user()->id)->pluck('opportunity_id')->toArray();
+        $success['user_wishes'] = WishList::where('user_id', auth()->user()->id)->pluck('opportunity_id')->toArray();
+        $success['user_enrollments'] = OpportunityUser::where('user_id', auth()->user()->id)->pluck('opportunity_id')->toArray();
+        $success['opportunities']=Opportunity::whereIn('id', $enrolledOpportunityIds)->with('createdBy')->get();
+        $success['upload_path'] = Opportunity::$_uploadPath;
+        return $this->sendResponse($success, 'opportunities fetch successfully.', 200);
     }
 
     /**
@@ -27,18 +33,7 @@ class WishListController extends Controller
      */
     public function store(Request $request)
     {
-        $userWish = WishList::where('opportunity_id', $request->opportunity_id)
-            ->where('user_id', auth()->user()->id)->first();
-        if (empty($userWish)) {
-
-            $wish = new WishList;
-
-            $wish->user_id = auth()->user()->id;
-            $wish->opportunity_id = $request->opportunity_id;
-            $wish->status = "active";
-            $wish->save();
-        }
-        return Response::json(["message" => 'added to wishlist successfully'], 201);
+        //
     }
 
     /**
@@ -72,7 +67,6 @@ class WishListController extends Controller
      */
     public function destroy($id)
     {
-        WishList::where('opportunity_id', $id)->where('user_id', auth()->user()->id)->delete();
-        return Response::json(["message" => 'removed from wish list successfully'], 200);
+        //
     }
 }

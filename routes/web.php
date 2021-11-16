@@ -38,7 +38,7 @@ Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home
 Route::prefix('/org-admin')->name('org-admin.')->group(function () {
 
     Route::group(['middleware' => ['auth', 'is_org_admin'], "namespace" => "OrgAdmin"], function () {
-
+        Route::apiResource('/user-opportunities', 'OpportunityUserController');  
         Route::view('/home', 'org_admin.home')->name('home');
         Route::resource('/opportunities', 'OpportunityController');
         Route::resource('/profiles', 'ProfileController');

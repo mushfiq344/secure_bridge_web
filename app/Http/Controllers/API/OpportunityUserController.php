@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\User;
-
+namespace App\Http\Controllers\API;
+use App\Http\Controllers\API\BaseController as BaseController;
+use App\Models\OpportunityUser;
+use App\Models\Opportunity;
 use App\Http\Controllers\Controller;
-use App\Models\WishList;
 use Illuminate\Http\Request;
-use Response;
 
-class WishListController extends Controller
+class OpportunityUserController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -20,6 +20,16 @@ class WishListController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -27,18 +37,7 @@ class WishListController extends Controller
      */
     public function store(Request $request)
     {
-        $userWish = WishList::where('opportunity_id', $request->opportunity_id)
-            ->where('user_id', auth()->user()->id)->first();
-        if (empty($userWish)) {
-
-            $wish = new WishList;
-
-            $wish->user_id = auth()->user()->id;
-            $wish->opportunity_id = $request->opportunity_id;
-            $wish->status = "active";
-            $wish->save();
-        }
-        return Response::json(["message" => 'added to wishlist successfully'], 201);
+        //
     }
 
     /**
@@ -53,15 +52,30 @@ class WishListController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id=-1)
     {
-        //
+        $opportunityUser=OpportunityUser::where('opportunity_id',$request->opportunity_id)
+        ->where('user_id',$request->user_id)->first();
+        $opportunityUser->status=$request->status;
+        $opportunityUser->save();
+        return $this->sendResponse(array(), 'user status updated.', 200);
     }
 
     /**
@@ -72,7 +86,6 @@ class WishListController extends Controller
      */
     public function destroy($id)
     {
-        WishList::where('opportunity_id', $id)->where('user_id', auth()->user()->id)->delete();
-        return Response::json(["message" => 'removed from wish list successfully'], 200);
+        //
     }
 }

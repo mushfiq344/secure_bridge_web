@@ -17,6 +17,8 @@ class CreateOpportunityUserTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('opportunity_id');
+            $table->integer('status')->default(0);
+            $table->integer('code')->default(0);
             $table->timestamps();
         });
     }

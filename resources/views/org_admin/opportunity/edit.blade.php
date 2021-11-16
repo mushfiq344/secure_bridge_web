@@ -20,7 +20,7 @@
 @section('scripts')
 <script src="//cdn.ckeditor.com/4.15.1/basic/ckeditor.js"></script>
 <script>
-CKEDITOR.replace('description');
+// CKEDITOR.replace('description');
 </script>
 <script src="{{asset('frontend/drag-drop-image-uploader/dist/image-uploader.min.js')}}"></script>
 @if(isset($opportunity->icon_image))
