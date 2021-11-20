@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('/user/opportunities', 'API\User\OpportunityController');  
 
-   
+    Route::post('/update-fcm-token', 'API\FirebaseController@updateFCMToken');  
 
     Route::get('/profile', function (Request $request) {
         return auth()->user();
