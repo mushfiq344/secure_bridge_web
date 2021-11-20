@@ -61,3 +61,5 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('message-users', 'MessagesController@loadUsers')->name('load.users');
 });
+
+// Route::get('/send-notification', 'API\FirebaseController@notification')->name('notification.send');
