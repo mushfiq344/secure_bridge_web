@@ -21,6 +21,8 @@ class CreateNotificationsTable extends Migration
             $table->integer('is_deleted')->default(0);
             $table->string('title');
             $table->string('message');
+            $table->string('notifiable_type');
+            $table->integer('notifiable_id');
             $table->timestamps();
         });
     }

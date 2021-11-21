@@ -34,6 +34,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/update-fcm-token', 'API\FirebaseController@updateFCMToken');  
 
+
+    Route::apiResource('/notifications', 'API\NotificationController');  
+
     Route::get('/profile', function (Request $request) {
         return auth()->user();
     });
