@@ -28,5 +28,7 @@ class Status extends Model
     public static $notificationStatusValues=array(
         "Unseen"=>"0",
         "Seen"=> "1"
-    );  
+    );
+    
+   
 }

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\User;
-
+use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
 use App\Models\Opportunity;
@@ -10,7 +10,7 @@ use App\Models\WishList;
 use Illuminate\Http\Request;
 use Response;
 
-class WishListController extends Controller
+class WishListController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -40,6 +40,8 @@ class WishListController extends Controller
             $wish->opportunity_id = $request->opportunity_id;
             $wish->status = "active";
             $wish->save();
+
+
             $opportunity=Opportunity::findOrFail($request->opportunity_id);
             $user=User::findOrFail($opportunity->created_by);
            
@@ -55,7 +57,8 @@ class WishListController extends Controller
             Notification::sendNotification([$user->fcm_token],$notification->title,$notification->message);
 
         }
-        return Response::json(["message" => 'added to wishlist successfully'], 201);
+        return $this->sendResponse( array(),'added to wishlist successfully', 201);
+      
     }
 
     /**

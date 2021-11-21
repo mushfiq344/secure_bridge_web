@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\OrgAdmin;
 use App\SecureBridges\Helpers\CustomHelper;
 use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Controllers\Controller;
+use App\Models\Notification;
 use App\Models\Opportunity;
 use App\Models\Status;
 use App\Models\OpportunityUser;
@@ -142,6 +143,7 @@ class OpportunityController extends BaseController
         $opportunity = Opportunity::destroy($id);
         OpportunityUser::where('opportunity_id', $id)->delete();
         WishList::where('opportunity_id', $id)->delete();
+        Notification::where('notifiable_type','opportunity')->where('notifiable_id',$id)->delete();
         
         $success = array(
             "opportunity" => $opportunity,
