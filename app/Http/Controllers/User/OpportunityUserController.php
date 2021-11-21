@@ -7,8 +7,10 @@ use App\Models\OpportunityUser;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Response;
-
-class OpportunityUserController extends Controller
+use App\Models\Opportunity;
+use App\Models\Notification;
+use App\Http\Controllers\API\BaseController as BaseController;
+class OpportunityUserController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -39,10 +41,23 @@ class OpportunityUserController extends Controller
             $opportunityUser->opportunity_id = $request->opportunity_id;
             $opportunityUser->code = mt_rand(100000,999999);
             $opportunityUser->save();
-        }
-     
-        return Response::json(["message" => 'added to enrollment list successfully'], 201);
 
+
+            $opportunity=Opportunity::findOrFail($request->opportunity_id);
+            $user=User::findOrFail($opportunity->created_by);
+           
+            $notification=new Notification();
+
+            $notification->user_id=$opportunity->created_by;
+            $notification->title="Enrollment in opportunity";
+            $notification->message= auth()->user()->email." Enrolled in ".$opportunity->title;
+            $notification->notifiable_type="opportunity";
+            $notification->notifiable_id=$opportunity->id;
+            $notification->save();
+
+            Notification::sendNotification([$user->fcm_token],$notification->title,$notification->message);
+        }
+        return $this->sendResponse( array(),'added to enrollment list successfully', 201);
     }
 
     /**

@@ -32,6 +32,8 @@ class RegisterController extends BaseController
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
+        $user->fcm_token=$request->fcm_token;
+        $user->save();
         $success['token'] = $user->createToken('MyApp')->plainTextToken;
         $success['user'] = array("name" => $user->name,
             "email" => $user->email,
@@ -51,8 +53,13 @@ class RegisterController extends BaseController
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
+            $user->fcm_token=$request->fcm_token;
+            $user->save();
             $success['token'] = $user->createToken('MyApp')->plainTextToken;
-            $success['user'] = array("name" => $user->name, "email" => $user->email, "id" => $user->id, "user_type"=>$user->user_type,"profile_image" => User::getUserPhoto($user->id));
+            $success['user'] = array("name" => $user->name, "email" => $user->email, "id" => $user->id, 
+            "user_type"=>$user->user_type,
+            "fcm_token"=>$request->fcm_token,
+            "profile_image" => User::getUserPhoto($user->id));
 
             return $this->sendResponse($success, 'User login successfully.');
         } else {

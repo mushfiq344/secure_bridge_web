@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\API\BaseController as BaseController;
+use App\Models\Notification;
 use App\Models\Opportunity;
 use App\Models\OpportunityUser;
 use App\Models\Status;
@@ -27,7 +28,7 @@ class OpportunityController extends BaseController
         $success['min_duration'] = $minDuration;
         $success['max_reward'] = $maxReward;
         $success['min_reward'] = $minReward;
-
+        $success['has_active_notifications']=Notification::where('user_id',auth()->user()->id)->where('status',Status::$notificationStatusValues['Unseen'])->exists();
         $success['opportunities'] = Opportunity::with('createdBy')->get();
         $success['upload_path'] = Opportunity::$_uploadPath;
         $success['user_wishes'] = WishList::where('user_id', auth()->user()->id)->pluck('opportunity_id')->toArray();

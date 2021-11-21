@@ -23,4 +23,12 @@ class Status extends Model
         "Participated"=>"3",
         "Rewarded"=>"4"
     );   
+
+
+    public static $notificationStatusValues=array(
+        "Unseen"=>"0",
+        "Seen"=> "1"
+    );
+    
+   
 }

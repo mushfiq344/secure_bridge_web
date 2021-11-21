@@ -6,6 +6,8 @@ use App\Models\OpportunityUser;
 use App\Models\Opportunity;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Notification;
+use App\Models\User;
 
 class OpportunityUserController extends BaseController
 {
@@ -75,6 +77,20 @@ class OpportunityUserController extends BaseController
         ->where('user_id',$request->user_id)->first();
         $opportunityUser->status=$request->status;
         $opportunityUser->save();
+
+        $opportunity=Opportunity::findOrFail($request->opportunity_id);
+        $user=User::findOrFail($request->user_id);
+
+        $notification=new Notification();   
+        $notification->user_id=$user->id;
+        $notification->title=$request->status;
+        $notification->message= "Admin ".$request->status." your enrollment";
+        $notification->notifiable_type="opportunity";
+        $notification->notifiable_id=$opportunity->id;
+        $notification->save();
+
+        Notification::sendNotification([$user->fcm_token],$notification->title,$notification->message);
+
         return $this->sendResponse(array(), 'user status updated.', 200);
     }
 
