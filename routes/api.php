@@ -19,6 +19,8 @@ Route::post('auth/google',[RegisterController::class, 'requestTokenGoogle']);
 Route::post('password/email', 'API\ForgotPasswordController@forgot');
 Route::middleware('auth:sanctum')->group(function () {
     
+    Route::post('complete-registration', 'API\RegisterController@completeRegistration')->name('registration.completion');
+
     Route::resource('/opportunities', 'API\OpportunityController');
     Route::post('fetch-user-opportunity-related-info', 'API\OpportunityController@fetchUserOpportunityRelatedInfo')->name('fetch.user-opportunity-related-info');
     Route::apiResource('/user-opportunities', 'API\OpportunityUserController');  

@@ -102,7 +102,7 @@ class RegisterController extends BaseController
         $success['token'] = $user->createToken('MyApp')->plainTextToken;
         $success['user'] = array("name" => $user->name, "email" => $user->email, "id" => $user->id, "user_type"=>$user->user_type,"profile_image" => User::getUserPhoto($user->id),
         "reg_completed"=>$user->reg_completed,
-        "has_create_opportunity_permission"=>PlanUser::where('user_id',auth()->user()->id)->where('plan_id',2)->where('end_date','>',date('Y-m-d'))->exists()
+        "has_create_opportunity_permission"=>PlanUser::where('user_id', $user->id)->where('plan_id',2)->where('end_date','>',date('Y-m-d'))->exists()
     );
         return $this->sendResponse($success, 'User login successfully.');
 
@@ -111,5 +111,27 @@ class RegisterController extends BaseController
         // $token = $userFromDb->createToken('Laravel Sanctum Client')->plainTextToken;
         // $response = ['token' => $token, 'message' => 'Google Login/Signup Successful'];
         // return response($response, 200);
+
+        
+    }
+
+    public function completeRegistration(Request $request) {
+        $user=User::findOrFail(auth()->user()->id);
+        if($user->reg_completed==0){
+            $user->user_type=$request->selected_type;
+            $user->reg_completed=1;
+            $user->save();
+            $success['user'] = array("name" => $user->name, "email" => $user->email, "id" => $user->id, "user_type"=>$user->user_type,"profile_image" => User::getUserPhoto($user->id),
+            "reg_completed"=>$user->reg_completed,
+            "has_create_opportunity_permission"=>PlanUser::where('user_id',auth()->user()->id)->where('plan_id',2)->where('end_date','>',date('Y-m-d'))->exists()
+        );
+            return $this->sendResponse($success, 'User login successfully.');
+
+        }else{
+            return $this->sendError('You can not change anymore.',[], 403);
+        }
+       
+
+
     }
 }
