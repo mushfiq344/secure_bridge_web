@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use Laravel\Socialite\Facades\Socialite;
+use App\Models\PlanUser;
 
 class RegisterController extends BaseController
 {
@@ -39,7 +40,9 @@ class RegisterController extends BaseController
             "email" => $user->email,
             "id" => $user->id,
             "user_type"=>$user->user_type,
-            "profile_image" => User::getUserPhoto($user->id));
+            "profile_image" => User::getUserPhoto($user->id),
+            "has_create_opportunity_permission"=>false
+        );
 
         return $this->sendResponse($success, 'User register successfully.', 201);
     }
@@ -59,7 +62,9 @@ class RegisterController extends BaseController
             $success['user'] = array("name" => $user->name, "email" => $user->email, "id" => $user->id, 
             "user_type"=>$user->user_type,
             "fcm_token"=>$request->fcm_token,
-            "profile_image" => User::getUserPhoto($user->id));
+            "profile_image" => User::getUserPhoto($user->id),
+            "has_create_opportunity_permission"=>PlanUser::where('user_id',auth()->user()->id)->where('plan_id',2)->where('end_date','>',date('Y-m-d'))->exists()
+        );
 
             return $this->sendResponse($success, 'User login successfully.');
         } else {
@@ -93,7 +98,9 @@ class RegisterController extends BaseController
 
 
         $success['token'] = $user->createToken('MyApp')->plainTextToken;
-        $success['user'] = array("name" => $user->name, "email" => $user->email, "id" => $user->id, "user_type"=>$user->user_type,"profile_image" => User::getUserPhoto($user->id));
+        $success['user'] = array("name" => $user->name, "email" => $user->email, "id" => $user->id, "user_type"=>$user->user_type,"profile_image" => User::getUserPhoto($user->id),
+        "has_create_opportunity_permission"=>PlanUser::where('user_id',auth()->user()->id)->where('plan_id',2)->where('end_date','>',date('Y-m-d'))->exists()
+    );
         return $this->sendResponse($success, 'User login successfully.');
 
        

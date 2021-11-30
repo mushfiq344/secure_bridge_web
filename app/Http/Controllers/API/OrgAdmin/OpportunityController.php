@@ -140,10 +140,11 @@ class OpportunityController extends BaseController
         if (file_exists($fileName)) {
             \File::delete($fileName);
         }
-        $opportunity = Opportunity::destroy($id);
+     
         OpportunityUser::where('opportunity_id', $id)->delete();
         WishList::where('opportunity_id', $id)->delete();
         Notification::where('notifiable_type','opportunity')->where('notifiable_id',$id)->delete();
+        $opportunity = Opportunity::destroy($id);
         
         $success = array(
             "opportunity" => $opportunity,

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Notification;
 use App\Models\User;
+use App\Models\Status;
 
 class OpportunityUserController extends BaseController
 {
@@ -84,7 +85,7 @@ class OpportunityUserController extends BaseController
         $notification=new Notification();   
         $notification->user_id=$user->id;
         $notification->title=$request->status;
-        $notification->message= "Admin ".$request->status." your enrollment";
+        $notification->message= "Admin ".Status::$userStatusNames[$request->status]." your enrollment";
         $notification->notifiable_type="opportunity";
         $notification->notifiable_id=$opportunity->id;
         $notification->save();

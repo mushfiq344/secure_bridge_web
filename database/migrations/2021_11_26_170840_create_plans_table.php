@@ -19,6 +19,8 @@ class CreatePlansTable extends Migration
             $table->string('description')->nullable();
             $table->decimal('amount',10,2);
             $table->integer('duration');
+            $table->tinyInteger('type');
+            $table->tinyInteger('mode');
             $table->timestamps();
         });
     }

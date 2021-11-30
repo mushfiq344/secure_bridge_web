@@ -16,13 +16,13 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('transaction_id');
+            $table->string('transaction_code')->unique();
             $table->decimal('amount',10,2);
             $table->decimal('discount',10,2)->default(0);
             $table->string('method')->nullable();
             $table->tinyInteger('type')->default(0);
             $table->tinyInteger('status')->default(0);
-            $table->json('payload');
+            $table->json('payload')->nullable();
             
             $table->timestamps();
         });

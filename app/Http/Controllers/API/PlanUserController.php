@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\API\OrgAdmin;
-
+namespace App\Http\Controllers\API;
+use App\Http\Controllers\API\BaseController as BaseController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Plan;
-use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\PlanUser;
+use App\Models\Transaction;
 
-class PlanController extends BaseController
+class PlanUserController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -18,18 +18,7 @@ class PlanController extends BaseController
      */
     public function index()
     {
-        $userTypes=User::getTypes();
-        if(auth()->user()->user_type==$userTypes['Organizational Admin']){
-            $monthlyPlans=Plan::where('type',Plan::$planTypesValues['monthly'])->get();
-            $yearlyPlans=Plan::where('type',Plan::$planTypesValues['yearly'])->get();
-            $success['monthly_plans']= $monthlyPlans;
-            $success['yearly_plans']= $yearlyPlans;
-            $userActiveSubscribedPlans=PlanUser::where('user_id',auth()->user()->id)->where('end_date','>',date('Y-m-d'))->pluck('plan_id')->toArray();
-            $success['user_subscribed_plans']=$userActiveSubscribedPlans;
-            return $this->sendResponse($success, 'plans fetched successfully.', 200);
-        }else{
-            return $this->sendError('Unauthorized',['User can not be authorized'], 401);
-        }
+        //
     }
 
     /**
@@ -50,7 +39,20 @@ class PlanController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        $userTypes=User::getTypes();
+        if(auth()->user()->user_type==$userTypes['Organizational Admin']){
+            $plan=Plan::findOrFail($request->plan_id);
+           
+            $response=PlanUser::subscribeUser($plan);
+            if($response['successful']){
+                return $this->sendResponse(array(),$response['message'], $response['code']);
+            }else{
+                return $this->sendError($response['message'],[], $response['code']);
+            }
+           
+        }else{
+            return $this->sendError('Unauthorized',['User can not be authorized'], 401);
+        }
     }
 
     /**

@@ -19,7 +19,9 @@ class CreatePlanUserTable extends Migration
             $table->integer('user_id');
             $table->date('start_date');
             $table->date('end_date');
-            $table->tinyInteger('status');
+            $table->bigInteger('transaction_id')->unsigned();
+            $table->tinyInteger('status')->default(0);
+            $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
             $table->timestamps();
         });
     }

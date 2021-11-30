@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plan;
+use App\Models\PlanUser;
 use App\Models\Transaction;
 use App\Models\WishList;
 use Illuminate\Http\Request;
@@ -242,17 +243,18 @@ class CustomStripeWebHookController extends Controller
 
         //$payload['data']['object']['id'];
         //$payload['data']['object']['amount'];
-        $transaction=new Transaction();
-    
-        $transaction->user_id=1;// need to chage
-        $transaction->transaction_id=$payload['data']['object']['id'];
+        $data=array();
+        $data['user_id']=$payload['data']['object']['metadata']['user_id'];
+        $data['plan_id']=$payload['data']['object']['metadata']['plan_id'];
+        $data['transaction_code']=$payload['data']['object']['id'];
+        $data['amount']=$payload['data']['object']['amount']/100;
+
+        PlanUser::subscribeUser($data,$payload);
+
         
-        $transaction->amount=$payload['data']['object']['amount'];
-        $transaction->method =$payload['data']['object']['payment_method'];
-        //add status
-        //add type
-        $transaction->payload= json_encode($payload);
-        $transaction->save();
+
+        
+        
 
         return $this->successMethod();
     }
