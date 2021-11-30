@@ -7,6 +7,8 @@ use App\Models\Notification;
 use App\Models\Opportunity;
 use App\Models\OpportunityUser;
 use App\Models\Status;
+use App\Models\User;
+use App\Models\PlanUser;
 use App\Models\WishList;
 use App\SecureBridges\Helpers\CustomHelper;
 use Illuminate\Http\Request;
@@ -33,6 +35,8 @@ class OpportunityController extends BaseController
         $success['upload_path'] = Opportunity::$_uploadPath;
         $success['user_wishes'] = WishList::where('user_id', auth()->user()->id)->pluck('opportunity_id')->toArray();
         $success['user_enrollments'] = OpportunityUser::where('user_id', auth()->user()->id)->pluck('opportunity_id')->toArray();
+        $success["has_create_opportunity_permission"]=PlanUser::where('user_id', auth()->user()->id)->where('plan_id', 2)->where('end_date', '>', date('Y-m-d'))->exists();
+        
         return $this->sendResponse($success, 'opportunities fetch successfully.', 200);
 
     }
