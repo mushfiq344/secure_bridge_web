@@ -1,16 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API;
-use App\Http\Controllers\API\BaseController as BaseController;
-use App\Models\OpportunityUser;
-use App\Models\Opportunity;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Notification;
-use App\Models\User;
-use App\Models\Status;
+namespace App\Http\Controllers\Admin;
 
-class OpportunityUserController extends BaseController
+use App\Http\Controllers\Controller;
+use App\Models\Plan;
+use Illuminate\Http\Request;
+
+class PlanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,7 +25,7 @@ class OpportunityUserController extends BaseController
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -40,7 +36,12 @@ class OpportunityUserController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        $plan=new Plan();
+        $plan->title="Yearly Subscription";
+        $plan->description="Valid For 365 Days";
+        $plan->amount=1000;
+        $plan->duration=365;
+       $plan->save();
     }
 
     /**
@@ -72,27 +73,9 @@ class OpportunityUserController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id=-1)
+    public function update(Request $request, $id)
     {
-        $opportunityUser=OpportunityUser::where('opportunity_id',$request->opportunity_id)
-        ->where('user_id',$request->user_id)->first();
-        $opportunityUser->status=$request->status;
-        $opportunityUser->save();
-
-        $opportunity=Opportunity::findOrFail($request->opportunity_id);
-        $user=User::findOrFail($request->user_id);
-
-        $notification=new Notification();   
-        $notification->user_id=$user->id;
-        $notification->title=$request->status;
-        $notification->message= "Admin ".Status::$userStatusNames[$request->status]." your enrollment";
-        $notification->notifiable_type="opportunity";
-        $notification->notifiable_id=$opportunity->id;
-        $notification->save();
-
-        Notification::sendNotification([$user->fcm_token],$notification->title,$notification->message);
-
-        return $this->sendResponse(array(), 'user status updated.', 200);
+        //
     }
 
     /**

@@ -63,3 +63,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::get('/send-notification', 'API\FirebaseController@notification')->name('notification.send');
+
+
+Route::post('webhook-custom/stripe', 'CustomStripeWebHookController@handleWebhook');
+
