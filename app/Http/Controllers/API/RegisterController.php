@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\PlanUser;
+use Exception;
 
 class RegisterController extends BaseController
 {
@@ -19,34 +20,41 @@ class RegisterController extends BaseController
      */
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'c_password' => 'required|same:password',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Validation Error.', $validator->errors());
+        try{
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'email' => 'required|email',
+                'password' => 'required',
+                'c_password' => 'required|same:password',
+            ]);
+    
+            if ($validator->fails()) {
+                return $this->sendError('Validation Error.', $validator->errors());
+            }
+    
+            $input = $request->all();
+            $input['password'] = bcrypt($input['password']);
+            $user = User::create($input);
+            $user->fcm_token = $request->fcm_token;
+            $user->save();
+            $success['token'] = $user->createToken('MyApp')->plainTextToken;
+            $success['user'] = array(
+                "name" => $user->name,
+                "email" => $user->email,
+                "id" => $user->id,
+                "reg_completed" => $user->reg_completed,
+                "user_type" => $user->user_type,
+                "profile_image" => User::getUserPhoto($user->id),
+                "has_create_opportunity_permission" => false
+            );
+    
+            return $this->sendResponse($success, 'User register successfully.', 201);
+        }catch (\Exception $e) {
+          
+            return $this->sendError('Validation Error.',[]);
+           
         }
 
-        $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
-        $user = User::create($input);
-        $user->fcm_token = $request->fcm_token;
-        $user->save();
-        $success['token'] = $user->createToken('MyApp')->plainTextToken;
-        $success['user'] = array(
-            "name" => $user->name,
-            "email" => $user->email,
-            "id" => $user->id,
-            "reg_completed" => $user->reg_completed,
-            "user_type" => $user->user_type,
-            "profile_image" => User::getUserPhoto($user->id),
-            "has_create_opportunity_permission" => false
-        );
-
-        return $this->sendResponse($success, 'User register successfully.', 201);
     }
 
     /**
