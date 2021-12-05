@@ -72,11 +72,10 @@ class OpportunityUserController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id=-1)
+    public function update(Request $request, $id)
     {
-        $opportunityUser=OpportunityUser::where('opportunity_id',$request->opportunity_id)
-        ->where('user_id',$request->user_id)->first();
-        $opportunityUser->status=$request->status;
+        $opportunityUser=OpportunityUser::findOrFail($id);
+        $opportunityUser->status=$request->updated_status;
         $opportunityUser->save();
 
         $opportunity=Opportunity::findOrFail($request->opportunity_id);
@@ -84,8 +83,8 @@ class OpportunityUserController extends BaseController
 
         $notification=new Notification();   
         $notification->user_id=$user->id;
-        $notification->title=$request->status;
-        $notification->message= "Admin ".Status::$userStatusNames[$request->status]." your enrollment";
+        $notification->title=Status::$userStatusNames[$request->updated_status];
+        $notification->message= "Admin ".Status::$userStatusNames[$request->updated_status]." your enrollment";
         $notification->notifiable_type="opportunity";
         $notification->notifiable_id=$opportunity->id;
         $notification->save();
