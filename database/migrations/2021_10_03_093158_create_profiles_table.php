@@ -19,8 +19,9 @@ class CreateProfilesTable extends Migration
             $table->string('full_name');
             $table->string('photo');
             $table->string('address');
-            $table->string('gender');
+            $table->tinyInteger('gender')->default(0);
             $table->boolean('is_active')->default(0);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

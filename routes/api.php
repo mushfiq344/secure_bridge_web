@@ -42,8 +42,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('/notifications', 'API\NotificationController');  
 
-    Route::get('/profile', function (Request $request) {
-        return auth()->user();
-    });
+    Route::apiResource('/profile', 'API\ProfileController');
+
+    // Route::get('/profile', function (Request $request) {
+    //     return auth()->user();
+    // });
     Route::post('logout', [RegisterController::class, 'logout']);
 });
