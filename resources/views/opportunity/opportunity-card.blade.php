@@ -84,7 +84,7 @@ $userTypes = \App\Models\User::getTypes();
                     </h4>
                 </div>
             </div>
-            <p>{{\App\SecureBridges\Helpers\CustomHelper::limit_text($opportunity->description,15)}}</p>
+            <p>{{\App\SecureBridges\Helpers\CustomHelper::limit_text($opportunity->subtitle,15)}}</p>
             <a href="/opportunities/{{$opportunity->slug}}" class="read-more-link">
                 Read More <span>&#10230;</span>
             </a>
