@@ -17,6 +17,7 @@ class CreateOpportunitiesTable extends Migration
             $table->id();
             $table->BigInteger('created_by')->unsigned();
             $table->string('title');
+            $table->string('slug')->unique();
             $table->text('subtitle', 500)->nullable();
             $table->text('description', 10000)->nullable();
             $table->date('opportunity_date')->nullable();
@@ -26,6 +27,7 @@ class CreateOpportunitiesTable extends Migration
             $table->string('cover_image')->nullable();
             $table->string('icon_image')->nullable();
             $table->boolean('is_active')->default(false);
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
