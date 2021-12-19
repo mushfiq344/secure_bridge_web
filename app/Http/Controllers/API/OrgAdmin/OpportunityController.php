@@ -115,7 +115,7 @@ class OpportunityController extends BaseController
         $opportunity->duration = $request->duration;
         $opportunity->reward = $request->reward;
         $opportunity->type = $request->type;
-
+        $opportunity->status=$request->status;
         $opportunity->save();
         $success = array(
             "opportunity" => $opportunity,
