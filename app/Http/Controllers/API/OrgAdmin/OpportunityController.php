@@ -52,7 +52,7 @@ class OpportunityController extends BaseController
         $opportunity->opportunity_date = $request->opportunity_date;
         $opportunity->duration = $request->duration;
         $opportunity->reward = $request->reward;
-        // $opportunity->type = $request->type;
+       $opportunity->type = $request->type;
         $opportunity->icon_image = $iconImageName;
         $opportunity->cover_image = $coverImageName;
         $opportunity->slug = CustomHelper::generateSlug($request->title, 'opportunities');
@@ -114,7 +114,7 @@ class OpportunityController extends BaseController
         $opportunity->opportunity_date = $request->opportunity_date;
         $opportunity->duration = $request->duration;
         $opportunity->reward = $request->reward;
-        // $opportunity->type = $request->type;
+        $opportunity->type = $request->type;
 
         $opportunity->save();
         $success = array(
