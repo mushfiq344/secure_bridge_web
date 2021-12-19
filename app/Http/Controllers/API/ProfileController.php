@@ -50,7 +50,7 @@ class ProfileController extends BaseController
             $profile->save();
             $user = User::findOrFail(auth()->user()->id);
             $success['user'] = array(
-                "name" => $user->name, "email" => $user->email, "id" => $user->id,
+                "name" => $profile->full_name, "email" => $user->email, "id" => $user->id,
                 "user_type" => $user->user_type,
                 "reg_completed" => $user->reg_completed,
                 "fcm_token" => $request->fcm_token,
@@ -108,7 +108,7 @@ class ProfileController extends BaseController
 
             $user = User::findOrFail(auth()->user()->id);
             $success['user'] = array(
-                "name" => $user->name, "email" => $user->email, "id" => $user->id,
+                "name" => $profile->full_name, "email" => $user->email, "id" => $user->id,
                 "user_type" => $user->user_type,
                 "reg_completed" => $user->reg_completed,
                 "fcm_token" => $request->fcm_token,
