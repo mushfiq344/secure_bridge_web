@@ -180,11 +180,11 @@ var my_id = "{{ Auth::id() }}";
 var priority_user_id = "{{!empty($selectedId)?$selectedId:''}}";
 
 // ajax setup form csrf token
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
+// $.ajaxSetup({
+//     headers: {
+//         'X-CSRF-TOKEN': '{{ csrf_token() }}'
+//     }
+// });
 
 // Enable pusher logging - don't include this in production
 Pusher.logToConsole = true;
@@ -237,7 +237,7 @@ $(document).on("click", ".user", function() {
         data: "",
         cache: false,
         success: function(data) {
-            console.log('message from user', data);
+            // console.log('message from user', data);
             $('#messages').html(data);
             scrollToBottomFunc();
         }
@@ -251,8 +251,12 @@ $(document).on('keyup', '#send_message_field', function(e) {
     // check if enter key is pressed and message is not null also receiver is selected
     if (e.keyCode == 13 && message != '' && active_tab_sender_id != '') {
         $(this).val(''); // while pressed enter text box will be empty
+        var datastr = {
+            "_token": "{{ csrf_token() }}",
+            "active_tab_sender_id":active_tab_sender_id,
+            "message":message,
 
-        var datastr = "active_tab_sender_id=" + active_tab_sender_id + "&message=" + message;
+        }
         $.ajax({
             type: "post",
             url: "{{url('message')}}", // need to create this post route
@@ -357,5 +361,28 @@ loadUsers();
 </script>
 
 @endif
+<script type="text/javascript" src="{{asset('js/echo.js')}}"></script>
 
+<script>
+    window.Laravel = <?php echo json_encode([
+        'csrfToken' => csrf_token(),
+    ]); ?>;
+    var module = { }; /*   <-----THIS LINE */
+</script>
+<script>
+    window.Echo = new Echo({
+        broadcaster: 'pusher',
+        key: '{{env("PUSHER_KEY")}}',
+        cluster: 'eu',
+        encrypted: true,
+        authEndpoint: '{{env("APP_URL")}}/broadcasting/auth'
+    });
+</script>
+<script>
+window.Echo.channel('public_channel')
+.listen('.testing', (e) => {
+    console.log("Received Data: ");
+    console.log(e);
+});
+</script>
 @endsection

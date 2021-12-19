@@ -118,7 +118,7 @@ class ProfileController extends BaseController
             );
             return $this->sendResponse($success, 'profile uppdated successfully.', 200);
         }else{
-            return $this->sendResponse('You can not change this profile',[], 403);
+            return $this->sendError('You can not change this profile',[], 403);
         }
     }
 

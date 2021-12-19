@@ -17,7 +17,14 @@
         "lodash": "^4.17.19",
         "popper.js": "^1.16.1",
         "postcss": "^8.1.14",
+        "resolve-url-loader": "^4.0.0",
         "sass": "^1.32.11",
         "sass-loader": "^11.0.1"
+    },
+    "dependencies": {
+        "-": "^0.0.1",
+        "laravel-echo": "^1.11.3",
+        "pusher-js": "^7.0.3",
+        "save": "^2.4.0"
     }
 }
