@@ -85,7 +85,7 @@ class ProfileController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        $profile = Profile::find($id)->first();
+        $profile = Profile::findOrFail($id);
         if ($profile->user_id == auth()->user()->id) {
             if ($request->profile_image) {
                 // delete file
@@ -118,7 +118,7 @@ class ProfileController extends BaseController
             );
             return $this->sendResponse($success, 'profile uppdated successfully.', 200);
         }else{
-            return $this->sendResponse('You can not change this profile',[], 403);
+            return $this->sendError('You can not change this profile',[], 403);
         }
     }
 
