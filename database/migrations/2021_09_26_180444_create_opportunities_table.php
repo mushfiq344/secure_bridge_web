@@ -28,6 +28,7 @@ class CreateOpportunitiesTable extends Migration
             $table->string('icon_image')->nullable();
             $table->string('location')->nullable();
             $table->boolean('is_active')->default(false);
+            $table->tinyInteger('status')->default(0);
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
