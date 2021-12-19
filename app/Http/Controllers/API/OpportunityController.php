@@ -32,7 +32,7 @@ class OpportunityController extends BaseController
         $success['max_reward'] = $maxReward;
         $success['min_reward'] = $minReward;
         $success['has_active_notifications'] = Notification::where('user_id', auth()->user()->id)->where('status', Status::$notificationStatusValues['Unseen'])->exists();
-        $success['opportunities'] = Opportunity::with('createdBy')->get();
+        $success['opportunities'] = Opportunity::where('status',Opportunity::$opportunityStatusValues['Published'])->with('createdBy')->get();
         $success['upload_path'] = Opportunity::$_uploadPath;
         $success['user_wishes'] = WishList::where('user_id', auth()->user()->id)->pluck('opportunity_id')->toArray();
         $success['user_enrollments'] = OpportunityUser::where('user_id', auth()->user()->id)->pluck('opportunity_id')->toArray();
