@@ -80,7 +80,7 @@ class OpportunityUserController extends BaseController
 
         $opportunity=Opportunity::findOrFail($request->opportunity_id);
         if($opportunity->status==Opportunity::$opportunityStatusValues['Rewarding']){
-            $totalUnRewardedopportunityUsers=OpportunityUser::where($request->opportunity_id)->where('status',Status::$userStatusValues['Participated'])->count();
+            $totalUnRewardedopportunityUsers=OpportunityUser::where('opportunity_id',$request->opportunity_id)->where('status',Status::$userStatusValues['Participated'])->count();
             if($totalUnRewardedopportunityUsers==0){
                 $opportunity->status=Opportunity::$opportunityStatusValues['Finished'];
                 $opportunity->save();
