@@ -12,6 +12,23 @@ class Opportunity extends Model
     use HasFactory;
     public static $_uploadPath = 'uploads/images/opportunities/';
     protected $table = "opportunities";
+    public static $opportunityStatusNames=array(
+        "0"=>"Drafted",
+        "1"=>"Published",
+        "2"=>"Currently Happening",
+        "3"=>"Rewarding",
+        "4"=>"Finished"
+    );
+
+    public static $opportunityStatusValues=array(
+        "Drafted"=>"0",
+        "Published"=> "1",
+        "Currently Happening"=>"2",
+        "Rewarding"=>"3",
+        "Finished"=>"4"
+    );   
+
+
 
     public function users()
     {
