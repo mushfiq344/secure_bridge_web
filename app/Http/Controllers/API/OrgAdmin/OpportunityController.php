@@ -21,7 +21,7 @@ class OpportunityController extends BaseController
      */
     public function index()
     {
-        $success['opportunities'] = Opportunity::where('created_by', auth()->user()->id)->with('createdBy')->get();
+        $success['opportunities'] = Opportunity::where('created_by', auth()->user()->id)->where('status',Opportunity::$opportunityStatusValues["Published"])->with('createdBy')->get();
         $success['upload_path'] = Opportunity::$_uploadPath;
         $success['total_reward'] = Opportunity::where('created_by', auth()->user()->id)->sum('reward');
         $adminOpportunityIds = Opportunity::where('created_by', auth()->user()->id)->pluck('id')->toArray();
