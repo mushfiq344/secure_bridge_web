@@ -16,16 +16,18 @@ class Opportunity extends Model
         "0"=>"Drafted",
         "1"=>"Published",
         "2"=>"Currently Happening",
-        "3"=>"Rewarding",
-        "4"=>"Finished"
+        "3"=>"Ended",
+        "4"=>"Rewarding",
+        "5"=>"Finished"
     );
 
     public static $opportunityStatusValues=array(
         "Drafted"=>0,
         "Published"=> 1,
         "Currently Happening"=>2,
-        "Rewarding"=>3,
-        "Finished"=>4
+        "Ended"=>3,
+        "Rewarding"=>4,
+        "Finished"=>5
     );   
 
 
