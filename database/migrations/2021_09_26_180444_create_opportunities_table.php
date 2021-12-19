@@ -23,7 +23,7 @@ class CreateOpportunitiesTable extends Migration
             $table->date('opportunity_date')->nullable();
             $table->integer('duration')->nullable();
             $table->text('reward', 500)->nullable();
-            $table->integer('type')->default(0);
+            $table->integer('type')->nullable()->default(0);
             $table->string('cover_image')->nullable();
             $table->string('icon_image')->nullable();
             $table->string('location')->nullable();
