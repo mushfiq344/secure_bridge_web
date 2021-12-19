@@ -21,11 +21,11 @@ class Opportunity extends Model
     );
 
     public static $opportunityStatusValues=array(
-        "Drafted"=>"0",
-        "Published"=> "1",
-        "Currently Happening"=>"2",
-        "Rewarding"=>"3",
-        "Finished"=>"4"
+        "Drafted"=>0,
+        "Published"=> 1,
+        "Currently Happening"=>2,
+        "Rewarding"=>3,
+        "Finished"=>4
     );   
 
 
