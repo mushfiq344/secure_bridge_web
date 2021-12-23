@@ -21,7 +21,7 @@ class OpportunityController extends BaseController
      */
     public function index()
     {
-        $success['opportunities'] = Opportunity::where('created_by', auth()->user()->id)->with('createdBy')->get();
+        $success['opportunities'] = Opportunity::where('created_by', auth()->user()->id)->with('createdBy')->orderBy('created_at','desc')->get();
         $success['upload_path'] = Opportunity::$_uploadPath;
         $success['total_reward'] = Opportunity::where('created_by', auth()->user()->id)->sum('reward');
         $adminOpportunityIds = Opportunity::where('created_by', auth()->user()->id)->pluck('id')->toArray();
@@ -41,9 +41,9 @@ class OpportunityController extends BaseController
     public function store(Request $request)
     {
         $coverImage = $request->cover_image;
-        $coverImageName = CustomHelper::saveBase64Image($coverImage, Opportunity::$_uploadPath, 300, 200);
+        $coverImageName = CustomHelper::saveBase64Image($coverImage, Opportunity::$_uploadPath,1024, 576);
         $iconImage = $request->icon_image;
-        $iconImageName = CustomHelper::saveBase64Image($iconImage, Opportunity::$_uploadPath, 300, 200);
+        $iconImageName = CustomHelper::saveBase64Image($iconImage, Opportunity::$_uploadPath, 512, 512);
         $opportunity = new Opportunity;
         $opportunity->title = $request->title;
         $opportunity->created_by = auth()->user()->id;
@@ -56,6 +56,7 @@ class OpportunityController extends BaseController
         $opportunity->icon_image = $iconImageName;
         $opportunity->cover_image = $coverImageName;
         $opportunity->slug = CustomHelper::generateSlug($request->title, 'opportunities');
+        $opportunity->status=$request->status;
         $opportunity->save();
         $success = array(
             "opportunity" => $opportunity,
@@ -92,7 +93,7 @@ class OpportunityController extends BaseController
                 \File::delete($fileName);
             }
 
-            $coverImageName = CustomHelper::saveBase64Image($request->cover_image, Opportunity::$_uploadPath, 1600, 900);
+            $coverImageName = CustomHelper::saveBase64Image($request->cover_image, Opportunity::$_uploadPath, 1024, 576);
             $opportunity->cover_image = $coverImageName;
         }
 
@@ -103,7 +104,7 @@ class OpportunityController extends BaseController
                 \File::delete($fileName);
             }
 
-            $iconImageName = CustomHelper::saveBase64Image($request->icon_image, Opportunity::$_uploadPath, 600, 600);
+            $iconImageName = CustomHelper::saveBase64Image($request->icon_image, Opportunity::$_uploadPath, 512, 512);
             $opportunity->icon_image = $iconImageName;
         }
 
