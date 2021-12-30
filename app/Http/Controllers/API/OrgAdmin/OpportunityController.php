@@ -57,6 +57,7 @@ class OpportunityController extends BaseController
         $opportunity->cover_image = $coverImageName;
         $opportunity->slug = CustomHelper::generateSlug($request->title, 'opportunities');
         $opportunity->status=$request->status;
+        $opportunity->location=$request->location;
         $opportunity->save();
         $success = array(
             "opportunity" => $opportunity,
@@ -117,6 +118,7 @@ class OpportunityController extends BaseController
         $opportunity->reward = $request->reward;
         $opportunity->type = $request->type;
         $opportunity->status=$request->status;
+        $opportunity->location=$request->location;
         $opportunity->save();
         $success = array(
             "opportunity" => $opportunity,
