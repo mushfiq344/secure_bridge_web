@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\PlanUser;
+use App\Models\Profile;
 use Exception;
 
 class RegisterController extends BaseController
@@ -70,8 +71,9 @@ class RegisterController extends BaseController
             $user->fcm_token = $request->fcm_token;
             $user->save();
             $success['token'] = $user->createToken('MyApp')->plainTextToken;
+            $profile = Profile::where('user_id',$user->id)->first();
             $success['user'] = array(
-                "name" => $user->name, "email" => $user->email, "id" => $user->id,
+                "name" => empty($profile)?$user->name:$profile->full_name, "email" => $user->email, "id" => $user->id,
                 "user_type" => $user->user_type,
                 "reg_completed" => $user->reg_completed,
                 "fcm_token" => $request->fcm_token,
@@ -113,8 +115,9 @@ class RegisterController extends BaseController
 
 
         $success['token'] = $user->createToken('MyApp')->plainTextToken;
+        $profile = Profile::where('user_id',$user->id)->first();
         $success['user'] = array(
-            "name" => $user->name, "email" => $user->email, "id" => $user->id, "user_type" => $user->user_type, "profile_image" => User::getUserPhoto($user->id),
+            "name" => empty($profile)?$user->name:$profile->full_name, "email" => $user->email, "id" => $user->id, "user_type" => $user->user_type, "profile_image" => User::getUserPhoto($user->id),
             "reg_completed" => $user->reg_completed,
             "has_create_opportunity_permission" => PlanUser::where('user_id', $user->id)->where('plan_id', 2)->where('end_date', '>', date('Y-m-d'))->exists(),
             "profile"=>$user->profile
