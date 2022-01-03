@@ -80,6 +80,7 @@ class OpportunityController extends BaseController
         $success["user_code"] = !empty($userOpportunity) ? $userOpportunity->code : null;
         $success["opportunity_users"] = $opportunity->users;
         $success["opportunity_creator"] = $opportunity->createdBy;
+        $success["opportunity_tags"] = $opportunity->tags;
 
         return $this->sendResponse($success, 'opportunity fetched successfully.', 200);
     }
