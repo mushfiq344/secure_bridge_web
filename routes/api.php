@@ -31,9 +31,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/choice-list', 'User\OpportunityUserController');
 
 
-    Route::apiResource('/org-admin/opportunities', 'API\OrgAdmin\OpportunityController');  
+    Route::apiResource('/org-admin/opportunities', 'API\OrgAdmin\OpportunityFormController');  
     Route::apiResource('org-admin/plans', 'API\OrgAdmin\PlanController');
-    Route::apiResource('org-admin/user-plans', 'API\PlanUserController');
+  
 
     Route::apiResource('/user/opportunities', 'API\User\OpportunityController');  
 

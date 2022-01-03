@@ -1,18 +1,24 @@
 <?php
 
 namespace App\Http\Controllers\API\OrgAdmin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
 use App\SecureBridges\Helpers\CustomHelper;
 use App\Http\Controllers\API\BaseController as BaseController;
-use App\Http\Controllers\Controller;
+
 use App\Models\Notification;
 use App\Models\Opportunity;
 use App\Models\Status;
 use App\Models\OpportunityUser;
 use App\Models\WishList;
 use Illuminate\Support\Collection;
-use Illuminate\Http\Request;
 
-class OpportunityController extends BaseController
+use App\Models\Tag;
+
+
+class OpportunityFormController extends OrgAdminBaseController
 {
     /**
      * Display a listing of the resource.
@@ -29,6 +35,8 @@ class OpportunityController extends BaseController
         $totalEnrolledUsers  = new Collection($totalEnrolledUsers);
         $success['total_enrolled_users']=count($totalEnrolledUsers->unique()); 
         $success['total_pending_approval']=OpportunityUser::whereIn('opportunity_id', $adminOpportunityIds)->where('status',Status::$userStatusValues["Requested"])->count();
+        
+        $success['engagement_data']=Opportunity::engagementData(auth()->user()->id);
         return $this->sendResponse($success, 'opportunities fetch successfully.', 200);
     }
 
@@ -58,8 +66,18 @@ class OpportunityController extends BaseController
         $opportunity->slug = CustomHelper::generateSlug($request->title, 'opportunities');
         $opportunity->status=$request->status;
         $opportunity->location=$request->location;
+       
+        
         $opportunity->save();
-        $success = array(
+     
+        foreach($request->tag_values as $tag){
+            $newTag=new Tag();
+            $newTag->title=$tag;
+            $newTag->opportunity_id=$opportunity->id;
+            $newTag->save();
+           
+         }
+         $success = array(
             "opportunity" => $opportunity,
         );
         return $this->sendResponse($success, 'opportunity created successfully.', 201);
@@ -73,7 +91,15 @@ class OpportunityController extends BaseController
      */
     public function show($id)
     {
-        //
+        $opportunity = Opportunity::where('id',$id)->with(['createdBy','tags'])->firstOrFail();
+        if($opportunity->created_by==auth()->user()->id){
+            $success["opportunity"] = $opportunity;
+            
+            return $this->sendResponse($success, 'opportunity fetched successfully.', 200);
+        }else{
+            return $this->sendError('You dont have permission', [], 403);
+        }
+       
     }
 
     /**
@@ -120,6 +146,14 @@ class OpportunityController extends BaseController
         $opportunity->status=$request->status;
         $opportunity->location=$request->location;
         $opportunity->save();
+        Tag::where('opportunity_id', $request->id)->delete();
+        foreach($request->tag_values as $tag){
+            $newTag=new Tag();
+            $newTag->title=$tag;
+            $newTag->opportunity_id=$opportunity->id;
+            $newTag->save();
+           
+         }
         $success = array(
             "opportunity" => $opportunity,
         );
@@ -152,6 +186,7 @@ class OpportunityController extends BaseController
         $success = array(
             "opportunity" => $opportunity,
         );
+        
         return $this->sendResponse($success, 'opportunity deleted successfully.', 200);
     }
 }

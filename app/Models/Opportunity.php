@@ -77,4 +77,14 @@ class Opportunity extends Model
         return $opportunity->title;
     }
 
+    public static function engagementData($orgAdminUserId){
+       $opportunityIds=Opportunity::where('created_by', auth()->user()->id)->pluck('id')->toArray();
+       return $opportunityIds;
+    }
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class,'opportunity_id','id');
+    }
+
 }

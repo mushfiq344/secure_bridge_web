@@ -15,7 +15,7 @@ class CreateNotificationsTable extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->BigInteger('user_id')->unsigned();
             $table->integer('type')->default(0);
             $table->integer('status')->default(0);
             $table->integer('is_deleted')->default(0);
@@ -23,6 +23,7 @@ class CreateNotificationsTable extends Migration
             $table->string('message');
             $table->string('notifiable_type');
             $table->integer('notifiable_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
