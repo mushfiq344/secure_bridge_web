@@ -17,6 +17,6 @@ class HomeController extends Controller
     public function index()
     {
         $message = "admin dashboard";
-        return view('Admin.home');
+        return view('admin.home');
     }
 }
