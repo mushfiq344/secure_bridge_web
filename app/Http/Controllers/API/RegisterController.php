@@ -68,6 +68,9 @@ class RegisterController extends BaseController
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = Auth::user();
+            if(!$user->is_active){
+                return $this->sendError('You Account has been inactivated', ['error' => 'Unauthorised'],403);
+            }
             $user->fcm_token = $request->fcm_token;
             $user->save();
             $success['token'] = $user->createToken('MyApp')->plainTextToken;
@@ -113,6 +116,10 @@ class RegisterController extends BaseController
             ]
         );
 
+        if(!$user->is_active){
+            return $this->sendError('You Account has been inactivated', ['error' => 'Unauthorised'],403);
+        }
+
 
         $success['token'] = $user->createToken('MyApp')->plainTextToken;
         $profile = Profile::where('user_id',$user->id)->first();
@@ -136,6 +143,10 @@ class RegisterController extends BaseController
     public function completeRegistration(Request $request)
     {
         $user = User::findOrFail(auth()->user()->id);
+
+        if(!$user->is_active){
+            return $this->sendError('You Account has been inactivated', ['error' => 'Unauthorised'],403);
+        }
         if ($user->reg_completed == 0) {
             $user->user_type = $request->selected_type;
             $user->reg_completed = 1;
