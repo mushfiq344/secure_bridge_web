@@ -17,7 +17,7 @@ Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [RegisterController::class, 'login']);
 Route::post('auth/google',[RegisterController::class, 'requestTokenGoogle']);
 Route::post('password/email', 'API\ForgotPasswordController@forgot');
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum','active_user_api'])->group(function () {
     
     Route::post('complete-registration', 'API\RegisterController@completeRegistration')->name('registration.completion');
 

@@ -62,7 +62,7 @@
                 {{Auth::user()->name}} <i class="fa fa-caret-down" aria-hidden="true"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-right profile-dropdown">
-                <a class="dropdown-item" href="/admin/dashboard">
+                <a class="dropdown-item" href="/admin/home">
                   <i class="mdi mdi-database-edit"></i>
                   Dashboard
                 </a>

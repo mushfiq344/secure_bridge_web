@@ -18,7 +18,7 @@
 								<th>Type</th>
 								<th>Email</th>
 								<th>Status</th>
-								<th>Action</th>
+								<!-- <th>Action</th> -->
 
 							</tr>
 						</thead>
@@ -36,21 +36,21 @@
 										<option value="1" {{$user->is_active?'selected':''}}>Active</option>
 									</select>
 								</td>
-								<td>
+								<!-- <td>-->
 									<!-- Edit -->
 									<!-- <a href="/admin/dashboard/users/{{$user->id}}/edit">
 										<button type="submit" class="btn btn-default float-left"><i class="ti-pencil"></i></button>
 									</a> -->
 
 									<!-- delete -->
-									<form action="{{ route('users.destroy', $user->id)}}" method="POST">
+									<!-- <form action="{{ route('admin.users.destroy', $user->id)}}" method="POST">
 										@method('DELETE')
 										@csrf
 										<button type="submit" class="btn btn-default float-left" style="margin-left: 10px;">
 											<i class="ti-trash"></i>
 										</button>
-									</form>
-								</td>
+									</form> -->
+								<!-- </td> -->
 							</tr>
 							@endforeach
 						</tbody>

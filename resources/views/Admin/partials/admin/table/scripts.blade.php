@@ -31,7 +31,7 @@
         let user_id = $(this).attr("user-id");
         $.ajax({
             type: 'POST',
-            url: "{{ route('admin-change-user-status')}}",
+            url: "{{ route('admin.admin-change-user-status')}}",
             data: {
                 is_active: status,
                 user_id: user_id

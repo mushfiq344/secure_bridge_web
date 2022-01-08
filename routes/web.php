@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth', 'is_user'], "namespace" => "User"], function () {
+Route::group(['middleware' => ['auth','active_user','is_user'], "namespace" => "User"], function () {
 
     Route::prefix('/user')->name('user.')->group(function () {
         Route::apiResource('/choice-list', 'OpportunityUserController');
@@ -38,20 +38,20 @@ Route::group(['middleware' => ['auth', 'is_user'], "namespace" => "User"], funct
 /*
     admin routes starts
 */
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => [ 'is_admin']], function () {
+Route::group([ 'namespace' => 'Admin', 'middleware' => [ 'is_admin']], function () {
     // routes for registrations
-    
-        Route::get('/home', "HomeController@index");
+    Route::prefix('/admin')->name('admin.')->group(function () {
+        Route::get('/home', "HomeController@index")->name('home');
         Route::resource('users', "UsersController");
         Route::post('change-user-status', "UsersController@changeUserStatus")->name('admin-change-user-status');
-        Route::resource('mails', "MailController");
+        // Route::resource('mails', "MailController");
 
-        Route::resource('blogs', "BlogsController");
+        // Route::resource('blogs', "BlogsController");
 
-        Route::resource('settings', "SettingsController");
+        // Route::resource('settings', "SettingsController");
 
-        Route::resource('social-links', "SocialLinkController");
-    
+        // Route::resource('social-links', "SocialLinkController");
+    });
 });
 /*
     admin routes ends
@@ -60,7 +60,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => [ 'is
 
 Route::prefix('/org-admin')->name('org-admin.')->group(function () {
 
-    Route::group(['middleware' => ['auth', 'is_org_admin'], "namespace" => "OrgAdmin"], function () {
+    Route::group(['middleware' => ['auth', 'active_user','is_org_admin'], "namespace" => "OrgAdmin"], function () {
         Route::apiResource('/user-opportunities', 'OpportunityUserController');  
         Route::view('/home', 'org_admin.home')->name('home');
         Route::resource('/opportunities', 'OpportunityController');
@@ -74,7 +74,7 @@ Route::prefix('/org-admin')->name('org-admin.')->group(function () {
     Route::post('/register', 'Auth\RegisterController@CreateOrgAdmin');
 
 });
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth','active_user']], function () {
     Route::post('fetch-opportunities', 'OpportunityController@fetchOpportunities')->name('fetch.opportunities');
 
     Route::get('/chatting/{id?}', "MessagesController@index")->where('id', '[0-9]*');

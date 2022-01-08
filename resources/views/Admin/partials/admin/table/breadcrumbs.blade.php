@@ -11,9 +11,9 @@
 	<div class="col-sm-6">
 		<div class="float-right d-none d-md-block">
 			<div class="dropdown">
-				<a href="/admin/dashboard/{{ \Str::plural($featureName) }}/create" class="btn btn-primary  arrow-none waves-effect waves-light" aria-haspopup="true" aria-expanded="false">
+				<!-- <a href="/admin/dashboard/{{ \Str::plural($featureName) }}/create" class="btn btn-primary  arrow-none waves-effect waves-light" aria-haspopup="true" aria-expanded="false">
 					<i class="mdi mdi-plus mr-2"></i> New {{ ucfirst($featureName) }}
-				</a>
+				</a> -->
 			</div>
 		</div>
 	</div>

@@ -5,7 +5,7 @@
 			<!-- Left Menu Start -->
 			<ul class="metismenu" id="side-menu">
 				<li>
-					<a href="/admin/dashboard" class="waves-effect">
+					<a href="/admin/home" class="waves-effect">
 						<i class="ti-home"></i> <span>Dashboard</span>
 					</a>
 				</li>
@@ -20,7 +20,7 @@
 						<li><a href="/admin/users">All Users</a></li>
 					</ul>
 				</li>
-				<li>
+				<!-- <li>
 					<a href="/admin/dashboard/mails" class="waves-effect">
 						<i class="mdi mdi-settings m-r-5"></i><span>Mails</span>
 					</a>
@@ -39,7 +39,7 @@
 					<a href="/admin/dashboard/social-links" class="waves-effect">
 						<i class="mdi mdi-settings m-r-5"></i><span>Social Links</span>
 					</a>
-				</li>
+				</li> -->
 				<!-- <li>
 					<a href="javascript:void(0);" class="waves-effect">
 						<i class="mdi mdi-pencil m-r-5"></i>
