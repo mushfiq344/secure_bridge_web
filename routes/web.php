@@ -33,7 +33,30 @@ Route::group(['middleware' => ['auth', 'is_user'], "namespace" => "User"], funct
 
 });
 
-Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+// Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+
+/*
+    admin routes starts
+*/
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => [ 'is_admin']], function () {
+    // routes for registrations
+    
+        Route::get('/home', "HomeController@index");
+        Route::resource('users', "UsersController");
+        Route::post('change-user-status', "UsersController@changeUserStatus")->name('admin-change-user-status');
+        Route::resource('mails', "MailController");
+
+        Route::resource('blogs', "BlogsController");
+
+        Route::resource('settings', "SettingsController");
+
+        Route::resource('social-links', "SocialLinkController");
+    
+});
+/*
+    admin routes ends
+*/
+
 
 Route::prefix('/org-admin')->name('org-admin.')->group(function () {
 
