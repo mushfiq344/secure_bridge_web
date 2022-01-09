@@ -24,7 +24,7 @@ class RegisterController extends BaseController
         try{
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
-                'email' => 'required|email',
+                'email' => 'required|unique:users|email',
                 'password' => 'required',
                 'c_password' => 'required|same:password',
             ]);
@@ -53,7 +53,7 @@ class RegisterController extends BaseController
             return $this->sendResponse($success, 'User register successfully.', 201);
         }catch (\Exception $e) {
           
-            return $this->sendError('Validation Error.',[]);
+            return $this->sendError($e->getMessage(),[]);
            
         }
 
