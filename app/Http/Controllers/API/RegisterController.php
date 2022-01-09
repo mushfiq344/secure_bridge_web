@@ -53,7 +53,7 @@ class RegisterController extends BaseController
             return $this->sendResponse($success, 'User register successfully.', 201);
         }catch (\Exception $e) {
           
-            return $this->sendError('Validation Error.',[]);
+            return $this->sendError('Validation Error.',[$validator->errors()]);
            
         }
 
