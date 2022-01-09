@@ -30,7 +30,7 @@ class RegisterController extends BaseController
             ]);
     
             if ($validator->fails()) {
-                return $this->sendError('Validation Error.', $validator->errors());
+                return $this->sendError(implode(",",$validator->messages()->all()), $validator->errors());
             }
     
             $input = $request->all();
@@ -53,7 +53,7 @@ class RegisterController extends BaseController
             return $this->sendResponse($success, 'User register successfully.', 201);
         }catch (\Exception $e) {
           
-            return $this->sendError('Validation Error.',[$validator->errors()]);
+            return $this->sendError('Validation Error.',[]);
            
         }
 
