@@ -1,14 +1,14 @@
 <div class="row align-items-center">
   <!-- Breadcrumbs-->
-  <!-- <div class="col-sm-6">
+  <div class="col-sm-6">
     <h4 class="page-title">Create {{ ucfirst($featureName) }}</h4>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="/admin/dashboard">Dashboard</a></li>
       <li class="breadcrumb-item">
-        <a href="/admin/dashboard/{{ \Str::plural($featureName) }}">{{ ucfirst(\Str::plural($featureName)) }}</a>
+        <a href="/admin/{{ \Str::plural($featureName) }}">{{ ucfirst(\Str::plural($featureName)) }}</a>
       </li>
       <li class="breadcrumb-item active">Create {{ ucfirst($featureName) }}</li>
     </ol>
-  </div> -->
+  </div>
   <!--menu-->
 </div>
