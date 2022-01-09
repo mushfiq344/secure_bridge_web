@@ -5,7 +5,7 @@
 <div class="page-title-box">
 	@include('admin.partials.admin.form.create-breadcrumbs', ['featureName'=> 'user'])
 
-	<form action="/admin/dashboard/users" method="post" enctype="multipart/form-data">
+	<form action="/admin/users" method="post" enctype="multipart/form-data">
 		@csrf
 		@include('admin.user.form', ['submitButtonText' => 'Save'])
 	</form>

@@ -67,7 +67,7 @@ class UsersController extends Controller
         $user->save();
 
 
-        return redirect(route('users.index'))->with('success', 'Saved');
+        return redirect(route('admin.users.index'))->with('success', 'Saved');
     }
 
     /**
