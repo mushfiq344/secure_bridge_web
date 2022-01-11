@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use DB;
 class OpportunityUser extends Model
 {
     protected $table = "opportunity_user";
@@ -42,5 +42,16 @@ class OpportunityUser extends Model
         if (!empty($userOpportunity)) {
             return Status::$userStatusValues[$userOpportunity->status];
         }
+    }
+
+    public static function getTotalRewardedAmount($userId)
+    {
+        $adminOpportunityIds = Opportunity::where('created_by', $userId)->pluck('id')->toArray();
+        $opportunityUsers=DB::table('opportunity_user')->whereIn('opportunity_id',$adminOpportunityIds)->where('opportunity_user.status',Status::$userStatusValues['Rewarded'])
+        
+        ->leftJoin('opportunities', 'opportunity_user.opportunity_id', '=', 'opportunities.id')
+        
+        ->sum('reward');
+        return $opportunityUsers;
     }
 }

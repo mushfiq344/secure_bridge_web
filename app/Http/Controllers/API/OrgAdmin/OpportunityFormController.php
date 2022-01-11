@@ -29,13 +29,16 @@ class OpportunityFormController extends OrgAdminBaseController
     {
         $success['opportunities'] = Opportunity::where('created_by', auth()->user()->id)->with('createdBy')->orderBy('created_at','desc')->get();
         $success['upload_path'] = Opportunity::$_uploadPath;
-        $success['total_reward'] = Opportunity::where('created_by', auth()->user()->id)->sum('reward');
+        $success['total_reward'] = OpportunityUser::getTotalRewardedAmount(auth()->user()->id);
         $adminOpportunityIds = Opportunity::where('created_by', auth()->user()->id)->pluck('id')->toArray();
         $totalEnrolledUsers = OpportunityUser::whereIn('opportunity_id', $adminOpportunityIds)->pluck('user_id')->toArray();
         $totalEnrolledUsers  = new Collection($totalEnrolledUsers);
         $success['total_enrolled_users']=count($totalEnrolledUsers->unique()); 
         $success['total_pending_approval']=OpportunityUser::whereIn('opportunity_id', $adminOpportunityIds)->where('status',Status::$userStatusValues["Requested"])->count();
-        
+        $success['total_reward_request']=OpportunityUser::whereIn('opportunity_id', $adminOpportunityIds)->where('status',Status::$userStatusValues["Participated"])->count();
+
+
+
         $success['engagement_data']=Opportunity::engagementData(auth()->user()->id);
         return $this->sendResponse($success, 'opportunities fetch successfully.', 200);
     }
