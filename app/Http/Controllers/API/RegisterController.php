@@ -81,7 +81,7 @@ class RegisterController extends BaseController
                 "reg_completed" => $user->reg_completed,
                 "fcm_token" => $request->fcm_token,
                 "profile_image" => User::getUserPhoto($user->id),
-                "has_create_opportunity_permission" => PlanUser::where('user_id', auth()->user()->id)->where('plan_id', 2)->where('end_date', '>', date('Y-m-d'))->exists(),
+                "has_create_opportunity_permission" => PlanUser::where('user_id', auth()->user()->id)->whereIn('plan_id',[2,3])->where('end_date', '>', date('Y-m-d'))->exists(),
                 "profile"=>$user->profile
             );
 
@@ -126,7 +126,7 @@ class RegisterController extends BaseController
         $success['user'] = array(
             "name" => empty($profile)?$user->name:$profile->full_name, "email" => $user->email, "id" => $user->id, "user_type" => $user->user_type, "profile_image" => User::getUserPhoto($user->id),
             "reg_completed" => $user->reg_completed,
-            "has_create_opportunity_permission" => PlanUser::where('user_id', $user->id)->where('plan_id', 2)->where('end_date', '>', date('Y-m-d'))->exists(),
+            "has_create_opportunity_permission" => PlanUser::where('user_id', $user->id)->whereIn('plan_id', [2,3])->where('end_date', '>', date('Y-m-d'))->exists(),
             "profile"=>$user->profile
         );
         return $this->sendResponse($success, 'User login successfully.');
@@ -167,12 +167,12 @@ class RegisterController extends BaseController
                     $success['user'] = array(
                         "name" => $user->name, "email" => $user->email, "id" => $user->id, "user_type" => $user->user_type, "profile_image" => User::getUserPhoto($user->id),
                         "reg_completed" => $user->reg_completed,
-                        "has_create_opportunity_permission" => PlanUser::where('user_id', auth()->user()->id)->where('plan_id', 2)->where('end_date', '>', date('Y-m-d'))->exists(),
+                        "has_create_opportunity_permission" => PlanUser::where('user_id', auth()->user()->id)->whereIn('plan_id', [2,3])->where('end_date', '>', date('Y-m-d'))->exists(),
                         "profile"=>$user->profile
                     );
                     return $this->sendResponse($success, 'Organization admin initial package  selected successfully.');
                 } else {
-                    return $this->sendError('You can not change anymore1 .', [], 403);
+                    return $this->sendError('You can not change anymore .', [], 403);
                 }
             } else {
                 return $this->sendError('You can not change anymore.', [], 403);
