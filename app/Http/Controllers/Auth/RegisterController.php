@@ -70,14 +70,26 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        
     }
-
     /**
-     * Create a new user instance after a valid registration.
+     * The user has been registered.
      *
-     * @param  array  $data
-     * @return \App\Models\User
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     * @author rubab
      */
+    protected function registered(Request $request, $user)
+    {
+        if (auth()->user()->user_type == 2) {
+            return redirect()->route('admin.home');
+        } else if (auth()->user()->user_type == 1) {
+            return redirect()->route('org-admin.home');
+        } else {
+            return redirect()->route('user.home');
+        }
+    }
 
     /**
      * Create a new organizational admin instance after a valid registration.
@@ -94,7 +106,7 @@ class RegisterController extends Controller
             'user_type' => 1,
             'password' => Hash::make($request['password']),
         ]);
-        return redirect()->intended($this->redirectTo);
+        return redirect()->route('org-admin.home');
     }
 
     public function showOrgAdminRegisterForm()
