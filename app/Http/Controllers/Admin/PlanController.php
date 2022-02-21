@@ -15,7 +15,9 @@ class PlanController extends Controller
      */
     public function index()
     {
-        //
+        $plans = Plan::all();
+      
+        return view('admin.plan.index', compact('plans'));
     }
 
     /**
@@ -25,7 +27,7 @@ class PlanController extends Controller
      */
     public function create()
     {
-        
+        return view('admin.plan.create');
     }
 
     /**
@@ -36,12 +38,16 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
+       
         $plan=new Plan();
-        $plan->title="Yearly Subscription";
-        $plan->description="Valid For 365 Days";
-        $plan->amount=1000;
-        $plan->duration=365;
-       $plan->save();
+        $plan->title=$request->title;
+        $plan->description=$request->description;
+        $plan->amount=$request->amount;
+        $plan->duration=$request->duration;
+        $plan->type=$request->type;
+        $plan->mode=$request->mode;
+        $plan->save();
+        return redirect(route('admin.plans.index'))->with('success', 'Saved');
     }
 
     /**
@@ -63,7 +69,8 @@ class PlanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $plan=Plan::findOrFail($id);
+        return view('admin.plan.edit', compact('plan'));
     }
 
     /**
@@ -75,7 +82,15 @@ class PlanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $plan=Plan::findOrFail($id);
+        $plan->title=$request->title;
+        $plan->description=$request->description;
+        $plan->amount=$request->amount;
+        $plan->duration=$request->duration;
+        $plan->type=$request->type;
+        $plan->mode=$request->mode;
+        $plan->save();
+        return redirect(route('admin.plans.index'))->with('success', 'Updated');
     }
 
     /**

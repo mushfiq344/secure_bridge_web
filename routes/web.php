@@ -43,6 +43,7 @@ Route::group([ 'namespace' => 'Admin', 'middleware' => [ 'is_admin']], function 
     Route::prefix('/admin')->name('admin.')->group(function () {
         Route::get('/home', "HomeController@index")->name('home');
         Route::resource('users', "UsersController");
+        Route::resource('plans', "PlanController");
         Route::post('change-user-status', "UsersController@changeUserStatus")->name('admin-change-user-status');
         // Route::resource('mails', "MailController");
 

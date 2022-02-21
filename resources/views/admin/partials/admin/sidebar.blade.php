@@ -20,6 +20,11 @@
 						<li><a href="/admin/users">All Users</a></li>
 					</ul>
 				</li>
+				<li>
+					<a href="/admin/plans" class="waves-effect">
+						<i class="ti-home"></i> <span>Plans</span>
+					</a>
+				</li>
 				<!-- <li>
 					<a href="/admin/dashboard/mails" class="waves-effect">
 						<i class="mdi mdi-settings m-r-5"></i><span>Mails</span>
