@@ -35,7 +35,7 @@ CKEDITOR.replace('description');
 					
 						return {
 							"id": obj["id"],
-							"text": obj["name"]
+							"text": `${obj["name"]} (${obj["email"]})`
 						};
 
 					});
