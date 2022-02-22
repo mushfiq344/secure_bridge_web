@@ -24,7 +24,7 @@ CKEDITOR.replace('description');
 	// In your Javascript (external .js resource or <script> tag)
 	$(document).ready(function() {
 		$('.js-example-basic-single').select2({
-      minimumInputLength: 1,
+      minimumInputLength: 3,
 			ajax: {
 				url: "{{ route('admin.search-users')}}",
 				method: "POST",
