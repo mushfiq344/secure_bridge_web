@@ -25,6 +25,11 @@
 						<i class="ti-home"></i> <span>Plans</span>
 					</a>
 				</li>
+				<li>
+					<a href="/admin/opportunities" class="waves-effect">
+						<i class="ti-home"></i> <span>Opportunities</span>
+					</a>
+				</li>
 				<!-- <li>
 					<a href="/admin/dashboard/mails" class="waves-effect">
 						<i class="mdi mdi-settings m-r-5"></i><span>Mails</span>
