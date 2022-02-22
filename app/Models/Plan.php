@@ -22,4 +22,8 @@ class Plan extends Model
         'basic'=>'0',
         'pro'=>'1'
     );
+    public static $planModesNames=array(
+        '0'=>'basic',
+        '1'=>'pro'
+    );
 }

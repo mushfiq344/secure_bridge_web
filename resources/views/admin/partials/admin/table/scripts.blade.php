@@ -21,6 +21,7 @@
 
 <!-- users tables -->
 <script>
+   
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -35,6 +36,29 @@
             data: {
                 is_active: status,
                 user_id: user_id
+            },
+            success: (data) => {
+
+                console.log(data);
+
+            },
+
+            error: function(data) {
+                console.log(data);
+                alert("There has been some error");
+            }
+        });
+    });
+    $(".feature-status").change(function() {
+        let status = $(this).val();
+        let opportunity_id = $(this).attr("opportunity-id");
+      
+       
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('admin.change-opportunity-feature-status')}}",
+            data: {
+                 opportunity_id: opportunity_id
             },
             success: (data) => {
 

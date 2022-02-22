@@ -38,11 +38,15 @@ Route::group(['middleware' => ['auth','active_user','is_user'], "namespace" => "
 /*
     admin routes starts
 */
-Route::group([ 'namespace' => 'Admin', 'middleware' => [ 'is_admin']], function () {
+Route::group([ 'namespace' => 'Admin', 'middleware' => [ 'auth','is_admin']], function () {
     // routes for registrations
     Route::prefix('/admin')->name('admin.')->group(function () {
         Route::get('/home', "HomeController@index")->name('home');
         Route::resource('users', "UsersController");
+        Route::post('search-users', "UsersController@searchUsers")->name('search-users');
+        Route::resource('plans', "PlanController");
+        Route::resource('opportunities', "OpportunitiesController");
+        Route::post('change-opportunity-feature-status', "OpportunitiesController@changeOpportunityFeatureStatus")->name('change-opportunity-feature-status');
         Route::post('change-user-status', "UsersController@changeUserStatus")->name('admin-change-user-status');
         // Route::resource('mails', "MailController");
 

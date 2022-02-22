@@ -201,4 +201,14 @@ class UsersController extends Controller
             "leaders" => $request->all()
         ]);
     }
+
+    public function searchUsers(Request $request)
+    {
+        $users = User::Where('name', 'like', '%' . $request->term . '%')->get();
+        
+        return Response()->json([
+            "success" => true,
+            "users" => $users
+        ]);
+    }
 }

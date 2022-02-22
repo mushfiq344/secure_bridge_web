@@ -10,7 +10,7 @@
         <div class="col-sm-6">
             <h4 class="page-title">Admin Dashboard</h4>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{url('/')}}">Uncrowd</a></li>
+                <li class="breadcrumb-item"><a href="{{url('/')}}">Secure Bridges</a></li>
                 <li class="breadcrumb-item active">Dashboard
                 </li>
             </ol>

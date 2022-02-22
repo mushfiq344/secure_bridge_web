@@ -30,6 +30,34 @@ class Opportunity extends Model
         "Finished" => 5
     );
 
+    public static $opportunityTypes = [
+        'Shelter',
+        'Counselling',
+        'Food',
+        'Forms',
+        'Jobs',
+        'Health',
+        'Mental health',
+        'Therapy',
+        'Mentorship',
+        'Youth activities',
+        'General resources(housing)'
+    ];
+
+    public static $opportunityTypesValues = [
+        "Shelter"=> 0,
+        "Counselling"=>  1,
+        "Food"=>  2,
+        "Forms"=>  3,
+        "Jobs"=>  4,
+        "Health"=>  5,
+        "Mental health"=>  6,
+        "Therapy"=>  7,
+        "Mentorship"=>  8,
+        "Youth activities"=> 9,
+        "General resources(housing)"=> 10
+    ];
+
 
 
     public function users()

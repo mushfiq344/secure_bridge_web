@@ -3,7 +3,7 @@
 	<div class="col-sm-6">
 		<h4 class="page-title">{{ ucfirst(\Str::plural($featureName)) }}</h4>
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/admin/dashboard">Dashboard</a></li>
+			<li class="breadcrumb-item"><a href="/admin/home">Dashboard</a></li>
 			<li class="breadcrumb-item active">{{ ucfirst(\Str::plural($featureName)) }}
 			</li>
 		</ol>
