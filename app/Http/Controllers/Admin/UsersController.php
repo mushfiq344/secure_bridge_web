@@ -204,7 +204,8 @@ class UsersController extends Controller
 
     public function searchUsers(Request $request)
     {
-        $users = User::Where('name', 'like', '%' . $request->term . '%')->get();
+        $userTypes=User::getTypes();
+        $users = User::Where('name', 'like', '%' . $request->term . '%')->where('user_type',$userTypes['Organizational Admin'])->get();
         
         return Response()->json([
             "success" => true,

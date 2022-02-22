@@ -26,9 +26,11 @@
 	// In your Javascript (external .js resource or <script> tag)
 	$(document).ready(function() {
 		$('.js-example-basic-single').select2({
+			minimumInputLength: 3,
 			ajax: {
 				url: "{{ route('admin.search-users')}}",
 				method: "POST",
+				
 				processResults: function(data) {
 
 
