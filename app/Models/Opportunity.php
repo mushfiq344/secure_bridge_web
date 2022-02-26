@@ -117,7 +117,7 @@ class Opportunity extends Model
         $wednesdayDate = date('Y-m-d', strtotime("last Wednesday"));
         $thursdayDate = date('Y-m-d', strtotime("last Thursday"));
         $fridayDate = date('Y-m-d', strtotime("last Friday"));
-        $endDate = date('Y-m-d');
+        $endDate = date('Y-m-d',strtotime('+1 days'));
         $startDate = date('Y-m-d', strtotime('-7 days'));
 
         return [
