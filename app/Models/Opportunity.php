@@ -45,17 +45,17 @@ class Opportunity extends Model
     ];
 
     public static $opportunityTypesValues = [
-        "Shelter"=> 0,
-        "Counselling"=>  1,
-        "Food"=>  2,
-        "Forms"=>  3,
-        "Jobs"=>  4,
-        "Health"=>  5,
-        "Mental health"=>  6,
-        "Therapy"=>  7,
-        "Mentorship"=>  8,
-        "Youth activities"=> 9,
-        "General resources(housing)"=> 10
+        "Shelter" => 0,
+        "Counselling" =>  1,
+        "Food" =>  2,
+        "Forms" =>  3,
+        "Jobs" =>  4,
+        "Health" =>  5,
+        "Mental health" =>  6,
+        "Therapy" =>  7,
+        "Mentorship" =>  8,
+        "Youth activities" => 9,
+        "General resources(housing)" => 10
     ];
 
 
@@ -108,49 +108,91 @@ class Opportunity extends Model
     public static function engagementData($orgAdminUserId)
     {
         $opportunityIds = Opportunity::where('created_by', auth()->user()->id)->pluck('id')->toArray();
-        
+
         //    return $opportunityUsers;
-        $saturdayDate = date('Y-m-d', strtotime("last Saturday"));
-        $sundayDate = date('Y-m-d', strtotime("last Sunday"));
-        $mondayDate = date('Y-m-d', strtotime("last Monday"));
-        $tuesdayDate = date('Y-m-d', strtotime("last Tuesday"));
-        $wednesdayDate = date('Y-m-d', strtotime("last Wednesday"));
-        $thursdayDate = date('Y-m-d', strtotime("last Thursday"));
-        $fridayDate = date('Y-m-d', strtotime("last Friday"));
-        $endDate = date('Y-m-d',strtotime('+1 days'));
+        if (date('l') == "Saturday") {
+            $saturdayDate = date('Y-m-d');
+        } else {
+            $saturdayDate = date('Y-m-d', strtotime("last Saturday"));
+        }
+
+        if (date('l') == "Sunday") {
+            $sundayDate = date('Y-m-d');
+        } else {
+            $sundayDate = date('Y-m-d', strtotime("last Sunday"));
+        }
+
+        if (date('l') == "Monday") {
+            $mondayDate = date('Y-m-d');
+        } else {
+            $mondayDate = date('Y-m-d', strtotime("last Monday"));
+        }
+        if (date('l') == "Tuesday") {
+            $tuesdayDate = date('Y-m-d');
+        } else {
+            $tuesdayDate = date('Y-m-d', strtotime("last Tuesday"));
+        }
+
+        if (date('l') == "Wednesday") {
+            $wednesdayDate = date('Y-m-d');
+        } else {
+            $wednesdayDate = date('Y-m-d', strtotime("last Wednesday"));
+        }
+
+        if (date('l') == "Thursday") {
+            $thursdayDate = date('Y-m-d');
+        } else {
+            $thursdayDate = date('Y-m-d', strtotime("last Thursday"));
+        }
+
+        if (date('l') == "Friday") {
+            $fridayDate = date('Y-m-d');
+        } else {
+            $fridayDate = date('Y-m-d', strtotime("last Friday"));
+        }
+
+        $endDate = date('Y-m-d');
         $startDate = date('Y-m-d', strtotime('-7 days'));
 
         return [
             "start_date" => $startDate,
             "end_date" => $endDate,
+            "day" => date('l'),
             "weekly_engagements" => [
                 [
                     "day" => "Sat",
-                    "count" => DB::table('opportunity_user')->whereIn('opportunity_id',$opportunityIds)->whereDate("created_at", $saturdayDate)->count()
+                    "date" => $saturdayDate,
+                    "count" => DB::table('opportunity_user')->whereIn('opportunity_id', $opportunityIds)->whereDate("created_at", $saturdayDate)->count()
                 ],
                 [
                     "day" => "Sun",
-                    "count" => DB::table('opportunity_user')->whereIn('opportunity_id',$opportunityIds)->whereDate("created_at", $sundayDate)->count()
+                    "date" => $sundayDate,
+                    "count" => DB::table('opportunity_user')->whereIn('opportunity_id', $opportunityIds)->whereDate("created_at", $sundayDate)->count()
                 ],
                 [
                     "day" => "Mon",
-                    "count" => DB::table('opportunity_user')->whereIn('opportunity_id',$opportunityIds)->whereDate("created_at", $mondayDate)->count()
+                    "date" => $mondayDate,
+                    "count" => DB::table('opportunity_user')->whereIn('opportunity_id', $opportunityIds)->whereDate("created_at", $mondayDate)->count()
                 ],
                 [
                     "day" => "Tues",
-                    "count" => DB::table('opportunity_user')->whereIn('opportunity_id',$opportunityIds)->whereDate("created_at", $tuesdayDate)->count()
+                    "date" => $tuesdayDate,
+                    "count" => DB::table('opportunity_user')->whereIn('opportunity_id', $opportunityIds)->whereDate("created_at", $tuesdayDate)->count()
                 ],
                 [
                     "day" => "Wed",
-                    "count" => DB::table('opportunity_user')->whereIn('opportunity_id',$opportunityIds)->whereDate("created_at", $wednesdayDate)->count()
+                    "date" => $wednesdayDate,
+                    "count" => DB::table('opportunity_user')->whereIn('opportunity_id', $opportunityIds)->whereDate("created_at", $wednesdayDate)->count()
                 ],
                 [
                     "day" => "Thurs",
-                    "count" => DB::table('opportunity_user')->whereIn('opportunity_id',$opportunityIds)->whereDate("created_at", $thursdayDate)->count()
+                    "date" => $thursdayDate,
+                    "count" => DB::table('opportunity_user')->whereIn('opportunity_id', $opportunityIds)->whereDate("created_at", $thursdayDate)->count()
                 ],
                 [
                     "day" => "Fri",
-                    "count" => DB::table('opportunity_user')->whereIn('opportunity_id',$opportunityIds)->whereDate("created_at", $fridayDate)->count()
+                    "date" => $fridayDate,
+                    "count" => DB::table('opportunity_user')->whereIn('opportunity_id', $opportunityIds)->whereDate("created_at", $fridayDate)->count()
                 ]
 
             ]
