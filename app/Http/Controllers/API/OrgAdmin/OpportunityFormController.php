@@ -62,13 +62,24 @@ class OpportunityFormController extends OrgAdminBaseController
         $opportunity->description = $request->description;
         $opportunity->opportunity_date = $request->opportunity_date;
         $opportunity->duration = $request->duration;
-        $opportunity->reward = $request->reward;
-       $opportunity->type = $request->type;
+        if($request->reward!=null){
+            $opportunity->reward = $request->reward;
+        }else{
+            $opportunity->reward = 0;
+        }
+        $opportunity->type = $request->type;
+       
         $opportunity->icon_image = $iconImageName;
         $opportunity->cover_image = $coverImageName;
         $opportunity->slug = CustomHelper::generateSlug($request->title, 'opportunities');
         $opportunity->status=$request->status;
         $opportunity->location=$request->location;
+        if($request->max_participants!=null){
+            $opportunity->max_participants=$request->max_participants;
+        }else{
+            $opportunity->max_participants = 0;
+        }
+        
        
         
         $opportunity->save();
@@ -81,7 +92,7 @@ class OpportunityFormController extends OrgAdminBaseController
            
          }
          $success = array(
-            "opportunity" => $opportunity,
+            "opportunity" => Opportunity::where('id',$opportunity->id)->with('createdBy')->first()
         );
         return $this->sendResponse($success, 'opportunity created successfully.', 201);
     }
@@ -144,10 +155,15 @@ class OpportunityFormController extends OrgAdminBaseController
         $opportunity->description = $request->description;
         $opportunity->opportunity_date = $request->opportunity_date;
         $opportunity->duration = $request->duration;
-        $opportunity->reward = $request->reward;
+        if($request->reward!=null){
+            $opportunity->reward = $request->reward;
+        }else{
+            $opportunity->reward = 0;
+        }
         $opportunity->type = $request->type;
         $opportunity->status=$request->status;
         $opportunity->location=$request->location;
+        
         $opportunity->save();
         Tag::where('opportunity_id', $request->id)->delete();
         foreach($request->tag_values as $tag){
