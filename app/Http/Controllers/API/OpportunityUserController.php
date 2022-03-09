@@ -5,10 +5,12 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\OpportunityUser;
 use App\Models\Opportunity;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\OrgAdmin\OpportunityUserController as OrgAdminOpportunityUserController;
 use Illuminate\Http\Request;
 use App\Models\Notification;
 use App\Models\User;
 use App\Models\Status;
+use NunoMaduro\Collision\Adapters\Phpunit\State;
 
 class OpportunityUserController extends BaseController
 {
@@ -77,8 +79,15 @@ class OpportunityUserController extends BaseController
         $opportunityUser=OpportunityUser::findOrFail($id);
         $opportunityUser->status=$request->updated_status;
         $opportunityUser->save();
-
         $opportunity=Opportunity::findOrFail($request->opportunity_id);
+        
+        if($request->updated_status==Status::$userStatusValues["Rewarded"]){
+            $user=User::findOrFail($opportunityUser->user_id);
+            $user->credits=$user->credits+OpportunityUser::rewardToCreditConversion($opportunity->reward);
+            $user->save();
+        };
+
+        
         if($opportunity->status==Opportunity::$opportunityStatusValues['Rewarding']){
             $totalUnRewardedopportunityUsers=OpportunityUser::where('opportunity_id',$request->opportunity_id)->where('status',Status::$userStatusValues['Participated'])->count();
             if($totalUnRewardedopportunityUsers==0){

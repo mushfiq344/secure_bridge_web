@@ -10,6 +10,8 @@ class OpportunityUser extends Model
     protected $table = "opportunity_user";
     use HasFactory;
 
+    private static $OneDollarToCredit=120;
+
     public static function hasUserEnrolledOpportunity($opportunityId)
     {
         $isEnrolled = self::where('opportunity_id', $opportunityId)->where('user_id', auth()->user()->id)->exists();
@@ -53,5 +55,9 @@ class OpportunityUser extends Model
         
         ->sum('reward');
         return $opportunityUsers;
+    }
+
+    public static function rewardToCreditConversion($reward){
+        return self::$OneDollarToCredit*$reward;
     }
 }
