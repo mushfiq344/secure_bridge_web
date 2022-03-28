@@ -60,4 +60,11 @@ class OpportunityUser extends Model
     public static function rewardToCreditConversion($reward){
         return self::$OneDollarToCredit*$reward;
     }
+
+    public static function userRewardingOpportunities(){
+        $rewardingOpportunityIds = self::where('user_id', auth()->user()->id)->where('status',Status:: $userStatusValues["Rewarded"])->pluck('opportunity_id')->toArray();
+        $opportunities=Opportunity::whereIn('id',$rewardingOpportunityIds)->with('createdBy')->get();
+        return $opportunities; 
+    
+    }
 }

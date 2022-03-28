@@ -77,9 +77,22 @@ class OpportunityUserController extends BaseController
     public function update(Request $request, $id)
     {
         $opportunityUser=OpportunityUser::findOrFail($id);
+        $opportunity=Opportunity::findOrFail($request->opportunity_id);
+
+
+        if($request->updated_status==Status::$userStatusValues["Approved"]){
+            $totalApprovedParticipants=OpportunityUser::where('opportunity_id',$opportunity->id)->where('status',Status::$userStatusValues["Approved"])->count();
+
+            if($opportunity->reward>0 && $totalApprovedParticipants>=$opportunity->max_participants){
+                return $this->sendError('Can not approve any more user!');
+            }
+        }
+
         $opportunityUser->status=$request->updated_status;
         $opportunityUser->save();
-        $opportunity=Opportunity::findOrFail($request->opportunity_id);
+        
+
+        
         
         if($request->updated_status==Status::$userStatusValues["Rewarded"]){
             $user=User::findOrFail($opportunityUser->user_id);
@@ -88,7 +101,7 @@ class OpportunityUserController extends BaseController
         };
 
         
-        if($opportunity->status==Opportunity::$opportunityStatusValues['Rewarding']){
+        if($opportunity->status==Opportunity::$opportunityStatusValues['Rewarding']){ 
             $totalUnRewardedopportunityUsers=OpportunityUser::where('opportunity_id',$request->opportunity_id)->where('status',Status::$userStatusValues['Participated'])->count();
             if($totalUnRewardedopportunityUsers==0){
                 $opportunity->status=Opportunity::$opportunityStatusValues['Finished'];

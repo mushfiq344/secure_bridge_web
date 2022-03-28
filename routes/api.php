@@ -35,7 +35,8 @@ Route::middleware(['auth:sanctum','active_user_api'])->group(function () {
     Route::apiResource('org-admin/plans', 'API\OrgAdmin\PlanController');
   
 
-    Route::apiResource('/user/opportunities', 'API\User\OpportunityController');  
+    Route::apiResource('/user/opportunities', 'API\User\OpportunityController');
+    Route::apiResource('/user/rewards', 'API\User\RewardsController');    
 
     Route::post('/update-fcm-token', 'API\FirebaseController@updateFCMToken');  
 
