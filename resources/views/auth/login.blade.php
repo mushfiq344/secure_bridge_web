@@ -135,7 +135,7 @@
                                 <i class="material-icons">keyboard_arrow_down</i>
                             </div> -->
                         </div>
-
+                        @if (!$agent->isMobile())
                         <div class="social-login">
                             <h4 class="purple-text fw-700">Or login with social media</h4>
                             <div class="login-buttons">
@@ -158,6 +158,8 @@
 
                             </div>
                         </div>
+                            @endif
+                       
                     </div>
                 </form>
             </div>
