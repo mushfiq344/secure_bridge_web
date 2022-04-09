@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Agent;
 
 class LoginController extends Controller
 {
@@ -48,8 +49,9 @@ class LoginController extends Controller
         ]);
 
         if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
-            if ($request->redirect_url) {
-                $link = url("{$request->redirect_url}?mobile_view=yes");
+            $agent = new Agent();
+            if ($agent->isMobile()) {
+                $link = url("forum?mobile_view=yes");
                 return redirect($link);
             }
             if (auth()->user()->user_type == 2) {
