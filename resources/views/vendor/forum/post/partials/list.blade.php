@@ -53,9 +53,9 @@
                     @can ('edit', $post)
                         <a href="{{ Forum::route('post.edit', $post) }}" class="card-link">{{ trans('forum::general.edit') }}</a>
                     @endcan
-                    @can ('reply', $post->thread)
+                    <!-- @can ('reply', $post->thread)
                         <a href="{{ Forum::route('post.create', $post) }}" class="card-link">{{ trans('forum::general.reply') }}</a>
-                    @endcan
+                    @endcan -->
                 @else
                     @can ('restorePosts', $post->thread)
                         @can ('restore', $post)
