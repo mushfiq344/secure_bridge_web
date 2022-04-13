@@ -94,3 +94,6 @@ Route::get('/send-notification', 'API\FirebaseController@notification')->name('n
 
 Route::post('webhook-custom/stripe', 'CustomStripeWebHookController@handleWebhook');
 
+Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
+Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
+

@@ -143,7 +143,7 @@
 
                                 </div>
                                 <div class="button-wrap">
-                                    <a class="button-inner" href="#">
+                                    <a class="button-inner" href="{{url('auth/google')}}">
                                         <i class="fa fa-google"></i>
                                     </a>
                                 </div>
