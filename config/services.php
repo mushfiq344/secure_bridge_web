@@ -36,6 +36,12 @@ return [
         'redirect' => env('GOOGLE_AUTH_REDIRECT_URL'),
     ],
 
+    'facebook' => [
+        'client_id' =>  env('FACEBOOK_CLIENT_ID'),
+        'client_secret' =>  env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('FACEBOOK_AUTH_REDIRECT_URL'),
+    ],
+
     'stripe' => [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),

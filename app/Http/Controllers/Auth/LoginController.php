@@ -134,4 +134,53 @@ class LoginController extends Controller
             dd($e->getMessage());
         }
     }
+
+    public function redirectToFacebook()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function handleFacebookCallback()
+    {
+        try {
+
+            $user = Socialite::driver('facebook')->user();
+
+            $finduser = User::where('facebook_id', $user->id)->orWhere('email', $user->email)->first();
+
+            if ($finduser) {
+                $finduser->facebook_id
+                    = $user->id;
+                $finduser->save();
+                Auth::login($finduser);
+
+                if (auth()->user()->user_type == 2) {
+                    return redirect()->route('admin.home');
+                } else if (auth()->user()->user_type == 1) {
+                    return redirect()->route('org-admin.home');
+                } else {
+                    return redirect()->route('user.home');
+                }
+            } else {
+                $newUser = User::create([
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'facebook_id' => $user->id,
+                    'password' => encrypt('123456dummy')
+                ]);
+
+                Auth::login($newUser);
+
+                if (auth()->user()->user_type == 2) {
+                    return redirect()->route('admin.home');
+                } else if (auth()->user()->user_type == 1) {
+                    return redirect()->route('org-admin.home');
+                } else {
+                    return redirect()->route('user.home');
+                }
+            }
+        } catch (Exception $e) {
+            dd($e->getMessage());
+        }
+    }
 }
