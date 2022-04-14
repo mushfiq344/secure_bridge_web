@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Http\Controllers\API\BaseController;
+use App\Http\Controllers\API\User\UserBaseController;
 use App\Http\Controllers\Controller;
 use App\Models\Opportunity;
 use App\Models\OpportunityUser;
