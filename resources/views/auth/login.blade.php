@@ -124,10 +124,10 @@
                         </div>
 
                         <div class="has-text-centered">
-                            @if (!$agent->isMobile())
+                            
                             <a class="muted-text purple-text fw-500" href="{{ route('password.request') }}">Forgot
                                 Password?</a>
-                            @endif
+                           
                         </div>
 
                         <div class="form-divider">
@@ -135,7 +135,7 @@
                                 <i class="material-icons">keyboard_arrow_down</i>
                             </div> -->
                         </div>
-
+                      
                         <div class="social-login">
                             <h4 class="purple-text fw-700">Or login with social media</h4>
                             <div class="login-buttons">
@@ -143,12 +143,12 @@
 
                                 </div>
                                 <div class="button-wrap">
-                                    <a class="button-inner" href="#">
+                                    <a class="button-inner" href="{{url('auth/google')}}">
                                         <i class="fa fa-google"></i>
                                     </a>
                                 </div>
                                 <div class="button-wrap">
-                                    <a class="button-inner" href="#">
+                                    <a class="button-inner" href="{{url('auth/facebook')}}">
                                         <i class="fa fa-facebook"></i>
                                     </a>
                                 </div>
@@ -158,6 +158,8 @@
 
                             </div>
                         </div>
+                          
+                       
                     </div>
                 </form>
             </div>

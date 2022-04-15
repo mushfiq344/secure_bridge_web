@@ -34,6 +34,7 @@ class OpportunityUserController extends BaseController
 
         $opportunityUser=OpportunityUser::where('opportunity_id',$request->opportunity_id)
         ->where('user_id',auth()->user()->id)->first();
+        
         if(empty($opportunityUser)){
             $opportunityUser = new OpportunityUser;
 
@@ -56,8 +57,11 @@ class OpportunityUserController extends BaseController
             $notification->save();
 
             Notification::sendNotification([$user->fcm_token],$notification->title,$notification->message);
+            return $this->sendResponse( array(),'added to enrollment list successfully', 201);
+        }else{
+            return $this->sendError("User is already Enrolled");
         }
-        return $this->sendResponse( array(),'added to enrollment list successfully', 201);
+      
     }
 
     /**

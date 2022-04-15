@@ -35,7 +35,8 @@ Route::middleware(['auth:sanctum','active_user_api'])->group(function () {
     Route::apiResource('org-admin/plans', 'API\OrgAdmin\PlanController');
   
 
-    Route::apiResource('/user/opportunities', 'API\User\OpportunityController');  
+    Route::apiResource('/user/opportunities', 'API\User\OpportunityController');
+    Route::apiResource('/user/rewards', 'API\User\RewardsController');    
 
     Route::post('/update-fcm-token', 'API\FirebaseController@updateFCMToken');  
 
@@ -43,7 +44,23 @@ Route::middleware(['auth:sanctum','active_user_api'])->group(function () {
     Route::apiResource('/notifications', 'API\NotificationController');  
 
     Route::apiResource('/profile', 'API\ProfileController');
+    
+    //thread api
+    Route::get('forum/category/{category}/thread', 'API\Forum\ThreadController@recent');//all threads
+    Route::get('forum/thread/{thread}', 'API\Forum\ThreadController@fetch');//all single thread
+    Route::post('forum/category/{category}/thread', 'API\Forum\ThreadController@store');//title, content
+    Route::delete('forum/thread/{thread}', 'API\Forum\ThreadController@delete');//pass "permadelete":true if you want to delete permanently
+    Route::post('forum/thread/{thread}/rename', 'API\Forum\ThreadController@rename');
+    Route::post('forum/thread/{thread}/restore', 'API\Forum\ThreadController@restore');
 
+
+    //post api
+    Route::get('forum/thread/{thread}/posts', 'API\Forum\PostController@indexByThread');//all posts of a thread
+    Route::post('forum/thread/{thread}/posts', 'API\Forum\PostController@store');// content
+    Route::get('forum/post/{post}', 'API\Forum\PostController@fetch');//a single post
+    Route::patch('forum/post/{post}', 'API\Forum\PostController@update');// content
+    Route::delete('forum/post/{post}', 'API\Forum\PostController@delete');// "permadelete":true
+    Route::post('forum/post/{post}/restore', 'API\Forum\PostController@restore');
     // Route::get('/profile', function (Request $request) {
     //     return auth()->user();
     // });

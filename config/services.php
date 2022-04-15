@@ -33,7 +33,13 @@ return [
     'google' => [
         'client_id' => '422537799361-ptge0no6qr47qagpqfb1iglo6d29l4tl.apps.googleusercontent.com',
         'client_secret' => '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',
-        'redirect' => 'https://securebridges.ubitrixbd.com/auth/google/callback',
+        'redirect' => env('GOOGLE_AUTH_REDIRECT_URL'),
+    ],
+
+    'facebook' => [
+        'client_id' =>  env('FACEBOOK_CLIENT_ID'),
+        'client_secret' =>  env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('FACEBOOK_AUTH_REDIRECT_URL'),
     ],
 
     'stripe' => [

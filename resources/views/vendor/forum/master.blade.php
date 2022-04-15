@@ -55,8 +55,9 @@
         white-space: nowrap;
     }
 
-    a {
+    a,a:hover {
         text-decoration: none;
+        color:#581e71;
     }
 
     .deleted {
@@ -150,19 +151,35 @@
         background: var(--bs-light);
     }
 
+    .btn-primary,.btn-primary:hover,.btn-primary:active,.btn-primary:focus,.bg-primary{
+        background-color: #581e71 !important;
+        border-color: #581e71 !important;
+    }
+    .form-check-input:checked {
+    background-color: #581e71;
+    border-color: #581e71;
+    }
+
+    .btn-link,.btn-link:hover{
+        color: #581e71;
+    }
+    
+
     @media (max-width: 575.98px) {
         #main {
             padding: 1em;
         }
     }
+
+    
     </style>
 </head>
 
 <body>
-    @if (!$agent->isMobile())
+   
     <nav class="v-navbar navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="{{ url(config('forum.web.router.prefix')) }}">Laravel Forum</a>
+            <a class="navbar-brand" href="{{ url(config('forum.web.router.prefix')) }}">Secure Bridges Forum</a>
             <button class="navbar-toggler" type="button" :class="{ collapsed: isCollapsed }"
                 @click="isCollapsed = ! isCollapsed">
                 <span class="navbar-toggler-icon"></span>
@@ -216,10 +233,11 @@
                     </li>
                     @endif
                 </ul>
+              
             </div>
         </div>
     </nav>
-    @endif
+    
     <div id="main" class="container">
         @include('forum::partials.breadcrumbs')
         @include('forum::partials.alerts')

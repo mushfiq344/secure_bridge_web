@@ -37,9 +37,14 @@ class ProfileController extends BaseController
     public function store(Request $request)
     {
         $profileExists = Profile::where('user_id', auth()->user()->id)->exists();
-        if (!$profileExists) {
-            $profileImage = $request->profile_image;
-            $profileImageName = CustomHelper::saveBase64Image($profileImage, Profile::$_uploadPath, 300, 200);
+        if (!$profileExists) { 
+            if($request->profile_image){
+                $profileImage = $request->profile_image;
+                $profileImageName = CustomHelper::saveBase64Image($profileImage, Profile::$_uploadPath, 300, 200);
+            }else{
+                $profileImageName = Profile::$_defaultAvatarPath;
+            }
+           
             $profile = new Profile;
             $profile->user_id = auth()->user()->id;
             $profile->full_name = $request->full_name;

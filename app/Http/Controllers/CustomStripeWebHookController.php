@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Opportunity;
 use App\Models\Plan;
 use App\Models\PlanUser;
 use App\Models\Transaction;
@@ -243,13 +244,32 @@ class CustomStripeWebHookController extends Controller
 
         //$payload['data']['object']['id'];
         //$payload['data']['object']['amount'];
-        $data=array();
-        $data['user_id']=$payload['data']['object']['metadata']['user_id'];
-        $data['plan_id']=$payload['data']['object']['metadata']['plan_id'];
-        $data['transaction_code']=$payload['data']['object']['id'];
-        $data['amount']=$payload['data']['object']['amount']/100;
+        if($payload['data']['object']['metadata']['type']==1){
+            $opportunity=Opportunity::find($payload['data']['object']['metadata']['opportunity_id']);
+            $opportunity->is_paid=1;
+            $opportunity->status=Opportunity::$opportunityStatusValues["Published"];
+            $opportunity->budget=$payload['data']['object']['amount']/100;
+            $opportunity->transaction_code=$payload['data']['object']['id'];
+            $opportunity->save();
+            $transaction=new Transaction();
+            $transaction->user_id=$payload['data']['object']['metadata']['user_id'];
+            $transaction->transaction_code=$payload['data']['object']['id'];
+            $transaction->amount=$payload['data']['object']['amount']/100;
+            $transaction->type=Transaction::$transactionTypesValues["opportunity_publish"];
+            $transaction->status=Transaction::$transactionStatusValues["complete"];
+            $transaction->payload=json_encode($payload);
+            $transaction->save();
 
-        PlanUser::subscribeUser($data,$payload);
+        }else{
+            $data=array();
+            $data['user_id']=$payload['data']['object']['metadata']['user_id'];
+            $data['plan_id']=$payload['data']['object']['metadata']['plan_id'];
+            $data['transaction_code']=$payload['data']['object']['id'];
+            $data['amount']=$payload['data']['object']['amount']/100;
+    
+            PlanUser::subscribeUser($data,$payload);
+        };
+      
 
         
 

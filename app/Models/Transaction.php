@@ -10,7 +10,8 @@ class Transaction extends Model
     use HasFactory;
 
     public static $transactionTypesValues=array(
-        "Subscription"=>"0"
+        "Subscription"=>"0",
+        "opportunity_publish"=>"1"
     );
 
     public static $transactionStatusValues=array(
