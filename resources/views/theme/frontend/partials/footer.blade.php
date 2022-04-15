@@ -30,7 +30,7 @@ if (!empty(Auth::user())) {
                 </div>
                 <div>
                     <span class="moto">Copyright &#169; 2021 Secure Bridges | All Rights Reserved</span>
-                    @if(!$agent->isMobile())
+                  
                     <nav class="level is-mobile mt-20">
                         <div class="level-left level-social">
                             @foreach ($links as $link)
@@ -41,10 +41,10 @@ if (!empty(Auth::user())) {
                             @endforeach
                         </div>
                     </nav>
-                    @endif
+                   
                 </div>
             </div>
-            @if(!$agent->isMobile())
+         
             <div class="column">
                 <div class="footer-nav-right">
                     @guest
@@ -66,7 +66,7 @@ if (!empty(Auth::user())) {
                     @endguest
                 </div>
             </div>
-            @endif
+           
         </div>
     </div>
 </footer>

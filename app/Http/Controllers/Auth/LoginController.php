@@ -53,11 +53,7 @@ class LoginController extends Controller
         ]);
 
         if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
-            $agent = new Agent();
-            if ($agent->isMobile()) {
-                $link = url("forum?mobile_view=yes");
-                return redirect($link);
-            }
+          
             if (auth()->user()->user_type == 2) {
                 return redirect()->route('admin.home');
             } else if (auth()->user()->user_type == 1) {

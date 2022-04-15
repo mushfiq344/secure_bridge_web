@@ -206,7 +206,6 @@
                     </li>
                     @endcan
                 </ul>
-                @if (!$agent->isMobile())
                 <ul class="navbar-nav">
                     @if (Auth::check())
                     <li class="nav-item dropdown">
@@ -234,7 +233,7 @@
                     </li>
                     @endif
                 </ul>
-                @endif
+              
             </div>
         </div>
     </nav>
