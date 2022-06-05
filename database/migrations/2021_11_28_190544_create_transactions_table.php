@@ -22,7 +22,7 @@ class CreateTransactionsTable extends Migration
             $table->string('method')->nullable();
             $table->tinyInteger('type')->default(0);
             $table->tinyInteger('status')->default(0);
-            $table->json('payload')->nullable();
+            $table->longText('payload')->nullable();
             
             $table->timestamps();
         });
