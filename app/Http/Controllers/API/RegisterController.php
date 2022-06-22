@@ -112,12 +112,18 @@ class RegisterController extends BaseController
             [
                 'email_verified_at' => now(),
                 'name' => $userGoogleInfo->name,
-                'password' => bcrypt('123456')
+                'password' => bcrypt('123456'),
+                'is_active'=> 1,
+                'user_type'=> 0,
+                "reg_completed" => 0 
+
             ]
         );
 
+        $user=User::where('email',$userGoogleInfo->getEmail())->first();
+        
         if(!$user->is_active){
-            return $this->sendError('You Account has been inactivated', ['error' => 'Unauthorised'],403);
+            return $this->sendError('You Account has been inactivated', ['error' => 'Unauthorised','data'=>$user],403);
         }
 
 
